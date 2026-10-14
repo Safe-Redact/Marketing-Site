@@ -1,0 +1,112 @@
+backend:
+  name: github
+  repo: Safe-Redact/Marketing-Site
+  branch: master
+  use_graphql: true
+
+publish_mode: editorial_workflow
+site_url: https://saferedact.io
+display_url: https://saferedact.io
+logo_url: https://saferedact.io/favicon.svg
+media_folder: public/images/blog
+public_folder: /images/blog
+
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: "-"
+
+collections:
+  - name: articles
+    label: Blog articles
+    label_singular: Blog article
+    description: Draft, review, and publish factual SafeRedact articles and company updates.
+    folder: content/blog
+    create: true
+    extension: md
+    format: frontmatter
+    identifier_field: title
+    slug: "{{fields.slug}}"
+    preview_path: "blog/{{fields.slug}}"
+    summary: "{{title}} — {{status}} — {{date}}"
+    sortable_fields:
+      fields: [title, date, status, category]
+      default:
+        field: date
+        direction: Descending
+    view_filters:
+      - label: Drafts
+        field: status
+        pattern: draft
+      - label: Published
+        field: status
+        pattern: published
+      - label: Archived
+        field: status
+        pattern: archived
+    fields:
+      - label: Title
+        name: title
+        widget: string
+        pattern: ['^.{5,120}$', "Use between 5 and 120 characters."]
+      - label: Slug
+        name: slug
+        widget: string
+        hint: Lowercase letters, numbers, and single hyphens only. Changing a published slug requires a redirect review.
+        pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', "Use lowercase letters, numbers, and hyphens only."]
+      - label: Excerpt
+        name: excerpt
+        widget: text
+        pattern: ['^.{40,240}$', "Use between 40 and 240 characters."]
+      - label: Author
+        name: author
+        widget: string
+        hint: Use an approved SafeRedact staff byline. Do not invent biographies or contributors.
+      - label: Category
+        name: category
+        widget: string
+        hint: Reuse an approved category name consistently.
+      - label: Publication date
+        name: date
+        widget: datetime
+        default: "{{now}}"
+        picker_utc: true
+      - label: Updated date
+        name: updatedDate
+        widget: datetime
+        required: false
+        default: ""
+        picker_utc: true
+      - label: Featured image
+        name: featuredImage
+        widget: image
+        required: false
+        choose_url: false
+        media_library:
+          config:
+            max_file_size: 5242880
+      - label: Featured image alt text
+        name: imageAlt
+        widget: string
+        required: false
+        hint: Required when a featured image is selected. Describe its relevant information, not its appearance alone.
+      - label: Publication status
+        name: status
+        widget: select
+        default: draft
+        options:
+          - { label: Draft — never public, value: draft }
+          - { label: Published — public after review, value: published }
+          - { label: Archived — removed from public routes, value: archived }
+      - label: Featured article
+        name: featured
+        widget: boolean
+        default: false
+      - label: SEO description
+        name: seoDescription
+        widget: text
+        pattern: ['^.{50,170}$', "Use between 50 and 170 characters."]
+      - label: Article content
+        name: body
+        widget: markdown
+        hint: Use Markdown only. Raw HTML, executable content, download links, and unsupported claims are not permitted.

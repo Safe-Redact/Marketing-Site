@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -8,27 +8,37 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const poppins = Poppins({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-poppins",
+  weight: ["400", "500", "600", "700"],
+});
+
 export const metadata: Metadata = {
   title: {
-    default: "SafeRedact | Professional Document Redaction Services",
+    default: "SafeRedact | AI-Powered Redaction Software",
     template: "%s | SafeRedact",
   },
   description:
-    "Professional document redaction services for video, audio, and documents. Secure, accurate, and confidential redaction handled by experts.",
+    "Windows redaction software with AI-assisted workflows for documents, images, audio, and video.",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://saferedact.io",
     siteName: "SafeRedact",
-    title: "SafeRedact | Professional Document Redaction Services",
+    title: "SafeRedact | AI-Powered Redaction Software",
     description:
-      "Professional document redaction services for video, audio, and documents. Secure, accurate, and confidential redaction handled by experts.",
+      "Windows redaction software with AI-assisted workflows for documents, images, audio, and video.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SafeRedact | Professional Document Redaction Services",
+    title: "SafeRedact | AI-Powered Redaction Software",
     description:
-      "Professional document redaction services for video, audio, and documents. Secure, accurate, and confidential redaction handled by experts.",
+      "Windows redaction software with AI-assisted workflows for documents, images, audio, and video.",
   },
   robots: {
     index: true,
@@ -50,7 +60,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <script
@@ -58,46 +68,13 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "ProfessionalService",
+              "@type": "SoftwareApplication",
               name: "SafeRedact",
               description:
-                "Professional document redaction services for video, audio, and documents. Secure, accurate, and confidential redaction handled by experts.",
+                "Windows redaction software with AI-assisted workflows for documents, images, audio, and video.",
               url: "https://saferedact.io",
-              serviceType: "Document Redaction",
-              areaServed: "Global",
-              hasOfferCatalog: {
-                "@type": "OfferCatalog",
-                name: "Redaction Services",
-                itemListElement: [
-                  {
-                    "@type": "Offer",
-                    itemOffered: {
-                      "@type": "Service",
-                      name: "Video Redaction",
-                      description:
-                        "Professional video redaction including face blur, license plate removal, and on-screen text redaction.",
-                    },
-                  },
-                  {
-                    "@type": "Offer",
-                    itemOffered: {
-                      "@type": "Service",
-                      name: "Audio Redaction",
-                      description:
-                        "Permanent removal or masking of sensitive audio content from recordings.",
-                    },
-                  },
-                  {
-                    "@type": "Offer",
-                    itemOffered: {
-                      "@type": "Service",
-                      name: "Document Redaction",
-                      description:
-                        "Secure redaction of personal data, financial details, and confidential content from PDFs and documents.",
-                    },
-                  },
-                ],
-              },
+              applicationCategory: "BusinessApplication",
+              operatingSystem: "Windows",
             }),
           }}
         />

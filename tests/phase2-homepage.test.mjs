@@ -1,0 +1,114 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import test from "node:test";
+
+const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
+
+test("phase 2 content is structured around verified product narratives", async () => {
+  const platform = await read("src/content/platform.ts");
+  const trust = await read("src/content/trust-bar.ts");
+
+  for (const exportName of [
+    "platformOutcomes",
+    "platformCapabilities",
+    "workflowSteps",
+    "formatTabs",
+    "useCaseGroups",
+    "workbenchLabels",
+    "workflowPreviewLabels",
+  ]) {
+    assert.match(platform, new RegExp(`export const ${exportName}`));
+  }
+
+  assert.match(trust, /capabilityStripHeading/);
+  assert.doesNotMatch(platform, /guarantee|99%|HIPAA|GDPR|SOC 2|zero.retention/i);
+});
+
+test("homepage uses the cohesive phase 2 section sequence", async () => {
+  const page = await read("src/app/page.tsx");
+
+  for (const component of [
+    "Services",
+    "HowItWorks",
+    "WhySafeRedact",
+    "Industries",
+    "Faq",
+    "FinalCta",
+  ]) {
+    assert.match(page, new RegExp(`<${component} \\/>`));
+  }
+
+  assert.doesNotMatch(page, /<WhyRedaction \/>|<QualitySecurity \/>|<SoftwareAlternative \/>/);
+});
+
+test("shared accordion exposes disclosure semantics and hides collapsed panels", async () => {
+  const accordion = await read("src/components/ui/Accordion.tsx");
+
+  assert.match(accordion, /aria-expanded=/);
+  assert.match(accordion, /aria-controls=/);
+  assert.match(accordion, /hidden=/);
+  assert.match(accordion, /type="button"/);
+});
+
+test("migrated sections use the shared dark canvas and container", async () => {
+  const files = await Promise.all(
+    [
+      "Services",
+      "HowItWorks",
+      "WhySafeRedact",
+      "Industries",
+      "Faq",
+      "FinalCta",
+    ].map((name) => read(`src/components/sections/${name}.tsx`))
+  );
+
+  for (const source of files) {
+    assert.match(source, /<Container/);
+    assert.doesNotMatch(source, /(?:^|\s)bg-(?:white|surface-100)(?:\s|")/);
+  }
+});
+
+test("footer contains only real destinations", async () => {
+  const footer = await read("src/components/layout/Footer.tsx");
+
+  assert.match(footer, /<Container/);
+  assert.doesNotMatch(footer, /href="#"/);
+  assert.match(footer, /mailto:/);
+  assert.match(footer, /href="#demo-enquiry"/);
+  assert.doesNotMatch(footer, /downloadUrl/);
+});
+
+test("anchored sections clear the fixed header", async () => {
+  const globals = await read("src/app/globals.css");
+
+  assert.match(globals, /section\[id\][^{]*\{[^}]*scroll-margin-top:/s);
+});
+
+test("format tabs reference one stable tab panel", async () => {
+  const section = await read("src/components/sections/WhySafeRedact.tsx");
+
+  assert.match(section, /aria-controls="format-panel"/);
+  assert.match(section, /id="format-panel"/);
+  assert.match(section, /role="tabpanel"[\s\S]*?tabIndex=\{0\}/);
+  assert.doesNotMatch(section, /aria-controls=\{`format-panel-/);
+});
+
+test("contact form discloses its current validation-only delivery behavior", async () => {
+  const content = await read("src/content/final-cta.ts");
+  const section = await read("src/components/sections/FinalCta.tsx");
+
+  assert.match(content, /deliveryNotice/);
+  assert.match(content, /does not store it, send email, or create a CRM record/i);
+  assert.match(section, /form\.deliveryNotice/);
+  assert.match(section, /validated, but it was not stored, emailed, or added to a CRM/i);
+});
+
+test("outcome grid applies edge and divider styles to sibling wrappers", async () => {
+  const services = await read("src/components/sections/Services.tsx");
+
+  assert.match(
+    services,
+    /<AnimateOnScroll[^>]+className="[^"]*md:border-r[^"]*md:first:pl-0[^"]*md:last:border-r-0/
+  );
+  assert.doesNotMatch(services, /<article className="[^"]*md:first:pl-0/);
+});

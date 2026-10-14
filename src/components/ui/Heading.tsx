@@ -9,8 +9,8 @@ interface HeadingProps {
 }
 
 const sizeClasses: Record<HeadingLevel, string> = {
-  h1: "text-display-lg md:text-display-lg",
-  h2: "text-display-sm md:text-display",
+  h1: "text-display-lg",
+  h2: "text-display",
   h3: "text-heading-xl",
   h4: "text-heading-lg",
 };
@@ -25,7 +25,7 @@ export function Heading({
   return (
     <Tag
       className={cn(
-        "font-bold text-primary-800 text-balance",
+        "font-heading font-bold text-primary-800 text-balance",
         sizeClasses[level],
         className
       )}

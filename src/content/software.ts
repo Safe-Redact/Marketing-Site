@@ -1,11 +1,11 @@
 export const softwareContent = {
-  headline: "Prefer to Redact Yourself?",
+  headline: "Redact on Windows",
   description:
-    "SafeRedact also provides dedicated redaction software for Windows. Handle video, audio, and document redaction on your own machine with AI-powered detection and permanent removal.",
+    "SafeRedact is native Windows redaction software with AI-assisted document, image, audio, and video workflows.",
   features: [
-    "Fully offline processing",
-    "AI-powered face, plate, and PII detection",
-    "Video, audio, and document support",
+    "On-device processing options",
+    "AI-assisted sensitive-information detection",
+    "Document, image, audio, and video support",
   ],
   cta: {
     label: "Download SafeRedact",

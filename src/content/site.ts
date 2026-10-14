@@ -2,17 +2,18 @@ import type { NavLink } from "@/types";
 
 export const siteConfig = {
   name: "SafeRedact",
-  tagline: "Professional Document Redaction Services",
+  tagline: "AI-powered redaction software",
   description:
-    "Secure, accurate, and confidential document redaction services for video, audio, and documents. Expert handling by redaction specialists.",
+    "Windows redaction software with AI-assisted workflows for documents, images, audio, and video.",
   url: "https://saferedact.io",
   email: "support@saferedact.io",
 };
 
 export const navLinks: NavLink[] = [
-  { label: "Services", href: "#services" },
+  { label: "Capabilities", href: "#services" },
   { label: "How It Works", href: "#how-it-works" },
   { label: "Industries", href: "#industries" },
-  { label: "Why Us", href: "#why-saferedact" },
+  { label: "Why SafeRedact", href: "#why-saferedact" },
+  { label: "Insights", href: "/blog" },
   { label: "FAQ", href: "#faq" },
 ];

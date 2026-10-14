@@ -20,21 +20,21 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const variants = {
       primary:
-        "bg-accent text-white hover:bg-accent-dark shadow-sm hover:shadow-md",
+        "bg-accent-warm text-canvas shadow-action hover:bg-accent-warm-hover hover:shadow-action-hover",
       secondary:
-        "bg-primary-700 text-white hover:bg-primary-800 shadow-sm",
+        "border border-border-subtle bg-surface-raised text-ink hover:border-accent-cool/55 hover:bg-surface-active",
       ghost:
-        "bg-transparent text-primary-700 border border-surface-300 hover:border-accent hover:text-accent",
+        "border border-border-subtle bg-transparent text-ink hover:border-accent-cool/55 hover:text-white",
     };
 
     const sizes = {
-      sm: "px-4 py-2 text-body-sm",
-      md: "px-6 py-3 text-body",
-      lg: "px-8 py-4 text-body-lg",
+      sm: "min-h-11 px-5 py-2.5 text-body-sm",
+      md: "min-h-11 px-6 py-2.5 text-body",
+      lg: "min-h-12 px-7 py-3 text-body",
     };
 
     const classes = cn(
-      "inline-flex items-center justify-center gap-2 rounded-control font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2",
+      "inline-flex items-center justify-center gap-2 rounded-control font-semibold transition-all duration-200 motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool focus-visible:ring-offset-2 focus-visible:ring-offset-canvas disabled:pointer-events-none disabled:opacity-50",
       variants[variant],
       sizes[size],
       className

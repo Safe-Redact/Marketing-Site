@@ -1,18 +1,14 @@
 export const heroContent = {
-  headline: "Professional Document Redaction You Can Trust",
+  eyebrow: "AI-powered redaction",
+  headline: "Detect sensitive information. Redact with confidence.",
   subheadline:
-    "We securely remove sensitive information from video, audio, and documents. Every file is handled by experienced redaction specialists with strict confidentiality protocols.",
+    "SafeRedact is a Windows desktop application for AI-assisted redaction across documents, images, audio, and video, with review controls before export.",
   primaryCta: {
-    label: "Request a Quote",
-    href: "#contact",
+    label: "Request a Demo",
+    href: "#demo-enquiry",
   },
   secondaryCta: {
-    label: "Learn How It Works",
-    href: "#how-it-works",
+    label: "Explore Platform",
+    href: "#services",
   },
-  trustIndicators: [
-    "Secure file transfer",
-    "Expert human review",
-    "Confidential handling",
-  ],
 };

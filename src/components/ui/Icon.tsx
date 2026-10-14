@@ -429,6 +429,13 @@ const icons: Record<string, ReactElement> = {
       strokeLinejoin="round"
     />
   ),
+  info: (
+    <>
+      <circle cx="12" cy="12" r="10" strokeWidth="1.5" />
+      <line x1="12" y1="11" x2="12" y2="17" strokeWidth="1.5" strokeLinecap="round" />
+      <circle cx="12" cy="7.5" r="0.75" fill="currentColor" stroke="none" />
+    </>
+  ),
 };
 
 export function Icon({ name, className, size = 24 }: IconProps) {

@@ -1,7 +1,7 @@
 export const finalCtaContent = {
-  headline: "Ready to Get Started?",
+  headline: "Request a SafeRedact Demo",
   subheadline:
-    "Tell us about your redaction project. We will respond with a tailored approach and quote for your specific needs.",
+    "Tell us which source formats and review workflow you want to evaluate. You can also contact SafeRedact directly by email.",
   form: {
     nameLabel: "Full Name",
     namePlaceholder: "Your name",
@@ -22,7 +22,9 @@ export const finalCtaContent = {
     messageLabel: "Project Details",
     messagePlaceholder:
       "Tell us about your redaction needs: what type of files, approximate volume, and any specific requirements.",
-    submitLabel: "Send Inquiry",
-    submittingLabel: "Sending...",
+    deliveryNotice:
+      "Current form behavior: this site validates the inquiry but does not store it, send email, or create a CRM record. Email support directly when delivery matters.",
+    submitLabel: "Submit Demo Enquiry",
+    submittingLabel: "Submitting...",
   },
 };

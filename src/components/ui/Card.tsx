@@ -9,15 +9,15 @@ interface CardProps {
 function Card({ children, variant = "default", className }: CardProps) {
   const variants = {
     default:
-      "bg-surface-50 border border-surface-300 hover:border-accent/20 hover:shadow-xl hover:shadow-accent/5",
-    bordered: "bg-surface-50 border border-surface-300",
-    dark: "bg-white/5 border border-white/10 backdrop-blur-sm",
+      "border border-border-subtle bg-surface-raised text-ink shadow-panel hover:border-accent-cool/30",
+    bordered: "border border-border-subtle bg-canvas text-ink",
+    dark: "border border-border-subtle bg-surface-raised/85 text-ink backdrop-blur-sm",
   };
 
   return (
     <div
       className={cn(
-        "rounded-panel p-6 transition-all duration-300",
+        "rounded-card p-6 transition-all duration-300",
         variants[variant],
         className
       )}
@@ -45,7 +45,7 @@ function CardDescription({
   className?: string;
 }) {
   return (
-    <p className={cn("text-body text-primary-500 leading-relaxed", className)}>
+    <p className={cn("text-body leading-relaxed text-ink-muted", className)}>
       {children}
     </p>
   );

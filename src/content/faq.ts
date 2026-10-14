@@ -4,46 +4,46 @@ export const faqItems: FaqItem[] = [
   {
     question: "What is document redaction?",
     answer:
-      "Document redaction is the process of permanently removing or concealing sensitive information from documents, videos, or audio files. Unlike simply covering content visually, proper redaction ensures the underlying data cannot be recovered.",
+      "Document redaction is the process of identifying sensitive information, selecting what should be removed, and creating an output intended for controlled sharing. The exported result should always be reviewed before use.",
   },
   {
     question: "What types of files can you redact?",
     answer:
-      "We handle a wide range of formats including PDFs, Word documents, scanned images, video files (MP4, MOV, AVI, MKV), and audio recordings (WAV, MP3, M4A, FLAC, and more). If you have a format not listed, contact us to discuss your needs.",
+      "SafeRedact has workflows for PDFs and supported converted documents, common image formats, audio, and video. Some document conversions and local AI features require optional components, so confirm a specific format before planning a production workflow around it.",
   },
   {
     question: "What information can be redacted?",
     answer:
-      "We redact personally identifiable information (PII) such as names, addresses, phone numbers, Social Security numbers, and dates of birth. We also handle protected health information (PHI), financial data, account numbers, and custom redaction requirements based on your specifications.",
+      "Implemented visual detection targets include faces, license plates, and text. Document and transcript workflows can identify configured sensitive-information categories and patterns. Detection coverage varies, so reviewers should confirm every proposed redaction.",
   },
   {
-    question: "How does the service work?",
+    question: "How does SafeRedact work?",
     answer:
-      "Submit your files through our secure transfer system, tell us what needs to be redacted, and our specialists will process your documents. You will receive redacted files along with an audit report documenting all changes made.",
+      "Open a file in a SafeRedact project, run the appropriate detection or transcription workflow, review or adjust the selections, and export the redacted output.",
   },
   {
-    question: "How long does redaction take?",
+    question: "Does SafeRedact work offline?",
     answer:
-      "Turnaround depends on the volume and complexity of your files. We will provide an estimated timeline when you submit your project. Rush processing is available for time-sensitive needs.",
+      "SafeRedact supports on-device detection, OCR, transcription, and rendering after the required local models and tools are installed. Optional AWS-backed engines can be selected per job; they are not required for local processing. Licensing requirements still apply.",
   },
   {
-    question: "Can I request specific redactions?",
+    question: "Can I review detected information?",
     answer:
-      "Yes. You can specify exactly what needs to be redacted, provide term lists, or give general guidelines. Our team will follow your requirements precisely.",
+      "Yes. SafeRedact lets reviewers approve, reject, adjust, add, or remove findings before export, with page, timeline, and transcript views suited to the content.",
   },
   {
-    question: "How are my documents kept confidential?",
+    question: "What should I check before sharing an output?",
     answer:
-      "Files are transferred through encrypted systems, accessed only by authorized specialists, and securely deleted after your project is complete. We do not retain copies of your documents beyond the active project.",
+      "Review the complete output, confirm that intended content remains readable, and verify that every selected redaction appears as expected for the file type.",
   },
   {
-    question: "Is there a software option?",
+    question: "Which operating system is supported?",
     answer:
-      "Yes. If you prefer to handle redaction in-house, SafeRedact provides desktop redaction software for Windows with AI-powered detection for video, audio, and documents. The software processes everything offline on your own machine.",
+      "SafeRedact is available as desktop software for Windows.",
   },
   {
     question: "How do I get started?",
     answer:
-      "Contact us through the form on this page or email us at support@saferedact.io. We will discuss your redaction needs and provide a tailored quote for your project.",
+      "Request a demo through the enquiry form, or email support@saferedact.io directly if you want to evaluate SafeRedact for your workflow.",
   },
 ];

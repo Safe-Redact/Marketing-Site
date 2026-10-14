@@ -1,74 +1,60 @@
-import { services } from "@/content/services";
+import { platformCapabilities, platformOutcomes } from "@/content/platform";
 import { AnimateOnScroll } from "@/components/ui/AnimateOnScroll";
-import { Heading } from "@/components/ui/Heading";
+import { Container } from "@/components/ui/Container";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Icon } from "@/components/ui/Icon";
 
 export function Services() {
   return (
-    <section id="services" className="relative py-section overflow-hidden">
-      <div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-accent/[0.03] blur-3xl pointer-events-none" />
-
-      <div className="relative mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-8">
-        {/* Large container */}
-        <div className="rounded-[2rem] bg-surface-100 p-8 sm:p-12 lg:p-16 xl:px-24">
-          <div className="grid items-start gap-10 lg:grid-cols-[1fr_2.5fr] lg:gap-16">
-            {/* Left: Title */}
-            <div className="lg:sticky lg:top-28">
-              <AnimateOnScroll>
-                <p className="mb-3 text-caption font-medium uppercase tracking-wider text-accent">
-                  What We Do
-                </p>
-                <Heading>
-                  Secure Redaction for Video, Audio &amp; Documents
-                </Heading>
-                <p className="mt-4 text-body text-primary-500">
-                  We handle the full redaction process — from initial analysis
-                  through final delivery.
-                </p>
-                <div className="mt-8 hidden lg:flex h-14 w-14 items-center justify-center rounded-2xl bg-accent/10">
-                  <Icon name="layers" size={24} className="text-accent" />
+    <section id="services" className="relative overflow-hidden bg-canvas py-section text-ink">
+      <Container>
+        <div className="grid border-y border-border-subtle md:grid-cols-3">
+          {platformOutcomes.map((outcome, index) => (
+            <AnimateOnScroll
+              key={outcome.title}
+              delay={index * 90}
+              className="h-full border-b border-border-subtle py-7 last:border-b-0 md:border-b-0 md:border-r md:px-8 md:py-9 md:first:pl-0 md:last:border-r-0 md:last:pr-0"
+            >
+              <article className="flex h-full gap-5">
+                <span className="font-heading text-sm font-semibold text-accent-warm">{outcome.number}</span>
+                <div>
+                  <h2 className="font-heading text-xl font-semibold text-ink">{outcome.title}</h2>
+                  <p className="mt-2 text-[0.9375rem] leading-6 text-ink-muted">{outcome.description}</p>
                 </div>
-              </AnimateOnScroll>
-            </div>
-
-            {/* Right: Service items — no numbering, dividers between items */}
-            <div>
-              {services.map((service, i) => (
-                <AnimateOnScroll key={service.title} delay={i * 100}>
-                  <div className="group">
-                    {/* Divider between items (not before first) */}
-                    {i > 0 && (
-                      <div className="mb-8 h-px bg-surface-300" />
-                    )}
-
-                    <div className="flex items-start gap-4">
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent/10 transition-all group-hover:bg-accent group-hover:shadow-lg group-hover:shadow-accent/20">
-                        <Icon name={service.icon} size={22} className="text-accent transition-colors group-hover:text-white" />
-                      </div>
-                      <div>
-                        <h3 className="text-heading-lg font-bold text-primary-800">
-                          {service.title}
-                        </h3>
-                        <p className="mt-2 text-body text-primary-500 leading-relaxed">
-                          {service.description}
-                        </p>
-                        <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
-                          {service.capabilities.map((cap) => (
-                            <li key={cap} className="flex items-center gap-2 text-body-sm text-primary-600">
-                              <Icon name="check-circle" size={14} className="text-accent" />
-                              {cap}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </AnimateOnScroll>
-              ))}
-            </div>
-          </div>
+              </article>
+            </AnimateOnScroll>
+          ))}
         </div>
-      </div>
+
+        <AnimateOnScroll className="mt-16 max-w-4xl md:mt-20">
+          <Eyebrow>Platform capabilities</Eyebrow>
+          <h2 className="mt-4 max-w-[19ch] font-heading text-display font-bold text-ink text-balance">
+            One review workspace for <span className="text-accent-warm">sensitive content</span> across formats
+          </h2>
+          <p className="mt-5 max-w-2xl text-base leading-7 text-ink-muted sm:text-lg">
+            Move from candidate detection to operator decisions without losing the context of the document, transcript, frame, or timeline.
+          </p>
+        </AnimateOnScroll>
+
+        <div className="mt-12 grid gap-x-16 gap-y-10 md:grid-cols-2 lg:mt-14">
+          {platformCapabilities.map((capability, index) => (
+            <AnimateOnScroll key={capability.title} delay={index * 80}>
+              <article className="group border-t border-border-subtle pt-6">
+                <div className="flex items-start gap-4">
+                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-card border border-accent-cool/20 bg-accent-cool/10 text-accent-cool transition-colors duration-300 group-hover:border-accent-cool/45 group-hover:bg-accent-cool/15">
+                    <Icon name={capability.icon} size={22} />
+                  </span>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent-warm">{capability.accent}</p>
+                    <h3 className="mt-2 font-heading text-xl font-semibold text-ink">{capability.title}</h3>
+                    <p className="mt-3 max-w-[34rem] text-base leading-7 text-ink-muted">{capability.description}</p>
+                  </div>
+                </div>
+              </article>
+            </AnimateOnScroll>
+          ))}
+        </div>
+      </Container>
     </section>
   );
 }
