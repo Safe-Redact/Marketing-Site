@@ -1,7 +1,7 @@
 # SafeRedact Phase 2.5 — Visual Acceptance and Browser QA
 
-Date: 2026-10-14  
-Branch: `feat/saferedact-marketing-revamp`  
+Date: 2026-10-14
+Branch: `feat/saferedact-marketing-revamp`
 Acceptance status: **BLOCKED**
 
 ## 1. Browser tool authorization findings

@@ -1,7 +1,7 @@
 # Phase 2 section mapping
 
-Date: 2026-10-13  
-Reference: Elloe TruthChecker, inspected at 1440×900, 768×1024, and 390×844  
+Date: 2026-10-13
+Reference: Elloe TruthChecker, inspected at 1440×900, 768×1024, and 390×844
 Product authority: `APP_CAPABILITY_AUDIT.md` and the read-only application source at `M:\Safaridesk\redact`
 
 ## Page-level composition

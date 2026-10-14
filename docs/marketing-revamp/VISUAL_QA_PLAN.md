@@ -200,4 +200,3 @@ The implementation is ready only when the handoff includes:
 - Performance results
 - Final claims review with approver and date
 - A list of any accepted visual differences from the reference and why they were chosen
-

@@ -1,7 +1,7 @@
 # Elloe TruthChecker Reference Design Specification
 
-Source: `https://www.elloe.ai/platform/truthchecker`  
-Inspection date: 2026-10-13  
+Source: `https://www.elloe.ai/platform/truthchecker`
+Inspection date: 2026-10-13
 Purpose: extract a reusable visual grammar for an original SafeRedact implementation.
 
 ## Method and limits
@@ -261,4 +261,3 @@ The implementation should add a 992px navigation token only if the 768–1023px 
 | `section-y` | `64px` mobile, `96px` desktop | Preserves spacious rhythm while improving desktop pacing |
 
 These are proposed implementation values, not changes made during this phase.
-

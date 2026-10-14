@@ -1,6 +1,6 @@
 # SafeRedact Marketing Site Repository Audit
 
-Audit date: 2026-10-13  
+Audit date: 2026-10-13
 Scope: inspection and planning only; no production source files were modified.
 
 ## Executive summary
@@ -222,4 +222,3 @@ The full page was additionally inspected interactively at desktop and mobile wid
 5. Preserve original SafeRedact styling cues: dark navy, coral accent, redaction-bar motif, and plain-language privacy positioning.
 6. Do not reuse Elloe artwork, logos, proprietary copy, customer marks, or quantitative claims.
 7. Treat all unverified compliance, security, and performance claims as blocked content.
-

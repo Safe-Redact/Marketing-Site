@@ -1,6 +1,6 @@
 # Phase 2.5 acceptance screenshot manifest
 
-Date: 2026-10-14  
+Date: 2026-10-14
 Status: **BLOCKED**
 
 No screenshot files are stored in this directory.

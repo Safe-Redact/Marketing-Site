@@ -1,7 +1,7 @@
 # Phase 1 QA Results
 
-Date: 2026-10-13  
-Branch: `feat/saferedact-marketing-revamp`  
+Date: 2026-10-13
+Branch: `feat/saferedact-marketing-revamp`
 Build under test: clean `next build` followed by `next start`
 
 ## Automated checks

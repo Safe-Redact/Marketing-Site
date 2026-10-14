@@ -61,8 +61,8 @@ Do not add dropdown depth until real destination pages exist.
 
 Recommended direction:
 
-**Eyebrow:** AI-powered redaction  
-**Headline:** Detect sensitive information. Redact with confidence.  
+**Eyebrow:** AI-powered redaction
+**Headline:** Detect sensitive information. Redact with confidence.
 **Supporting copy:** SafeRedact helps teams find and remove sensitive information across documents, audio, and video, with review controls before export.
 
 This copy is a synthesis of existing repository claims. Final wording must be checked against the actual product. Avoid `automatic`, `guaranteed`, `compliant`, or numerical accuracy language unless approved.
@@ -205,4 +205,3 @@ Before implementation begins, obtain written answers for:
 8. Are audit reports or review histories generated, and in which product/service tier?
 9. Is email/attachment redaction available?
 10. Which legal, privacy, security, or compliance statements have counsel approval?
-

@@ -366,4 +366,3 @@ Measure Core Web Vitals/Lighthouse in production mode. Investigate regressions i
 ## Recommended execution strategy
 
 Use a native, task-by-task implementation in the current repository with one independent review after the complete visual system and page are integrated. The tasks share tokens and section interfaces heavily, so keeping implementation in one continuous context reduces drift. Require explicit approval of content and assets before Task 1 completes.
-

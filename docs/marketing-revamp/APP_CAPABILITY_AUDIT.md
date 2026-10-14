@@ -1,6 +1,6 @@
 # SafeRedact application capability audit
 
-Date checked: 2026-10-13  
+Date checked: 2026-10-13
 Application source reviewed read-only: `M:\Safaridesk\redact` (`develop`)
 
 This file is the marketing content source of truth for the current redesign. A capability may be described on the site only when the application repository contains both an implementation path and a user-facing workflow. Repository comments and disabled controls are not treated as shipped capabilities on their own.

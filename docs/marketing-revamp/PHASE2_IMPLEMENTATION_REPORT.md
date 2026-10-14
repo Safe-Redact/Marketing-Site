@@ -1,7 +1,7 @@
 # SafeRedact Marketing Revamp — Phase 2 Implementation Report
 
-Date: 2026-10-14  
-Branch: `feat/saferedact-marketing-revamp`  
+Date: 2026-10-14
+Branch: `feat/saferedact-marketing-revamp`
 Status: implemented and production-built; final screenshot recapture is blocked by the browser-control URL policy described in `PHASE2_VISUAL_QA.md`.
 
 ## Outcome
