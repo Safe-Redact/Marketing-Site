@@ -11,25 +11,25 @@ export const industries: Industry[] = [
     icon: "heart",
     title: "Healthcare",
     description:
-      "HIPAA-compliant redaction of PHI from medical records, clinical trial documentation, and patient communications.",
+      "Prepare medical records, research documents, and patient communications for appropriate sharing.",
   },
   {
     icon: "building",
     title: "Government",
     description:
-      "FOIA and FISMA-compliant redaction for public records requests, agency documents, and classified materials.",
+      "Prepare public records and agency documents for review and release workflows.",
   },
   {
     icon: "landmark",
     title: "Financial Services",
     description:
-      "GDPR and GLBA-compliant de-identification of financial records, loan documents, and banking statements.",
+      "Review personal and business information in financial records, loan documents, and statements.",
   },
   {
     icon: "briefcase",
     title: "Corporate",
     description:
-      "Internal documents, HR records, contracts, and communications redacted for mergers, litigation, and compliance.",
+      "Review sensitive information in internal documents, HR records, contracts, and communications.",
   },
   {
     icon: "search",

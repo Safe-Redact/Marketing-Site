@@ -3,20 +3,20 @@ import type { Step } from "@/types";
 export const steps: Step[] = [
   {
     number: 1,
-    title: "Submit Your Files",
+    title: "Open Your File",
     description:
-      "Send us your documents, videos, or audio files through our secure transfer system. Tell us what needs to be redacted and any specific requirements.",
+      "Add a supported document, image, audio recording, or video to a SafeRedact project.",
   },
   {
     number: 2,
-    title: "Expert Redaction",
+    title: "Detect and Review",
     description:
-      "Our specialists process your files using advanced detection tools combined with meticulous manual review. Every redaction is verified for accuracy.",
+      "Use the available detector or transcription workflow, then review or adjust the proposed redactions.",
   },
   {
     number: 3,
-    title: "Receive Redacted Files",
+    title: "Create the Output",
     description:
-      "Get your securely redacted files back, along with an audit report documenting all changes. Files are delivered through secure channels.",
+      "Export the redacted file and inspect the rendered result before using or sharing it.",
   },
 ];

@@ -5,6 +5,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        canvas: "#080914",
+        "surface-raised": "#101525",
+        "surface-active": "#151B2F",
+        "border-subtle": "#222B44",
+        ink: "#F7F8FC",
+        "ink-muted": "#A7B0C9",
+        "accent-warm": "#E47755",
+        "accent-warm-hover": "#F08A66",
+        "accent-cool": "#33B7FF",
+        "accent-mint": "#55E6D0",
         accent: {
           DEFAULT: "#D97757",
           dark: "#B85C3F",
@@ -52,25 +62,32 @@ const config: Config = {
       },
       fontFamily: {
         sans: [
-          "Inter",
+          "var(--font-inter)",
           "ui-sans-serif",
           "system-ui",
           "sans-serif",
           "Apple Color Emoji",
           "Segoe UI Emoji",
         ],
+        heading: [
+          "var(--font-poppins)",
+          "var(--font-inter)",
+          "ui-sans-serif",
+          "system-ui",
+          "sans-serif",
+        ],
       },
       fontSize: {
         "display-lg": [
-          "4rem",
+          "clamp(1.75rem, 5vw, 3.25rem)",
           {
-            lineHeight: "1.05",
+            lineHeight: "1.3",
             letterSpacing: "-0.03em",
-            fontWeight: "700",
+            fontWeight: "500",
           },
         ],
         display: [
-          "3rem",
+          "clamp(1.75rem, 4.5vw, 3rem)",
           {
             lineHeight: "1.1",
             letterSpacing: "-0.02em",
@@ -123,17 +140,23 @@ const config: Config = {
         ],
       },
       spacing: {
-        section: "5rem",
-        "section-sm": "3rem",
+        section: "6rem",
+        "section-sm": "4rem",
       },
       borderRadius: {
-        panel: "0.75rem",
-        control: "0.5rem",
+        panel: "1rem",
+        card: "0.5rem",
+        control: "0.375rem",
         chip: "0.25rem",
       },
       maxWidth: {
-        content: "72rem",
+        content: "77rem",
         prose: "65ch",
+      },
+      boxShadow: {
+        action: "0 2px 14px rgba(228, 119, 85, 0.46)",
+        "action-hover": "0 4px 20px rgba(228, 119, 85, 0.58)",
+        panel: "0 18px 70px rgba(0, 0, 0, 0.32)",
       },
       keyframes: {
         "fade-in-up": {
@@ -158,10 +181,10 @@ const config: Config = {
         },
       },
       animation: {
-        "fade-in-up": "fade-in-up 0.6s ease-out forwards",
-        "fade-in": "fade-in 0.6s ease-out forwards",
-        "slide-in-left": "slide-in-left 0.6s ease-out forwards",
-        "scale-in": "scale-in 0.5s ease-out forwards",
+        "fade-in-up": "fade-in-up 0.45s ease-out forwards",
+        "fade-in": "fade-in 0.3s ease-out forwards",
+        "slide-in-left": "slide-in-left 0.4s ease-out forwards",
+        "scale-in": "scale-in 0.4s ease-out forwards",
         float: "float 6s ease-in-out infinite",
       },
     },

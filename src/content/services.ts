@@ -3,41 +3,41 @@ import type { Service } from "@/types";
 export const services: Service[] = [
   {
     icon: "video",
-    title: "Video Redaction",
+    title: "Video & Image Redaction",
     description:
-      "We redact faces, license plates, on-screen text, and sensitive audio from video files. Surveillance footage, body cameras, interviews, and corporate recordings are handled with precision.",
+      "Detect faces, license plates, and text, add or adjust regions manually, and preview visual redactions before export.",
     capabilities: [
-      "Face and person blurring",
-      "License plate obscuration",
-      "On-screen text redaction",
-      "Audio muting and removal",
-      "Multi-format support",
+      "Face and license-plate detection",
+      "OCR text regions",
+      "Manual region controls",
+      "Video timeline review",
+      "Video and PNG image output",
     ],
   },
   {
     icon: "audio",
     title: "Audio Redaction",
     description:
-      "Sensitive names, numbers, and confidential discussions are permanently removed or masked from audio recordings. Ideal for legal proceedings, interviews, and medical recordings.",
+      "Transcribe speech, detect configured sensitive-information categories, and review time ranges before rendering audio.",
     capabilities: [
-      "Speech-to-text transcription",
-      "PII detection in audio",
-      "Mute, beep, or tone replacement",
-      "Multiple format support",
-      "Transcript-based review",
+      "Local or configured transcription",
+      "Transcript-based navigation",
+      "Sensitive-information detection",
+      "Mute, tone, and audio-mask effects",
+      "Playback review",
     ],
   },
   {
     icon: "document",
     title: "Document Redaction",
     description:
-      "We securely redact personal data, financial details, case information, and classified content from PDFs, Word documents, scanned files, and other digital records.",
+      "Open PDFs and supported converted formats, find sensitive text, and adjust text or area redactions before PDF export.",
     capabilities: [
-      "PDF and document redaction",
-      "Scanned file processing",
-      "PII and PHI detection",
-      "Permanent text removal",
-      "PDF/A and archival export",
+      "PDF and converted document intake",
+      "Text and OCR-assisted detection",
+      "Manual text and area selection",
+      "Page and project-scope review",
+      "Redacted PDF output",
     ],
   },
 ];

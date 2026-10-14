@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface AnimateOnScrollProps {
@@ -14,55 +14,67 @@ export function AnimateOnScroll({
   className,
   delay = 0,
 }: AnimateOnScrollProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const [hasAnimated, setHasAnimated] = useState(false);
+  const elementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+    const node = elementRef.current;
+    if (!node) return;
 
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    const bounds = node.getBoundingClientRect();
+    const isInitiallyVisible =
+      bounds.top < window.innerHeight && bounds.bottom > 0;
+
+    if (
+      reducedMotion ||
+      typeof window.IntersectionObserver === "undefined" ||
+      isInitiallyVisible
+    ) {
+      node.setAttribute("data-revealed", "true");
+      return;
+    }
+
+    let revealFrame = 0;
+    let isPrepared = false;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated) {
-          setHasAnimated(true);
-          setIsVisible(true);
-          observer.disconnect();
+        if (!entry) return;
+
+        if (!entry.isIntersecting) {
+          if (!isPrepared) {
+            node.setAttribute("data-reveal-ready", "true");
+            isPrepared = true;
+          }
+          return;
         }
+
+        if (!isPrepared) {
+          node.setAttribute("data-reveal-ready", "true");
+          isPrepared = true;
+        }
+        revealFrame = window.requestAnimationFrame(() => {
+          node.setAttribute("data-revealed", "true");
+          observer.unobserve(node);
+        });
       },
-      {
-        threshold: 0.05,
-        rootMargin: "0px 0px -20px 0px",
-      }
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.12 }
     );
 
-    observer.observe(el);
-
-    // Fallback: ensure content is visible after a delay
-    const fallback = setTimeout(() => {
-      if (!hasAnimated) {
-        setIsVisible(true);
-        observer.disconnect();
-      }
-    }, 1500);
+    observer.observe(node);
 
     return () => {
+      window.cancelAnimationFrame(revealFrame);
       observer.disconnect();
-      clearTimeout(fallback);
     };
-  }, [hasAnimated]);
+  }, []);
 
   return (
     <div
-      ref={ref}
-      className={cn(
-        "transition-all duration-700 ease-out",
-        isVisible
-          ? "translate-y-0 opacity-100"
-          : "translate-y-6 opacity-0",
-        className
-      )}
-      style={{ transitionDelay: `${delay}ms` }}
+      ref={elementRef}
+      className={cn("reveal-on-scroll", className)}
+      style={{ "--reveal-delay": `${delay}ms` } as CSSProperties}
     >
       {children}
     </div>

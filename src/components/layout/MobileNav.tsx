@@ -1,89 +1,144 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { cn } from "@/lib/utils";
 import { navLinks } from "@/content/site";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
+import { cn } from "@/lib/utils";
 
 interface MobileNavProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose: (restoreFocus?: boolean) => void;
+  activeHref: string | null;
+  isHomePage: boolean;
+  isBlogPage: boolean;
 }
 
-export function MobileNav({ isOpen, onClose }: MobileNavProps) {
+export function MobileNav({ isOpen, onClose, activeHref, isHomePage, isBlogPage }: MobileNavProps) {
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+    if (!isOpen) return;
+
+    const panel = panelRef.current;
+    const focusable = panel?.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+    const first = focusable?.[0];
+    const last = focusable?.[focusable.length - 1];
+    const focusTimer = window.setTimeout(() => first?.focus(), 50);
+    const outsideLandmarks = Array.from(
+      document.querySelectorAll<HTMLElement>("header, main, footer")
+    );
+    const previousInertState = outsideLandmarks.map((element) =>
+      element.hasAttribute("inert")
+    );
+    outsideLandmarks.forEach((element) => element.setAttribute("inert", ""));
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose(true);
+        return;
+      }
+
+      if (event.key !== "Tab" || !first || !last) return;
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
 
-    if (isOpen) {
-      document.addEventListener("keydown", handleEscape);
-    }
+    document.addEventListener("keydown", handleKeyDown);
 
-    return () => document.removeEventListener("keydown", handleEscape);
+    return () => {
+      window.clearTimeout(focusTimer);
+      document.removeEventListener("keydown", handleKeyDown);
+      outsideLandmarks.forEach((element, index) => {
+        if (!previousInertState[index]) element.removeAttribute("inert");
+      });
+    };
   }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
 
   return (
     <>
       <div
-        className={cn(
-          "fixed inset-0 z-50 bg-black/60 transition-opacity duration-300 md:hidden",
-          isOpen ? "opacity-100" : "pointer-events-none opacity-0"
-        )}
-        onClick={onClose}
+        className="fixed inset-0 z-40 bg-black/55 motion-safe:animate-fade-in min-[992px]:hidden"
+        onClick={() => onClose(true)}
         aria-hidden="true"
       />
 
       <div
+        id="mobile-navigation"
         ref={panelRef}
-        className={cn(
-          "fixed top-0 right-0 z-50 h-full w-72 bg-primary-800 transition-transform duration-300 ease-out md:hidden",
-          isOpen ? "translate-x-0" : "translate-x-full"
-        )}
+        className="fixed inset-x-0 top-[78px] z-50 max-h-[calc(100dvh-78px)] overscroll-contain overflow-y-auto border-y border-border-subtle bg-surface-raised px-5 py-6 shadow-panel motion-safe:animate-fade-in min-[992px]:hidden"
         role="dialog"
         aria-modal="true"
         aria-label="Mobile navigation"
       >
-        <div className="flex items-center justify-between px-6 py-4">
-          <a
-            href="#"
-            className="text-xl font-bold text-white"
-            onClick={onClose}
-          >
-            <span className="text-accent">Safe</span>Redact
-          </a>
-          <button
-            onClick={onClose}
-            className="text-white/70 transition-colors hover:text-white"
-            aria-label="Close menu"
-          >
-            <Icon name="close" size={24} />
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => onClose(true)}
+          className="absolute right-5 top-4 flex h-10 w-10 items-center justify-center rounded-control border border-border-subtle text-ink transition-colors hover:border-accent-cool/55 hover:bg-surface-active"
+          aria-label="Close mobile menu"
+        >
+          <Icon name="close" size={22} />
+        </button>
+        <nav className="mx-auto flex max-w-content flex-col gap-1 pt-11" aria-label="Mobile navigation">
+          {navLinks.map((link) => {
+            const href = link.href.startsWith("#") && !isHomePage ? `/${link.href}` : link.href;
+            if (link.href.startsWith("#")) {
+              return (
+                <a
+                  key={link.href}
+                  href={href}
+                  aria-current={activeHref === link.href ? "location" : undefined}
+                  onClick={() => onClose(false)}
+                  className={cn(
+                    "rounded-control border-l-2 px-4 py-3 text-body-lg font-medium transition-colors",
+                    activeHref === link.href
+                      ? "border-accent-cool bg-surface-active text-white"
+                      : "border-transparent text-ink-muted hover:bg-surface-active hover:text-white"
+                  )}
+                >
+                  {link.label}
+                </a>
+              );
+            }
 
-        <nav className="flex flex-col gap-1 px-4" aria-label="Mobile navigation">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={onClose}
-              className="rounded-control px-4 py-3 text-body-lg font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white"
-            >
-              {link.label}
-            </a>
-          ))}
+            return (
+              <a
+                key={link.href}
+                href={href}
+                aria-current={isBlogPage ? "page" : undefined}
+                onClick={() => onClose(false)}
+                className={cn(
+                  "rounded-control border-l-2 px-4 py-3 text-body-lg font-medium transition-colors",
+                  isBlogPage
+                    ? "border-accent-cool bg-surface-active text-white"
+                    : "border-transparent text-ink-muted hover:bg-surface-active hover:text-white"
+                )}
+              >
+                {link.label}
+              </a>
+            );
+          })}
+          <div className="mt-5 grid gap-3 border-t border-border-subtle pt-5 sm:grid-cols-2">
+            <Button variant="ghost" size="md" className="w-full" asChild>
+              <a href={isHomePage ? "#services" : "/#services"} onClick={() => onClose(false)}>Explore Platform</a>
+            </Button>
+            <Button variant="primary" size="md" className="w-full" asChild>
+              <a href={isHomePage ? "#demo-enquiry" : "/#demo-enquiry"} onClick={() => onClose(false)}>
+                Request a Demo
+              </a>
+            </Button>
+          </div>
         </nav>
-
-        <div className="mt-6 px-6">
-          <Button variant="primary" size="md" className="w-full" asChild>
-            <a href="#contact" onClick={onClose}>
-              Request a Quote
-            </a>
-          </Button>
-        </div>
       </div>
     </>
   );

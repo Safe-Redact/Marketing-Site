@@ -1,72 +1,47 @@
-import { industries } from "@/content/industries";
+import { useCaseGroups } from "@/content/platform";
 import { AnimateOnScroll } from "@/components/ui/AnimateOnScroll";
-import { Heading } from "@/components/ui/Heading";
+import { Container } from "@/components/ui/Container";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Icon } from "@/components/ui/Icon";
+import { UseCaseVisual } from "@/components/visuals/UseCaseVisual";
 
 export function Industries() {
   return (
-    <section id="industries" className="relative py-section overflow-hidden">
-      <div className="absolute -bottom-20 -right-20 h-80 w-80 rounded-full bg-accent/[0.03] blur-3xl pointer-events-none" />
-
-      <div className="relative mx-auto max-w-content px-4 sm:px-6 lg:px-8">
-        <AnimateOnScroll>
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="mb-3 text-caption font-medium uppercase tracking-wider text-accent">
-              Industries We Serve
-            </p>
-            <Heading>Trusted Across Sectors</Heading>
-            <p className="mt-4 text-body-lg text-primary-500">
-              Organizations in regulated industries rely on professional
-              redaction to protect sensitive information and maintain compliance.
-            </p>
-          </div>
+    <section id="industries" className="relative overflow-hidden bg-canvas py-section text-ink">
+      <Container>
+        <AnimateOnScroll className="max-w-3xl">
+          <Eyebrow>Use cases</Eyebrow>
+          <h2 className="mt-4 font-heading text-display font-bold text-ink text-balance">
+            Prepare sensitive records for the next step
+          </h2>
+          <p className="mt-5 max-w-2xl text-base leading-7 text-ink-muted sm:text-lg">
+            Teams use redaction when records need to move into filing, disclosure, release, research, or controlled internal review.
+          </p>
         </AnimateOnScroll>
 
-        {/* Horizontal flowing layout */}
-        <div className="mt-14 flex flex-col gap-6 lg:mt-16">
-          {/* Row 1: 3 items */}
-          <div className="grid gap-4 sm:grid-cols-3">
-            {industries.slice(0, 3).map((industry, i) => (
-              <AnimateOnScroll key={industry.title} delay={i * 80}>
-                <div className="group flex items-center gap-4 rounded-xl bg-surface-100 p-5 transition-all hover:bg-accent/[0.06]">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent/10 transition-all group-hover:bg-accent group-hover:shadow-lg group-hover:shadow-accent/20">
-                    <Icon name={industry.icon} size={22} className="text-accent transition-colors group-hover:text-white" />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="text-heading-sm font-bold text-primary-800 truncate">
-                      {industry.title}
-                    </h3>
-                    <p className="mt-0.5 text-body-sm text-primary-500 truncate">
-                      {industry.description.slice(0, 60)}...
-                    </p>
-                  </div>
+        <div className="mt-12 grid gap-5 lg:grid-cols-3 lg:gap-6">
+          {useCaseGroups.map((useCase, index) => (
+            <AnimateOnScroll key={useCase.title} delay={index * 90}>
+              <article className="h-full overflow-hidden rounded-card border border-border-subtle bg-surface-raised shadow-panel transition-colors duration-300 hover:border-accent-cool/35">
+                <UseCaseVisual variant={useCase.visual} icon={useCase.icon} />
+                <div className="p-5 sm:p-6">
+                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent-cool">{useCase.kicker}</p>
+                  <h3 className="mt-3 font-heading text-xl font-semibold leading-7 text-ink">{useCase.title}</h3>
+                  <p className="mt-3 text-[0.9375rem] leading-6 text-ink-muted">{useCase.description}</p>
+                  <ul className="mt-6 flex flex-wrap gap-2" aria-label={`${useCase.title} categories`}>
+                    {useCase.tags.map((tag) => (
+                      <li key={tag} className="inline-flex items-center gap-1.5 rounded-full border border-border-subtle px-3 py-1 text-xs text-ink-muted">
+                        <Icon name="check-circle" size={12} className="text-accent-mint" />
+                        {tag}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </AnimateOnScroll>
-            ))}
-          </div>
-
-          {/* Row 2: 3 items */}
-          <div className="grid gap-4 sm:grid-cols-3">
-            {industries.slice(3, 6).map((industry, i) => (
-              <AnimateOnScroll key={industry.title} delay={(i + 3) * 80}>
-                <div className="group flex items-center gap-4 rounded-xl bg-surface-100 p-5 transition-all hover:bg-accent/[0.06]">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent/10 transition-all group-hover:bg-accent group-hover:shadow-lg group-hover:shadow-accent/20">
-                    <Icon name={industry.icon} size={22} className="text-accent transition-colors group-hover:text-white" />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="text-heading-sm font-bold text-primary-800 truncate">
-                      {industry.title}
-                    </h3>
-                    <p className="mt-0.5 text-body-sm text-primary-500 truncate">
-                      {industry.description.slice(0, 60)}...
-                    </p>
-                  </div>
-                </div>
-              </AnimateOnScroll>
-            ))}
-          </div>
+              </article>
+            </AnimateOnScroll>
+          ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

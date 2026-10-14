@@ -103,7 +103,7 @@ export function SoftwareAlternative() {
 
                 {/* Status bar */}
                 <div className="flex items-center justify-between bg-white/[0.03] px-4 py-2 border-t border-white/[0.06] text-xs text-white/30">
-                  <span>Fully offline</span>
+                  <span>On-device options</span>
                   <span>AI-powered detection</span>
                 </div>
               </div>

@@ -1,27 +1,27 @@
 export const qualityContent = {
-  headline: "Quality and Confidentiality",
+  headline: "Review Before Export",
   intro:
-    "Handling sensitive documents requires strict protocols. Our processes are designed to protect your data at every stage.",
+    "SafeRedact keeps detection suggestions and review controls together so teams can inspect redactions before creating an output file.",
   points: [
     {
-      title: "Secure File Transfer",
+      title: "Candidate Detection",
       description:
-        "Files are uploaded and delivered through encrypted transfer systems. No unencrypted email attachments.",
+        "AI-assisted detection highlights candidate sensitive information for review.",
     },
     {
-      title: "Access Controls",
+      title: "Manual Adjustments",
       description:
-        "Only authorized redaction specialists handle your documents. Access is logged and limited to the duration of your project.",
+        "Reviewers can confirm or adjust the areas selected for redaction.",
     },
     {
-      title: "No Data Retention",
+      title: "Format-Specific Review",
       description:
-        "After your project is complete and files are delivered, source materials are securely deleted from our systems.",
+      "Document, image, audio, and video workflows present content in ways suited to each format.",
     },
     {
-      title: "Verified Output",
+      title: "Output Check",
       description:
-        "Every redacted file is verified to confirm that sensitive content has been permanently removed, not just visually hidden.",
+        "Review the resulting file before it is used or shared outside the workflow.",
     },
   ],
 };

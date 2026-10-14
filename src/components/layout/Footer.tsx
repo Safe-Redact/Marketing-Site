@@ -1,100 +1,87 @@
+import Image from "next/image";
+import Link from "next/link";
 import { siteConfig } from "@/content/site";
+import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/ui/Icon";
 
-export function Footer() {
+const footerGroups = [
+  {
+    title: "Platform",
+    links: [
+      { label: "Capabilities", href: "#services" },
+      { label: "Product workflow", href: "#how-it-works" },
+      { label: "Why SafeRedact", href: "#why-saferedact" },
+      { label: "Blog & insights", href: "/blog" },
+    ],
+  },
+  {
+    title: "Workflows",
+    links: [
+      { label: "Documents & images", href: "#why-saferedact" },
+      { label: "Audio & transcripts", href: "#why-saferedact" },
+      { label: "Video", href: "#why-saferedact" },
+      { label: "Use cases", href: "#industries" },
+    ],
+  },
+] as const;
+
+export function Footer({ homePage = false }: { homePage?: boolean }) {
   return (
-    <footer className="bg-primary-900 text-white">
-      <div className="mx-auto max-w-content px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-12 md:grid-cols-3">
+    <footer className="border-t border-border-subtle bg-canvas text-ink">
+      <Container className="py-14 sm:py-16">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.35fr_0.75fr_0.85fr_1fr] lg:gap-12">
           <div>
-            <a href="#" className="mb-4 inline-block text-xl font-bold">
-              <span className="text-accent">Safe</span>Redact
-            </a>
-            <p className="mt-3 max-w-xs text-body-sm text-white/50">
-              Professional document redaction services for video, audio, and
-              documents. Secure, accurate, and confidential handling.
+            <Link href="/" className="inline-flex items-center gap-2.5 font-heading text-xl font-semibold tracking-[-0.03em] text-ink" aria-label={`${siteConfig.name} home`}>
+              <span className="grid h-8 w-8 place-items-center rounded-control border border-accent-warm/30 bg-accent-warm/10">
+                <Image src="/favicon.svg" alt="" width={22} height={22} />
+              </span>
+              <span><span className="text-accent-warm">Safe</span>Redact</span>
+            </Link>
+            <p className="mt-5 max-w-xs text-sm leading-6 text-ink-muted">
+              AI-assisted redaction workflows for documents, images, audio, and video in a native Windows application.
             </p>
           </div>
 
-          <div>
-            <h3 className="mb-4 text-heading-sm font-semibold text-white">
-              Services
-            </h3>
-            <ul className="space-y-3">
-              <li>
-                <a
-                  href="#services"
-                  className="text-body-sm text-white/50 transition-colors hover:text-white"
-                >
-                  Video Redaction
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#services"
-                  className="text-body-sm text-white/50 transition-colors hover:text-white"
-                >
-                  Audio Redaction
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#services"
-                  className="text-body-sm text-white/50 transition-colors hover:text-white"
-                >
-                  Document Redaction
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://saferedact.io/download"
-                  className="text-body-sm text-white/50 transition-colors hover:text-white"
-                >
-                  Desktop Software
-                </a>
-              </li>
-            </ul>
-          </div>
+          {footerGroups.map((group) => (
+            <div key={group.title}>
+              <h2 className="font-heading text-sm font-semibold text-ink">{group.title}</h2>
+              <ul className="mt-4 space-y-1">
+                {group.links.map((link) => (
+                  <li key={link.label}>
+                    <Link href={link.href.startsWith("#") && !homePage ? `/${link.href}` : link.href} className="inline-flex min-h-9 items-center text-sm text-ink-muted transition-colors hover:text-ink">{link.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
 
           <div>
-            <h3 className="mb-4 text-heading-sm font-semibold text-white">
-              Get in Touch
-            </h3>
-            <p className="mb-4 text-body-sm text-white/50">
-              Contact us to discuss your redaction needs and get a personalized
-              solution.
-            </p>
-            <a
-              href={`mailto:${siteConfig.email}`}
-              className="inline-flex items-center gap-2 text-body-sm font-medium text-accent transition-colors hover:text-accent-light"
-            >
-              <Icon name="send" size={16} />
-              {siteConfig.email}
-            </a>
+            <h2 className="font-heading text-sm font-semibold text-ink">Connect</h2>
+            <div className="mt-4 space-y-3">
+              {homePage ? (
+                <a href="#demo-enquiry" className="inline-flex items-center gap-2 text-sm font-semibold text-accent-warm transition-colors hover:text-accent-warm-hover">
+                  <Icon name="arrow" size={16} />
+                  Request a Demo
+                </a>
+              ) : (
+                <Link href="/#demo-enquiry" className="inline-flex items-center gap-2 text-sm font-semibold text-accent-warm transition-colors hover:text-accent-warm-hover">
+                  <Icon name="arrow" size={16} />
+                  Request a Demo
+                </Link>
+              )}
+              <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-2 text-sm text-ink-muted transition-colors hover:text-ink">
+                <Icon name="send" size={16} />
+                Direct contact
+              </a>
+            </div>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row">
-          <p className="text-caption text-white/30">
-            {siteConfig.name} &copy; {new Date().getFullYear()} All rights
-            reserved.
-          </p>
-          <div className="flex gap-6">
-            <a
-              href="#"
-              className="text-caption text-white/30 transition-colors hover:text-white/60"
-            >
-              Terms &amp; Conditions
-            </a>
-            <a
-              href="#"
-              className="text-caption text-white/30 transition-colors hover:text-white/60"
-            >
-              Privacy Policy
-            </a>
-          </div>
+        <div className="mt-12 flex flex-col gap-3 border-t border-border-subtle pt-7 text-xs leading-5 text-ink-muted sm:flex-row sm:items-center sm:justify-between">
+          <p>{siteConfig.name} &copy; {new Date().getFullYear()} All rights reserved.</p>
+          <p>Windows desktop software · Verify exported results before use.</p>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }

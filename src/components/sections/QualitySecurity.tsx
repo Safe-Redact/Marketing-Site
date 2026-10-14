@@ -3,7 +3,7 @@ import { AnimateOnScroll } from "@/components/ui/AnimateOnScroll";
 import { Heading } from "@/components/ui/Heading";
 import { Icon } from "@/components/ui/Icon";
 
-const iconNames = ["lock", "shield-check", "check-circle", "search"] as const;
+const iconNames = ["brain", "settings", "check-circle", "search"] as const;
 
 export function QualitySecurity() {
   return (
@@ -14,7 +14,7 @@ export function QualitySecurity() {
         <AnimateOnScroll>
           <div className="mx-auto max-w-2xl text-center">
             <p className="mb-3 text-caption font-medium uppercase tracking-wider text-accent">
-              Security &amp; Quality
+              Review &amp; Quality
             </p>
             <Heading>{qualityContent.headline}</Heading>
             <p className="mt-4 text-body-lg text-primary-500">

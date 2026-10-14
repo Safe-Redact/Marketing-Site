@@ -1,28 +1,27 @@
 import type { TrustPillar } from "@/types";
 
+export const capabilityStripHeading =
+  "Redaction workflows for the formats your team handles";
+
 export const trustPillars: TrustPillar[] = [
   {
-    icon: "shield-check",
-    title: "Secure Handling",
-    description:
-      "Files are transferred and processed using industry-standard security protocols.",
+    icon: "document",
+    title: "Documents & images",
+    description: "Review text and visual regions in documents and still images.",
   },
   {
-    icon: "users",
-    title: "Expert Specialists",
-    description:
-      "Every redaction is reviewed by trained professionals, not just algorithms.",
+    icon: "video",
+    title: "Video",
+    description: "Detect faces, license plates, and text, or add regions manually.",
   },
   {
-    icon: "lock",
-    title: "Strict Confidentiality",
-    description:
-      "Your documents are handled with the highest level of discretion and privacy.",
+    icon: "audio",
+    title: "Audio",
+    description: "Use transcription and time-range controls for spoken information.",
   },
   {
-    icon: "check-circle",
-    title: "Accuracy Guaranteed",
-    description:
-      "Multi-step verification ensures no sensitive information is missed.",
+    icon: "download",
+    title: "Offline on Windows",
+    description: "Use on-device processing after the required models and tools are set up.",
   },
 ];

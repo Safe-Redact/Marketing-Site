@@ -3,38 +3,38 @@ import type { Differentiator } from "@/types";
 export const differentiators: Differentiator[] = [
   {
     icon: "layers",
-    title: "Multi-Format Expertise",
+    title: "Multi-Format Workflows",
     description:
-      "We handle video, audio, PDFs, Word documents, scanned files, and more. Whatever format your data comes in, we can redact it.",
+      "Work with documents, images, audio, and video in one Windows desktop application.",
   },
   {
     icon: "brain",
     title: "AI-Assisted Detection",
     description:
-      "Our process combines automated PII detection with expert human review, catching sensitive content that fully automated tools miss.",
+      "Use AI-assisted detection to identify candidate sensitive information for review.",
   },
   {
     icon: "check-circle",
-    title: "Permanent Redaction",
+    title: "Review Controls",
     description:
-      "Redactions are applied through raster reconstruction and permanent data removal, not visual overlays that can be bypassed.",
+      "Confirm or adjust suggested redactions before creating the output file.",
   },
   {
     icon: "file-text",
-    title: "Audit Reporting",
+    title: "Project Workspace",
     description:
-      "Every redaction project includes a detailed audit report documenting what was redacted, where, and why.",
+      "Keep mixed source files, findings, redaction controls, and exports together by project.",
   },
   {
     icon: "settings",
-    title: "Tailored Approach",
+    title: "Format-Aware Review",
     description:
-      "We adjust our process to match your organization's specific redaction requirements, terminology, and compliance needs.",
+      "Use pages for documents, a timeline for media, and transcripts for spoken content.",
   },
   {
     icon: "clock",
-    title: "Reliable Delivery",
+    title: "Local Processing Options",
     description:
-      "We work to your deadlines. Rush processing is available when time-sensitive redaction is needed.",
+      "Run supported AI, OCR, and transcription workflows on-device after setup; optional cloud engines are configured per job.",
   },
 ];
