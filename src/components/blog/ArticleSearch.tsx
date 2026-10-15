@@ -1,6 +1,9 @@
-export function ArticleSearch({ query = "" }: { query?: string }) {
+export function ArticleSearch({ query = "", type }: { query?: string; type?: string }) {
   return (
     <form action="/blog" method="get" role="search" className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end">
+      {/* A GET form only submits its own fields, so the active filter is carried
+          explicitly — otherwise searching would silently reset it to all content. */}
+      {type ? <input type="hidden" name="type" value={type} /> : null}
       <label className="block">
         <span className="mb-2 block font-heading text-body-sm font-semibold text-ink">Search insights</span>
         <input

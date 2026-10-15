@@ -22,6 +22,9 @@ export function FinalCta() {
     fileType: "",
     message: "",
   });
+  // Honeypot. Hidden from sight, from the accessibility tree and from the tab order,
+  // so only an unattended submitter fills it in.
+  const [website, setWebsite] = useState("");
 
   useEffect(() => {
     if (isSubmitted) successHeadingRef.current?.focus();
@@ -37,18 +40,32 @@ export function FinalCta() {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, kind: "demo", website }),
       });
+      const result = (await response.json().catch(() => ({}))) as {
+        delivered?: boolean;
+        error?: string;
+      };
 
-      if (!response.ok) throw new Error("Submission was not accepted");
+      if (!response.ok) {
+        setHasError(true);
+        setStatusMessage(
+          result.error ??
+            "The site could not accept the submission. Please try again or email support@saferedact.io directly."
+        );
+        return;
+      }
+
       setIsSubmitted(true);
       setStatusMessage(
-        "Your demo enquiry was validated, but it was not stored, emailed, or added to a CRM. Email support directly when delivery matters."
+        result.delivered
+          ? "Your demo enquiry has been sent to the SafeRedact team. We will reply to the address you provided."
+          : "Your demo enquiry was validated, but delivery is not yet switched on, so nobody has received it. Please email support@saferedact.io directly."
       );
     } catch {
       setHasError(true);
       setStatusMessage(
-        "The site could not accept the submission. Please try again or email support@saferedact.io directly."
+        "The site could not reach the server. Please try again or email support@saferedact.io directly."
       );
     } finally {
       setIsSubmitting(false);
@@ -158,6 +175,18 @@ export function FinalCta() {
                     <Field label={form.messageLabel} htmlFor="message" className="sm:col-span-2">
                       <textarea id="message" name="message" rows={4} required minLength={10} maxLength={2000} value={formData.message} onChange={(event) => setFormData((current) => ({ ...current, message: event.target.value }))} placeholder={form.messagePlaceholder} className={cn(fieldClass, "resize-none")} />
                     </Field>
+                  </div>
+                  <div aria-hidden="true" className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden">
+                    <label htmlFor="website">Leave this field empty</label>
+                    <input
+                      id="website"
+                      name="website"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={website}
+                      onChange={(event) => setWebsite(event.target.value)}
+                    />
                   </div>
                   <p id="contact-form-delivery" className="mt-5 flex items-start gap-2 text-xs leading-5 text-ink-muted">
                     <Icon name="info" size={15} className="mt-0.5 shrink-0 text-accent-cool" />

@@ -12,8 +12,8 @@ test("empty production blog renders an honest accessible landing page", async ()
   const html = await response.text();
 
   assert.equal(response.status, 200);
-  assert.match(html, /Blog &amp; Insights/);
-  assert.match(html, /No articles have been published yet/i);
+  assert.match(html, /<h1[^>]*>\s*Insights\s*<\/h1>/);
+  assert.match(html, /No content has been published yet/i);
   assert.doesNotMatch(html, /development fixture/i);
   assert.match(html, /<form[^>]+role="search"/);
 });
@@ -53,15 +53,55 @@ test("public navigation and footer link to the blog without exposing CMS login",
 test("admin foundation is noindexed and redirects to the static Decap shell", async () => {
   const redirect = await get("/admin");
   const shell = await get("/admin/index.html");
+  const config = await get("/admin/config.yml");
   const html = await shell.text();
+  const configText = await config.text();
 
   assert.ok([307, 308].includes(redirect.status));
   assert.equal(redirect.headers.get("location"), "/admin/index.html");
   assert.equal(shell.status, 200);
+  assert.equal(config.status, 200);
   assert.match(html, /<meta name="robots" content="noindex, nofollow"/);
   assert.match(html, /decap-cms@3\.17\.1/);
+  assert.match(configText, /base_url:\s*https:\/\/cms-auth\.invalid/);
+  assert.doesNotMatch(configText, /api\.netlify\.com|client_secret|access_token/i);
   assert.match(shell.headers.get("content-security-policy") ?? "", /frame-ancestors 'none'/);
   assert.equal(shell.headers.get("x-frame-options"), "DENY");
+});
+
+test("only the admin document receives the eval exception; public routes receive none", async () => {
+  const [home, blog, shell, config] = await Promise.all([
+    get("/"),
+    get("/blog"),
+    get("/admin/index.html"),
+    get("/admin/config.yml"),
+  ]);
+  const [homeHtml, blogHtml, shellHtml, configText] = await Promise.all([
+    home.text(),
+    blog.text(),
+    shell.text(),
+    config.text(),
+  ]);
+
+  // Public routes must not grant eval by header or by an inline document policy.
+  for (const response of [home, blog]) {
+    assert.doesNotMatch(response.headers.get("content-security-policy") ?? "", /unsafe-eval/);
+  }
+  for (const html of [homeHtml, blogHtml]) {
+    assert.doesNotMatch(html, /unsafe-eval/);
+  }
+
+  // The exception lives in the admin document's own script-src and nowhere else:
+  // not in its response headers, and not on sibling assets under the same path.
+  assert.match(shellHtml, /script-src [^";]*'unsafe-eval'/);
+  assert.doesNotMatch(shell.headers.get("content-security-policy") ?? "", /unsafe-eval/);
+  assert.doesNotMatch(config.headers.get("content-security-policy") ?? "", /unsafe-eval/);
+  assert.doesNotMatch(configText, /unsafe-eval/);
+
+  // Anti-framing and referrer protections survive the change.
+  assert.match(shell.headers.get("content-security-policy") ?? "", /frame-ancestors 'none'/);
+  assert.equal(shell.headers.get("x-frame-options"), "DENY");
+  assert.equal(shell.headers.get("referrer-policy"), "no-referrer");
 });
 
 test("sitemap lists the public blog but no drafts, fixtures, or administration routes", async () => {
@@ -71,4 +111,267 @@ test("sitemap lists the public blog but no drafts, fixtures, or administration r
   assert.equal(response.status, 200);
   assert.match(xml, /https:\/\/saferedact\.io\/blog<\/loc>/);
   assert.doesNotMatch(xml, /development-fixture|draft-development|\/admin/);
+});
+
+const requiredPublicDirectives = [
+  "default-src 'self'",
+  "style-src 'self'",
+  "style-src-attr 'unsafe-inline'",
+  "img-src 'self' data:",
+  "font-src 'self'",
+  "connect-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+  "frame-src 'none'",
+];
+
+const publicRoutes = [
+  "/",
+  "/blog",
+  "/blog?query=privacy",
+  "/blog/not-a-real-article",
+  "/blog/category/not-a-real-category",
+  "/this-route-does-not-exist",
+  "/robots.txt",
+  "/sitemap.xml",
+  "/api/contact",
+];
+
+function directives(policy) {
+  return new Map(
+    policy
+      .split(";")
+      .map((directive) => directive.trim())
+      .filter(Boolean)
+      .map((directive) => {
+        const [name, ...sources] = directive.split(/\s+/);
+        return [name, sources.join(" ")];
+      })
+  );
+}
+
+test("every public route serves the strict nonce-based policy", async () => {
+  const responses = await Promise.all(publicRoutes.map((route) => get(route)));
+
+  for (const [index, response] of responses.entries()) {
+    const route = publicRoutes[index];
+    const policy = response.headers.get("content-security-policy");
+    assert.ok(policy, `${route} must carry a Content-Security-Policy header`);
+
+    for (const directive of requiredPublicDirectives) {
+      assert.ok(policy.includes(directive), `${route} must keep ${directive}`);
+    }
+
+    const scriptSrc = directives(policy).get("script-src");
+    assert.match(scriptSrc ?? "", /^'self' 'nonce-[A-Za-z0-9+/]{22}=='$/, route);
+  }
+});
+
+test("the public policy never grants eval or inline script, and keeps inline style to attributes", async () => {
+  const responses = await Promise.all(publicRoutes.map((route) => get(route)));
+
+  for (const [index, response] of responses.entries()) {
+    const route = publicRoutes[index];
+    const policy = response.headers.get("content-security-policy") ?? "";
+    const parsed = directives(policy);
+
+    assert.doesNotMatch(policy, /unsafe-eval/, `${route} must never grant eval`);
+    assert.doesNotMatch(parsed.get("script-src") ?? "", /'unsafe-inline'|\*|data:/, route);
+    assert.doesNotMatch(parsed.get("style-src") ?? "", /'unsafe-inline'/, route);
+
+    // The admin document widens connect-src to blob: for the editor's media reads.
+    // Public routes must stay at 'self' exactly, with no scheme added.
+    assert.equal(parsed.get("connect-src"), "'self'", route);
+
+    // The single inline allowance is scoped to the style attribute and nowhere else.
+    const inlineAllowances = [...parsed].filter(([, sources]) => sources.includes("'unsafe-inline'"));
+    assert.deepEqual(inlineAllowances.map(([name]) => name), ["style-src-attr"], route);
+  }
+});
+
+test("each response mints its own nonce", async () => {
+  const [first, second] = await Promise.all([get("/"), get("/")]);
+  const nonceOf = (response) =>
+    /'nonce-([^']+)'/.exec(response.headers.get("content-security-policy") ?? "")?.[1];
+
+  const firstNonce = nonceOf(first);
+  assert.ok(firstNonce);
+  assert.notEqual(firstNonce, nonceOf(second));
+});
+
+test("rendered documents carry no script or style the policy would block", async () => {
+  // A statically prerendered document would be served with a freshly minted nonce in
+  // its header and none on its inline scripts, so this is what guards the nonce
+  // mechanism against silently regressing into a broken page.
+  const documentRoutes = [
+    "/",
+    "/blog",
+    "/blog?query=privacy",
+    "/blog/category/not-a-real-category",
+    "/this-route-does-not-exist",
+  ];
+
+  for (const route of documentRoutes) {
+    const response = await get(route);
+    const html = await response.text();
+    const nonce = /'nonce-([^']+)'/.exec(response.headers.get("content-security-policy") ?? "")?.[1];
+    assert.ok(nonce, `${route} must mint a nonce`);
+
+    for (const tag of html.match(/<script\b[^>]*>/g) ?? []) {
+      assert.ok(tag.includes(`nonce="${nonce}"`), `${route} serves an unnonced script: ${tag}`);
+    }
+
+    // style-src stays at 'self', so no inline <style> element may reach the browser.
+    assert.equal(html.match(/<style\b/g)?.length ?? 0, 0, `${route} serves an inline <style>`);
+  }
+});
+
+test("the admin tree keeps its own policy and is never given the public one", async () => {
+  const [shell, config, redirect] = await Promise.all([
+    get("/admin/index.html"),
+    get("/admin/config.yml"),
+    get("/admin"),
+  ]);
+
+  for (const response of [shell, config, redirect]) {
+    const policy = response.headers.get("content-security-policy");
+    assert.equal(policy, "frame-ancestors 'none'");
+    assert.doesNotMatch(policy, /nonce-|script-src/);
+  }
+
+  // The eval exception the Decap bundle needs stays in the document, which is the
+  // only policy the admin shell enforces beyond the anti-framing header above.
+  const html = await shell.text();
+  assert.match(html, /script-src [^";]*'unsafe-eval'/);
+});
+
+test("the admin blob allowance never leaks into a response header", async () => {
+  const [home, blog, shell, config] = await Promise.all([
+    get("/"),
+    get("/blog"),
+    get("/admin/index.html"),
+    get("/admin/config.yml"),
+  ]);
+
+  for (const response of [home, blog, shell, config]) {
+    assert.doesNotMatch(response.headers.get("content-security-policy") ?? "", /blob:/);
+  }
+
+  // It lives in the admin document's own connect-src, and the public documents
+  // neither carry a document policy nor mention the scheme.
+  const shellHtml = await shell.text();
+  assert.match(shellHtml, /connect-src [^";]*blob:/);
+  for (const html of await Promise.all([home.text(), blog.text()])) {
+    assert.doesNotMatch(html, /http-equiv="Content-Security-Policy"/);
+    assert.doesNotMatch(html, /connect-src/);
+  }
+});
+
+test("the legacy newsroom URL permanently redirects into the Insights news filter", async () => {
+  const response = await get("/news");
+
+  assert.equal(response.status, 308);
+  assert.equal(response.headers.get("location"), "/blog?type=news");
+});
+
+test("Insights is the single content hub and carries the content-type filters", async () => {
+  const response = await get("/blog");
+  const html = await response.text();
+
+  assert.equal(response.status, 200);
+  for (const label of [
+    "All content",
+    "Company News",
+    "Product Updates",
+    "Industry Insights",
+    "Guides &amp; Tutorials",
+  ]) {
+    assert.ok(html.includes(label), `the hub must offer the ${label} filter`);
+  }
+
+  // One content entry in the navigation, and it is the hub.
+  assert.match(html, /href="\/blog"/);
+  assert.doesNotMatch(html, /href="\/news"/);
+
+  // The category row's "All insights" chip pointed at /blog too, so the hub carried
+  // two identical chips both claiming aria-current="page" — a screen reader was told
+  // the reader was on two pages at once. The type row owns the "all" affordance now.
+  assert.doesNotMatch(html, /All insights/);
+});
+
+test("only the active view claims aria-current on the hub", async () => {
+  const [plain, filtered] = await Promise.all([get("/blog"), get("/blog?type=news")]);
+  const [plainHtml, filteredHtml] = await Promise.all([plain.text(), filtered.text()]);
+
+  // The desktop nav and the mobile menu each mark the Insights section, and exactly
+  // one filter chip marks the view. Anything more is a conflicting "you are here".
+  const chipCurrent = (html) =>
+    (html.match(/aria-current="page"[^>]*href="\/blog\?type=[^"]*"/g) ?? []).length;
+
+  assert.equal(chipCurrent(plainHtml), 0, "the unfiltered hub highlights All content, not a typed chip");
+  assert.equal(chipCurrent(filteredHtml), 1, "exactly one type chip is current");
+});
+
+test("a type filter is canonical while search and deeper pages are not indexed", async () => {
+  const [unfiltered, filtered, searched] = await Promise.all([
+    get("/blog"),
+    get("/blog?type=news"),
+    get("/blog?query=privacy"),
+  ]);
+  const [plainHtml, filteredHtml, searchedHtml] = await Promise.all([
+    unfiltered.text(),
+    filtered.text(),
+    searched.text(),
+  ]);
+
+  assert.match(plainHtml, /rel="canonical" href="https:\/\/saferedact\.io\/blog"/);
+  assert.match(filteredHtml, /rel="canonical" href="https:\/\/saferedact\.io\/blog\?type=news"/);
+  assert.doesNotMatch(plainHtml, /<meta name="robots" content="[^"]*noindex/i);
+  assert.match(searchedHtml, /<meta name="robots" content="[^"]*noindex/i);
+});
+
+test("an unknown type falls back to the whole hub rather than erroring", async () => {
+  const response = await get("/blog?type=not-a-type");
+  const html = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.match(html, /rel="canonical" href="https:\/\/saferedact\.io\/blog"/);
+});
+
+test("staff surfaces are kept out of crawls and out of the sitemap", async () => {
+  const [robots, sitemap, moderation] = await Promise.all([
+    get("/robots.txt"),
+    get("/sitemap.xml"),
+    get("/moderation"),
+  ]);
+  const [robotsText, xml, html] = await Promise.all([robots.text(), sitemap.text(), moderation.text()]);
+
+  for (const path of ["/admin", "/moderation", "/api/"]) {
+    assert.ok(robotsText.includes(`Disallow: ${path}`), `robots must disallow ${path}`);
+  }
+  assert.doesNotMatch(xml, /\/moderation|\/admin|\/api\//);
+
+  // The moderation tool is noindexed, carries the strict public policy, and grants
+  // nothing by being reachable: every action is authorized server side.
+  assert.equal(moderation.status, 200);
+  assert.match(html, /<meta name="robots" content="[^"]*noindex/i);
+  assert.match(moderation.headers.get("content-security-policy") ?? "", /^script-src 'self' 'nonce-/);
+  assert.equal(html.match(/<script>/g)?.length ?? 0, 0);
+});
+
+test("moderation endpoints never answer a public caller with data", async () => {
+  const responses = await Promise.all([
+    get("/api/moderation/comments"),
+    get("/api/moderation/history?comment=x"),
+    get("/api/moderation/comments", { method: "POST", headers: { authorization: "Bearer forged" } }),
+  ]);
+
+  for (const response of responses) {
+    // 503 when comments are switched off for the deployment, 403 once they are on.
+    assert.ok([403, 405, 503].includes(response.status), `unexpected ${response.status}`);
+    const body = await response.text();
+    assert.doesNotMatch(body, /authorKey|author_key|COMMENTS_DATABASE_URL|postgres/i);
+  }
 });

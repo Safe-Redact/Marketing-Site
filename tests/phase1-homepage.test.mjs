@@ -10,7 +10,12 @@ test("homepage exposes the approved Phase 1 platform narrative", async () => {
   assert.equal(response.status, 200);
   assert.match(html, /AI-powered redaction/);
   assert.match(html, /Detect sensitive information\. Redact with confidence\./);
-  assert.match(html, /SafeRedact Workbench/);
+  // The hero carries an authentic screenshot of the editor rather than an
+  // illustration, so the workbench is asserted through the figure and its
+  // described image instead of text that used to sit in a drawn title bar.
+  assert.match(html, /data-hero-workbench/);
+  assert.match(html, /hero-document-review/);
+  assert.match(html, /Screenshot of the SafeRedact editor/);
   assert.match(html, /Documents &amp; images/);
   assert.match(html, /Video/);
   assert.match(html, /Audio/);

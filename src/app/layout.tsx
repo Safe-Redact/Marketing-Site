@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
+import { contentSecurityPolicyNonce } from "@/lib/csp";
 import "./globals.css";
 
 const inter = Inter({
@@ -14,6 +15,13 @@ const poppins = Poppins({
   variable: "--font-poppins",
   weight: ["400", "500", "600", "700"],
 });
+
+/**
+ * Every document on the public site carries a per-request nonce from src/middleware.ts.
+ * A prerendered document would be served with a freshly minted nonce in its header and
+ * none on its inline scripts, so nothing below this layout may be prerendered.
+ */
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: {
@@ -54,17 +62,20 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://saferedact.io"),
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const nonce = await contentSecurityPolicyNonce();
+
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <script
           type="application/ld+json"
+          nonce={nonce}
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",

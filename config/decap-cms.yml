@@ -1,13 +1,8 @@
 backend:
   name: github
-  repo: Safe-Redact/Marketing-Site
-  branch: master
   use_graphql: true
 
 publish_mode: editorial_workflow
-site_url: https://saferedact.io
-display_url: https://saferedact.io
-logo_url: https://saferedact.io/favicon.svg
 media_folder: public/images/blog
 public_folder: /images/blog
 
@@ -29,12 +24,28 @@ collections:
     slug: "{{fields.slug}}"
     preview_path: "blog/{{fields.slug}}"
     summary: "{{title}} — {{status}} — {{date}}"
+    # decap-cms@3.17.1 validates sortable_fields as an array whose items are either a
+    # field name or {field, label, default_sort}. The {fields, default} object form is
+    # rejected by its schema, which stops the CMS before the login screen renders.
     sortable_fields:
-      fields: [title, date, status, category]
-      default:
-        field: date
-        direction: Descending
+      - field: date
+        default_sort: desc
+      - title
+      - status
+      - category
     view_filters:
+      - label: Blog articles
+        field: type
+        pattern: article
+      - label: Guides
+        field: type
+        pattern: guide
+      - label: Company news
+        field: type
+        pattern: news
+      - label: Product updates
+        field: type
+        pattern: product-update
       - label: Drafts
         field: status
         pattern: draft
@@ -62,10 +73,40 @@ collections:
         name: author
         widget: string
         hint: Use an approved SafeRedact staff byline. Do not invent biographies or contributors.
+      - label: Content type
+        name: type
+        widget: select
+        default: article
+        hint: All four kinds publish to the Insights hub at /blog, where readers filter
+          by content type. Pick the one that describes the entry.
+        options:
+          - label: Blog article
+            value: article
+          - label: Educational guide
+            value: guide
+          - label: Company news
+            value: news
+          - label: Product update
+            value: product-update
       - label: Category
         name: category
         widget: string
         hint: Reuse an approved category name consistently.
+      - label: Tags
+        name: tags
+        widget: list
+        required: false
+        default: []
+        max: 6
+        hint: Up to six short topic tags. Reuse existing spellings; tags that differ
+          only by case are merged.
+        field:
+          label: Tag
+          name: tag
+          widget: string
+          pattern:
+            - ^(?=.*[A-Za-z0-9]).{2,30}$
+            - Use 2 to 30 characters including at least one letter or digit.
       - label: Publication date
         name: date
         widget: datetime

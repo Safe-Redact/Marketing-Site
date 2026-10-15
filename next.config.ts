@@ -10,6 +10,17 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  async redirects() {
+    return [
+      {
+        // Insights is the single content hub. /news was folded into it as a type
+        // filter; the redirect is permanent so existing links keep working.
+        source: "/news",
+        destination: "/blog?type=news",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

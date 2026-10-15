@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArticleBody } from "@/components/blog/ArticleBody";
 import { ArticleCard, formatArticleDate } from "@/components/blog/ArticleCard";
+import { CommentThread } from "@/components/blog/CommentThread";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import {
@@ -11,6 +12,7 @@ import {
   loadPublishedArticles,
 } from "@/lib/blog/content";
 import { buildArticleJsonLd, buildArticleMetadata } from "@/lib/blog/seo";
+import { contentSecurityPolicyNonce } from "@/lib/csp";
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
@@ -28,7 +30,8 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
-  const [article, allArticles] = await Promise.all([
+  const [nonce, article, allArticles] = await Promise.all([
+    contentSecurityPolicyNonce(),
     getPublishedArticleBySlug(slug),
     loadPublishedArticles(),
   ]);
@@ -39,7 +42,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <article>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
+      <script type="application/ld+json" nonce={nonce} dangerouslySetInnerHTML={{ __html: jsonLd }} />
       <header className="blog-hero border-b border-border-subtle pt-[8.75rem] sm:pt-[10rem] lg:pt-[11.5rem]">
         <Container className="max-w-[58rem] pb-12 sm:pb-16 lg:pb-20">
           <Link href={`/blog/category/${article.categorySlug}`} className="inline-flex rounded-sm font-heading text-caption font-bold uppercase tracking-[0.05em] text-accent-cool transition-colors hover:text-white">
@@ -67,6 +70,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           </div>
         </Container>
       </section>
+
+      {/* Absent entirely when comments are switched off for the deployment: a form
+          that refused every submission would be worse than no form. */}
+      <CommentThread articleSlug={article.slug} />
 
       {related.length ? (
         <section className="border-t border-border-subtle bg-surface-raised/45 py-14 sm:py-16 lg:py-20" aria-labelledby="related-articles-heading">

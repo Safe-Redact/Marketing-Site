@@ -14,16 +14,26 @@ dist/
 
 # Misc
 .DS_Store
+
+# Private key and certificate material (also rejected by scripts/check-secrets.mjs)
 *.pem
+*.key
+*.p12
+*.pfx
 
 # Debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Local env files
-.env*.local
+# Local env files — secret-bearing, never committed.
+# These patterns contain no slash, so they match at every depth, including
+# services/cms-oauth-broker/.env.local. Only the .env.example templates are tracked.
 .env
+.env.local
+.env.*.local
+.env*.local
+!.env.example
 
 # Vercel
 .vercel
@@ -47,5 +57,12 @@ Desktop.ini
 # Testing
 coverage/
 
+# Generated public CMS configuration (rendered from config/decap-cms.yml)
+public/admin/config.yml
+
 # Next.js
 .eslintcache
+
+# Screenshot masters. assets/product-screenshots/raw/ holds the approved source art
+# for every product visual; it is tracked, because losing it would mean the served
+# images could not be regenerated. It sits outside public/ so it is never served.

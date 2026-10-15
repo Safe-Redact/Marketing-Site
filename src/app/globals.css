@@ -271,3 +271,21 @@
     }
   }
 }
+
+@layer components {
+  /**
+   * The product-visual treatment. A neutral lifted panel: a hairline edge and a
+   * plain shadow that separate the screenshot from the canvas. Deliberately free of
+   * coloured rim lighting or decorative overlays — the screenshots carry their own
+   * finish, and tinted glow competed with the application's own accent colours.
+   */
+  .product-visual {
+    position: relative;
+    border-radius: 12px;
+    background-color: #0b1020;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.08),
+      0 24px 56px -22px rgba(0, 0, 0, 0.75),
+      0 2px 8px -3px rgba(0, 0, 0, 0.55);
+  }
+}

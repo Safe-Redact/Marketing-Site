@@ -74,7 +74,11 @@ test("contact form exposes native autofill and submission state semantics", asyn
   assert.match(section, /autoComplete="name"/);
   assert.match(section, /autoComplete="email"/);
   assert.match(section, /autoComplete="organization"/);
-  assert.match(section, /validated, but it was not stored, emailed, or added to a CRM/i);
+  // The honeypot must stay out of the tab order and the accessibility tree, or it
+  // becomes a trap for keyboard and screen-reader users rather than for bots.
+  assert.match(section, /aria-hidden="true"[\s\S]{0,120}htmlFor="website"/);
+  assert.match(section, /id="website"[\s\S]{0,120}tabIndex=\{-1\}/);
+  assert.match(section, /autoComplete="off"/);
 });
 
 test("submission status persists across form replacement and success receives focus", async () => {
