@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -36,11 +37,35 @@ const pool = new pg.Pool({
   max: 1,
 });
 
+const SCHEMA_VERSION = "0001_comments";
+
 try {
   // schema.sql is idempotent, so this is safe to run on every deploy.
-  await pool.query(await readFile(schemaPath, "utf8"));
+  const schema = await readFile(schemaPath, "utf8");
+  const checksum = createHash("sha256").update(schema).digest("hex");
+  await pool.query(schema);
+
+  const existing = await pool.query(
+    "select checksum from schema_migrations where version = $1",
+    [SCHEMA_VERSION]
+  );
+  if (!existing.rows[0]) {
+    await pool.query(
+      "insert into schema_migrations (version, checksum) values ($1, $2) on conflict (version) do nothing",
+      [SCHEMA_VERSION, checksum]
+    );
+    console.log(`Applied ${SCHEMA_VERSION}.`);
+  } else if (existing.rows[0].checksum !== checksum) {
+    console.warn(
+      `Warning: ${SCHEMA_VERSION} was applied from a different version of schema.sql. ` +
+        "The live schema may have drifted from the file; review before relying on it."
+    );
+  } else {
+    console.log(`${SCHEMA_VERSION} is already applied; nothing to do.`);
+  }
+
   // The host is printed without credentials; the URL carries a password.
-  console.log(`Comments schema applied to ${parsed.hostname}${parsed.pathname}`);
+  console.log(`Comments schema present on ${parsed.hostname}${parsed.pathname}`);
 } catch (error) {
   // A driver error can quote the connection string, so only the code is surfaced.
   fail(`the schema could not be applied (${error?.code ?? "unknown error"}).`);

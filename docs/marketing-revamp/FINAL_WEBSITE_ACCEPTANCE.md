@@ -28,11 +28,11 @@ Status vocabulary, used strictly:
 | Decap CMS interface reaches login | yes | yes | **yes** | Complete |
 | Decap publishing (create/save/publish) | yes | n/a | **no** | **Blocked** — org OAuth |
 | Comments domain model and rules | yes | yes (34) | n/a | Complete |
-| Comments PostgreSQL persistence | yes | contract test skips | **no** | **Needs config** |
-| Comments retention controls | yes | skips without DB | no | **Needs config** |
-| Comments public HTTP routes | yes | yes (10) | no | **Needs config** |
-| Comment thread and submission UI | yes | yes | browser-verified (disabled path) | **Needs config** |
-| Staff moderation API and UI | yes | yes (9) | no | **Needs config** |
+| Comments PostgreSQL persistence | yes | yes (3) | **yes — local PostgreSQL 18.1** | Complete in development |
+| Comments retention controls | yes | yes | **yes — real database** | Complete in development |
+| Comments public HTTP routes | yes | yes (10) | **yes — real submission** | Complete in development |
+| Comment thread and submission UI | yes | yes | **yes — browser, real database** | Complete in development |
+| Staff moderation API and UI | yes | yes (9) | authorization only | **Blocked** — needs a staff GitHub token |
 | Lead delivery pipeline | yes | yes (15) | **no** | **Needs config** |
 | Privacy notice for visitor comment data | no | — | — | **Blocked** — needs approved copy |
 
@@ -43,11 +43,15 @@ Status vocabulary, used strictly:
 
 ```
 static   39 pass
-content  84 pass, 2 skipped
+content  86 pass
 routes   25 pass
 broker   37 pass
-         185 pass, 2 skipped, 0 fail
+         187 pass, 0 skipped, 0 fail
 ```
+
+**The PostgreSQL tests no longer skip.** A local cluster (PostgreSQL 18.1, port 5432) is
+provisioned and migrated, so `tests/comments-postgres.test.ts` runs the real contract
+against a real database. See `DATABASE_DEPLOYMENT.md`.
 
 The 2 skips are the PostgreSQL contract and retention tests. They skip with an explicit
 reason rather than passing vacuously, and they run the moment `COMMENTS_DATABASE_URL` is set.
@@ -180,10 +184,10 @@ publicly, not building them.
 | Visitor browses articles, search, categories, news | **Passes** — browser-verified |
 | Visitor reads an article | **Passes** — hydrated, no console errors, all scripts nonced |
 | Visitor submits a demo enquiry | **Partial** — accepted and validated; delivery needs config |
-| Visitor submits / replies / reports a comment | **Automated only** — 10 route tests against the in-memory repository; refused end to end without a database, as designed |
+| Visitor submits / replies / reports a comment | **Passes** — a real comment submitted through the browser form was stored `pending` in PostgreSQL, stayed out of the public thread, and appeared only after approval |
 | Staff signs in with GitHub | **Passes** — real OAuth, real account |
 | Staff creates / publishes an article | **Blocked** — 403, see above |
 | Staff uploads an image | **Blocked** — same 403 |
-| Staff moderates comments | **Automated only** — 9 authorization and action tests; live surface verified closed (503 without a database, no data to an unauthenticated caller) |
+| Staff moderates comments | **Partly** — the decision path ran against the real database (pending → approved, audited, comment became public). The live API returns **403** to an unauthenticated and to a forged-token caller. Signing in as a staff member needs a real GitHub token, which was not available |
 
 No mocked test is counted as real external-service acceptance anywhere in this document.

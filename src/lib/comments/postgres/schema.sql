@@ -10,6 +10,16 @@
 
 create extension if not exists "pgcrypto";
 
+-- Migration tracking. Every statement below is CREATE ... IF NOT EXISTS, so applying
+-- the file twice is a no-op; this table records that it was applied and the checksum
+-- of what was applied, so a schema that drifted from the file is detectable rather
+-- than silently assumed.
+create table if not exists schema_migrations (
+  version    text        primary key,
+  checksum   text        not null,
+  applied_at timestamptz not null default now()
+);
+
 create table if not exists comments (
   id                uuid primary key default gen_random_uuid(),
   article_slug      text        not null,

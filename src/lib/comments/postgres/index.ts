@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { Pool } from "pg";
@@ -123,10 +124,47 @@ export function createPool(options: PostgresRepositoryOptions): Pool {
   });
 }
 
-/** Applies schema.sql. Idempotent, so it is safe to run on every deploy. */
-export async function migrate(pool: Pool): Promise<void> {
+export const SCHEMA_VERSION = "0001_comments";
+
+export interface MigrationResult {
+  version: string;
+  applied: boolean;
+  /** True when the schema was applied earlier from a file that has since changed. */
+  drifted: boolean;
+}
+
+/**
+ * Applies schema.sql and records that it was applied.
+ *
+ * Every statement in the file is CREATE ... IF NOT EXISTS, so running this twice is
+ * a no-op and it is safe on every deploy. The checksum is recorded so a schema
+ * applied from an older version of the file is detectable rather than silently
+ * assumed to match.
+ */
+export async function migrate(pool: Pool): Promise<MigrationResult> {
   const schemaPath = path.join(process.cwd(), "src", "lib", "comments", "postgres", "schema.sql");
-  await pool.query(await readFile(schemaPath, "utf8"));
+  const schema = await readFile(schemaPath, "utf8");
+  const checksum = createHash("sha256").update(schema).digest("hex");
+
+  await pool.query(schema);
+
+  const existing = await pool.query<{ checksum: string }>(
+    "select checksum from schema_migrations where version = $1",
+    [SCHEMA_VERSION]
+  );
+  if (!existing.rows[0]) {
+    await pool.query(
+      "insert into schema_migrations (version, checksum) values ($1, $2) on conflict (version) do nothing",
+      [SCHEMA_VERSION, checksum]
+    );
+    return { version: SCHEMA_VERSION, applied: true, drifted: false };
+  }
+
+  return {
+    version: SCHEMA_VERSION,
+    applied: false,
+    drifted: existing.rows[0].checksum !== checksum,
+  };
 }
 
 /**
