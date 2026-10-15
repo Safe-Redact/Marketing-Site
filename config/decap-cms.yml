@@ -1,13 +1,8 @@
 backend:
   name: github
-  repo: Safe-Redact/Marketing-Site
-  branch: master
   use_graphql: true
 
 publish_mode: editorial_workflow
-site_url: https://saferedact.io
-display_url: https://saferedact.io
-logo_url: https://saferedact.io/favicon.svg
 media_folder: public/images/blog
 public_folder: /images/blog
 
@@ -29,11 +24,15 @@ collections:
     slug: "{{fields.slug}}"
     preview_path: "blog/{{fields.slug}}"
     summary: "{{title}} — {{status}} — {{date}}"
+    # decap-cms@3.17.1 validates sortable_fields as an array whose items are either a
+    # field name or {field, label, default_sort}. The {fields, default} object form is
+    # rejected by its schema, which stops the CMS before the login screen renders.
     sortable_fields:
-      fields: [title, date, status, category]
-      default:
-        field: date
-        direction: Descending
+      - field: date
+        default_sort: desc
+      - title
+      - status
+      - category
     view_filters:
       - label: Drafts
         field: status

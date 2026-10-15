@@ -2,7 +2,7 @@
 
 ## Current state
 
-The repository serves Decap CMS 3.17.1 at `/admin/index.html` and redirects `/admin` there. Configuration lives at `/admin/config.yml` in the deployed site and in `public/admin/config.yml` in source.
+The repository serves Decap CMS 3.17.1 at `/admin/index.html` and redirects `/admin` there. The reviewed schema lives at `config/decap-cms.yml`. `scripts/render-cms-config.mjs` combines that schema with validated public deployment settings and generates `/admin/config.yml` before development, build, start, and tests. The generated file is ignored and is not a source-of-truth artifact.
 
 Configured values:
 
@@ -14,7 +14,7 @@ Configured values:
 - media folder: `public/images/blog`
 - public media path: `/images/blog`
 
-No authentication endpoint, application ID, or secret is configured. This is intentional.
+Without an explicitly enabled deployment configuration, the generated file uses reserved `.invalid` site and broker origins. No authentication endpoint, application ID, or secret is operational. This fail-closed state is intentional and prevents Decap's Netlify OAuth default.
 
 ## Why authentication remains external
 
@@ -29,11 +29,7 @@ Official references:
 
 ## Required launch decisions
 
-Choose and security-review exactly one supported path:
-
-1. A deployment provider's supported GitHub/Decap OAuth integration.
-2. A small self-hosted OAuth proxy under SafeRedact operational control.
-3. An approved hosted Decap authentication service.
+Choose and security-review one maintained, independently deployed Decap-compatible OAuth broker. Do not couple authentication to the website hosting provider and do not implement an ad hoc OAuth callback inside this marketing application.
 
 The selection must document data handling, token scope, availability, cost, callback behavior, staff offboarding, and secret rotation. This task did not choose a paid service or create an account.
 
@@ -43,7 +39,7 @@ The selection must document data handling, token scope, availability, cost, call
 2. Create a GitHub OAuth application owned by the appropriate SafeRedact organization/account.
 3. Set its homepage and callback to the exact HTTPS production values required by the chosen auth service.
 4. Store the client secret only in that service's server-side secret manager.
-5. Add only the public auth endpoint/client identifier settings required by that backend to `config.yml`.
+5. Supply only the public broker origin, auth path, site origin, repository, branch, and approved scope through the documented build environment contract.
 6. Invite named staff identities with the minimum repository role that supports the approved Decap workflow.
 7. Protect `master`: require pull requests, at least one appropriate reviewer, passing build/tests, resolved conversations, and no force pushes or branch deletion.
 8. Review GitHub App/OAuth scopes; do not grant organization-wide or unrelated repository access.
@@ -53,7 +49,7 @@ The selection must document data handling, token scope, availability, cost, call
 
 1. Deploy the same Next.js repository; do not create a second public admin application.
 2. Confirm `/admin` redirects to `/admin/index.html` and remains noindexed.
-3. Update the static studio CSP only for the exact selected OAuth origins. Do not add broad wildcard script or connection sources.
+3. Keep the static studio CSP provider-neutral. The broker runs in a separate popup and must enforce the exact initiating origin itself; do not add broad wildcard script, frame, or connection sources.
 4. Verify reviewed merges trigger a production build and validation failure blocks release.
 5. Confirm uploaded media size and repository-growth limits are operationally acceptable.
 6. Configure build-failure alerts for invalid content.

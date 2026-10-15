@@ -11,6 +11,7 @@ import {
   loadPublishedArticles,
 } from "@/lib/blog/content";
 import { buildArticleJsonLd, buildArticleMetadata } from "@/lib/blog/seo";
+import { contentSecurityPolicyNonce } from "@/lib/csp";
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
@@ -28,7 +29,8 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
-  const [article, allArticles] = await Promise.all([
+  const [nonce, article, allArticles] = await Promise.all([
+    contentSecurityPolicyNonce(),
     getPublishedArticleBySlug(slug),
     loadPublishedArticles(),
   ]);
@@ -39,7 +41,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <article>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
+      <script type="application/ld+json" nonce={nonce} dangerouslySetInnerHTML={{ __html: jsonLd }} />
       <header className="blog-hero border-b border-border-subtle pt-[8.75rem] sm:pt-[10rem] lg:pt-[11.5rem]">
         <Container className="max-w-[58rem] pb-12 sm:pb-16 lg:pb-20">
           <Link href={`/blog/category/${article.categorySlug}`} className="inline-flex rounded-sm font-heading text-caption font-bold uppercase tracking-[0.05em] text-accent-cool transition-colors hover:text-white">

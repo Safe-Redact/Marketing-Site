@@ -51,7 +51,7 @@ Draft, future-dated, archived, missing, malformed, and traversal-like article re
 - Article slugs are allowlisted rather than interpolated into file paths.
 - Only local blog image paths are accepted; remote editor-supplied image URLs are rejected.
 - External links receive `noopener noreferrer` when opened in a new tab.
-- Decap configuration contains repository identity and branch names only, never OAuth secrets.
+- Generated Decap configuration contains public repository, branch, site, scope, and broker coordinates only, never OAuth secrets. Its reviewed schema is provider-neutral and missing authentication settings fail closed to reserved `.invalid` origins.
 - `/admin` is absent from navigation and sitemap and is disallowed in `robots.txt`; this is discoverability hygiene, not authentication.
 - GitHub authorization must enforce staff identity and repository permissions before the studio is production-enabled.
 
@@ -70,7 +70,7 @@ Decap's GitHub backend requires an OAuth authentication service (or an explicitl
 - staff login is **not verified**;
 - authenticated editing and live publishing are **not operationally accepted**.
 
-See `DECAP_CMS_SETUP.md` for the launch gate.
+See `PHASE5_DESIGN_SPEC.md`, `DECAP_NETLIFY_AUTH_PLAN.md`, and `DECAP_CMS_SETUP.md` for the provider-neutral launch gate.
 
 ## Deployment assumptions
 

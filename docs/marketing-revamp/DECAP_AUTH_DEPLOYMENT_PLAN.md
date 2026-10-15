@@ -3,6 +3,8 @@
 Date: 2026-10-14
 Status: **design only — authentication is not deployed**
 
+> Phase 5 update: `PHASE5_DESIGN_SPEC.md` and `DECAP_NETLIFY_AUTH_PLAN.md` supersede provider-specific assumptions in this earlier plan. The OAuth broker origin, public site origin, callback, and allowed origins are deployment environment values. Netlify is preview-only and is not the selected authentication architecture.
+
 ## Current readiness
 
 The public site contains a static Decap shell at `/admin/index.html` and a GitHub backend definition for `Safe-Redact/Marketing-Site`. The content schema and editorial workflow exist, but the shell has no authentication service, OAuth application, client secret, allowed-origin policy, or tested staff identity. It is not a working publishing portal.

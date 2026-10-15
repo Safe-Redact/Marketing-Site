@@ -123,6 +123,8 @@ test("Decap configuration uses the reviewed Git target and pull-request editoria
   assert.equal(config.public_folder, "/images/blog");
   assert.equal(articles.folder, "content/blog");
   assert.equal(articles.format, "frontmatter");
-  assert.equal(config.backend.base_url, undefined);
+  assert.equal(config.backend.base_url, "https://cms-auth.invalid");
+  assert.equal(config.backend.auth_endpoint, "auth");
+  assert.equal(config.backend.auth_scope, "public_repo");
   assert.equal(config.backend.app_id, undefined);
 });

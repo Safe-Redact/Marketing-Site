@@ -1,0 +1,94 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master, feat/saferedact-publishing-and-comments]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: quality / verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CMS_ENABLED: "false"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            services/cms-oauth-broker/package-lock.json
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Install OAuth broker locked dependencies
+        run: npm --prefix services/cms-oauth-broker ci
+      - name: TypeScript
+        run: npm run typecheck
+      - name: ESLint
+        run: npm run lint
+      - name: Production build
+        run: npm run build
+      - name: Complete regression suite
+        run: npm test
+      - name: Changed-line whitespace validation
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            git diff --check "${{ github.event.pull_request.base.sha }}...HEAD"
+          elif [[ "${{ github.event.before }}" =~ ^0+$ ]]; then
+            git diff --check HEAD^ HEAD
+          else
+            git diff --check "${{ github.event.before }}...HEAD"
+          fi
+
+  production-audit:
+    name: security / production-audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version: 22
+          cache: npm
+      - name: Production dependency audit
+        run: |
+          npm audit --omit=dev --audit-level=low
+          npm --prefix services/cms-oauth-broker audit --omit=dev --audit-level=low
+
+  tracked-secret-policy:
+    name: security / tracked-secret-policy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version: 22
+      - name: Deterministic secret-pattern check
+        run: npm run check:secrets

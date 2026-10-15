@@ -1,0 +1,15 @@
+{
+  "name": "@saferedact/cms-oauth-broker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node src/start.mjs",
+    "dev": "node --env-file-if-exists=.env.local src/start.mjs",
+    "test": "node --test test/*.test.mjs",
+    "check": "node --check src/broker.mjs && node --check src/config.mjs && node --check src/github.mjs && node --check src/popup.mjs && node --check src/server.mjs && node --check src/start.mjs && node --check src/transaction.mjs"
+  }
+}

@@ -4,9 +4,29 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
+    <!--
+      This policy is delivered as a document-level meta element, so it applies to
+      this administration document alone: not to /admin/config.yml, not to any
+      public route, and not to the site-wide header set in next.config.ts.
+
+      script-src must include 'unsafe-eval' because the pinned decap-cms bundle
+      validates the CMS configuration with Ajv, which compiles each JSON schema
+      into a function via `new Function` at load time. Without it, Decap fails with
+      "Error loading the CMS configuration: EvalError". Ajv's documented
+      alternative (precompiled validators) would have to be applied inside Decap's
+      own build, so it is not available to a consumer of the published bundle.
+      Keep this exception confined to this element; never add it to a header.
+
+      connect-src must include blob: because the editor reads a selected media file
+      back through fetch()/XHR on the object URL it created for it. Without it the
+      read fails, the upload never materialises, and the image widget falls back to
+      rendering the file's future public path, which 404s. blob: is same-document
+      and carries no network reach, so this does not widen the policy's exposure.
+      It belongs to this document only; public routes keep connect-src 'self'.
+    -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https://api.github.com https://api.netlify.com; font-src 'self' data:; frame-src 'self' https://api.netlify.com; base-uri 'self'; object-src 'none'"
+      content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' blob: https://api.github.com; font-src 'self' data:; frame-src 'none'; base-uri 'self'; object-src 'none'"
     />
     <title>SafeRedact Content Studio</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
