@@ -4,6 +4,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import { isRouteActive } from "@/lib/nav";
 import { navLinks, siteConfig } from "@/content/site";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -18,7 +19,6 @@ const sectionHrefs = navLinks
 export function Header() {
   const pathname = usePathname();
   const isHomePage = pathname === "/";
-  const isBlogPage = pathname.startsWith("/blog");
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -109,10 +109,10 @@ export function Header() {
                 <a
                   key={link.href}
                   href={link.href}
-                  aria-current={isBlogPage ? "page" : undefined}
+                  aria-current={isRouteActive(pathname, link.href) ? "page" : undefined}
                   className={cn(
                     "relative rounded-sm px-0.5 py-2 text-body-sm font-medium transition-colors duration-300 after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-left after:bg-accent-cool after:transition-transform after:duration-300",
-                    isBlogPage
+                    isRouteActive(pathname, link.href)
                       ? "text-white after:scale-x-100"
                       : "text-ink-muted after:scale-x-0 hover:text-white"
                   )}
@@ -154,8 +154,8 @@ export function Header() {
         isOpen={isOpen}
         onClose={closeMenu}
         activeHref={activeHref}
+        pathname={pathname}
         isHomePage={isHomePage}
-        isBlogPage={isBlogPage}
       />
     </>
   );

@@ -22,6 +22,11 @@ external services**, **Pending external configuration**, **Blocked**.
 
 ## 4. Company news and announcements — delivered in this pass
 
+> **Superseded.** This section records the two-hub design as it was delivered in that
+> pass. `/news` was later folded into a single Insights hub at `/blog` with content-type
+> filters, and `/news` now answers 308 to `/blog?type=news`. The content model below is
+> unchanged; only the routing and navigation described here were replaced.
+
 Implemented:
 
 - Four content types (`article`, `guide`, `news`, `product-update`) on the existing content

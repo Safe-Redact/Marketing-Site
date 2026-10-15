@@ -1,17 +1,27 @@
 import { articleTypeLabel, isAnnouncement } from "@/lib/blog/content";
+import { cn } from "@/lib/utils";
 import type { BlogArticle } from "@/lib/blog/types";
 
 /**
- * Announcements carry the coral accent so a company update is never mistaken for
- * editorial writing in a mixed list. Articles and guides stay unlabelled, because a
- * badge on every card would be noise rather than a distinction.
+ * The content type, on every card.
+ *
+ * Insights is one hub carrying news, product updates, articles and guides together,
+ * so a reader needs to know which is which at a glance. Announcements take the coral
+ * accent; editorial writing takes a quieter outline, so the badge informs without
+ * turning the grid into a wall of colour.
  */
 export function ArticleTypeBadge({ article, className }: { article: BlogArticle; className?: string }) {
-  if (!isAnnouncement(article)) return null;
+  const announcement = isAnnouncement(article);
 
   return (
     <span
-      className={`inline-flex items-center rounded-sm border border-accent-warm/40 bg-accent-warm/10 px-2 py-0.5 font-heading text-caption font-semibold uppercase tracking-[0.04em] text-accent-warm ${className ?? ""}`}
+      className={cn(
+        "inline-flex items-center rounded-sm border px-2 py-0.5 font-heading text-caption font-semibold uppercase tracking-[0.04em]",
+        announcement
+          ? "border-accent-warm/40 bg-accent-warm/10 text-accent-warm"
+          : "border-border-subtle text-ink-muted",
+        className
+      )}
     >
       {articleTypeLabel(article.type)}
     </span>

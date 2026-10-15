@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { CONTENT_FILTERS } from "@/components/blog/ContentTypeFilter";
 import { getArticleCategories, isAnnouncement, loadPublishedArticles } from "@/lib/blog/content";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -20,12 +21,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly",
       priority: 0.8,
     },
-    {
-      url: `${baseUrl}/news`,
+    // The content-type filters are canonical views of the hub, so they are listed.
+    ...CONTENT_FILTERS.filter((filter) => filter.type).map((filter) => ({
+      url: `${baseUrl}/blog?type=${filter.type}`,
       lastModified: announcements[0]?.updatedDate ?? announcements[0]?.date ?? new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    })),
     ...categories.map((category) => ({
       url: `${baseUrl}/blog/category/${category.slug}`,
       lastModified: new Date(),

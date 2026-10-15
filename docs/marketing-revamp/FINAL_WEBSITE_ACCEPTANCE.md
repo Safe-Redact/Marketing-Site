@@ -44,9 +44,9 @@ Status vocabulary, used strictly:
 ```
 static   39 pass
 content  86 pass
-routes   25 pass
+routes   27 pass
 broker   37 pass
-         187 pass, 0 skipped, 0 fail
+         189 pass, 0 skipped, 0 fail
 ```
 
 **The PostgreSQL tests no longer skip.** A local cluster (PostgreSQL 18.1, port 5432) is
@@ -181,7 +181,7 @@ publicly, not building them.
 
 | Journey | Result |
 |---|---|
-| Visitor browses articles, search, categories, news | **Passes** — browser-verified |
+| Visitor browses the Insights hub: type filters, search, categories | **Passes** — browser-verified |
 | Visitor reads an article | **Passes** — hydrated, no console errors, all scripts nonced |
 | Visitor submits a demo enquiry | **Partial** — accepted and validated; delivery needs config |
 | Visitor submits / replies / reports a comment | **Passes** — a real comment submitted through the browser form was stored `pending` in PostgreSQL, stayed out of the public thread, and appeared only after approval |

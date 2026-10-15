@@ -354,7 +354,7 @@ export function isAnnouncement(article: BlogArticle): boolean {
 }
 
 const articleTypeLabels: Record<ArticleType, string> = {
-  article: "Article",
+  article: "Insight",
   news: "Company news",
   "product-update": "Product update",
   guide: "Guide",

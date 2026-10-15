@@ -15,6 +15,5 @@ export const navLinks: NavLink[] = [
   { label: "Industries", href: "#industries" },
   { label: "Why SafeRedact", href: "#why-saferedact" },
   { label: "Insights", href: "/blog" },
-  { label: "News", href: "/news" },
   { label: "FAQ", href: "#faq" },
 ];

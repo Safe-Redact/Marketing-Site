@@ -5,16 +5,18 @@ import { navLinks } from "@/content/site";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/utils";
+import { isRouteActive } from "@/lib/nav";
 
 interface MobileNavProps {
   isOpen: boolean;
   onClose: (restoreFocus?: boolean) => void;
   activeHref: string | null;
   isHomePage: boolean;
-  isBlogPage: boolean;
+  /** The current path, so a route link highlights only for its own route. */
+  pathname: string;
 }
 
-export function MobileNav({ isOpen, onClose, activeHref, isHomePage, isBlogPage }: MobileNavProps) {
+export function MobileNav({ isOpen, onClose, activeHref, isHomePage, pathname }: MobileNavProps) {
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -115,11 +117,11 @@ export function MobileNav({ isOpen, onClose, activeHref, isHomePage, isBlogPage 
               <a
                 key={link.href}
                 href={href}
-                aria-current={isBlogPage ? "page" : undefined}
+                aria-current={isRouteActive(pathname, link.href) ? "page" : undefined}
                 onClick={() => onClose(false)}
                 className={cn(
                   "rounded-control border-l-2 px-4 py-3 text-body-lg font-medium transition-colors",
-                  isBlogPage
+                  isRouteActive(pathname, link.href)
                     ? "border-accent-cool bg-surface-active text-white"
                     : "border-transparent text-ink-muted hover:bg-surface-active hover:text-white"
                 )}

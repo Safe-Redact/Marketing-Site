@@ -1,9 +1,9 @@
 export type ArticleStatus = "draft" | "published" | "archived";
 
 /**
- * The four kinds of entry the newsroom carries. "news" and "product-update" are
- * company announcements and surface under /news; "article" and "guide" are
- * editorial writing and surface under /blog.
+ * The four kinds of entry the Insights hub carries. "news" and "product-update" are
+ * company announcements; "article" and "guide" are editorial writing. All four surface
+ * under /blog, where the content-type filter narrows between them.
  */
 export const ARTICLE_TYPES = ["article", "news", "product-update", "guide"] as const;
 export type ArticleType = (typeof ARTICLE_TYPES)[number];

@@ -12,8 +12,8 @@ test("empty production blog renders an honest accessible landing page", async ()
   const html = await response.text();
 
   assert.equal(response.status, 200);
-  assert.match(html, /Blog &amp; Insights/);
-  assert.match(html, /No articles have been published yet/i);
+  assert.match(html, /<h1[^>]*>\s*Insights\s*<\/h1>/);
+  assert.match(html, /No content has been published yet/i);
   assert.doesNotMatch(html, /development fixture/i);
   assert.match(html, /<form[^>]+role="search"/);
 });
@@ -269,38 +269,75 @@ test("the admin blob allowance never leaks into a response header", async () => 
   }
 });
 
-test("the newsroom listing is public, canonical, and separate from the blog", async () => {
-  const [news, blog] = await Promise.all([get("/news"), get("/blog")]);
-  const [newsHtml, blogHtml] = await Promise.all([news.text(), blog.text()]);
+test("the legacy newsroom URL permanently redirects into the Insights news filter", async () => {
+  const response = await get("/news");
 
-  assert.equal(news.status, 200);
-  assert.match(newsHtml, /News &amp; Announcements/);
-  assert.match(newsHtml, /No announcements have been published yet/i);
-  assert.match(newsHtml, /rel="canonical" href="https:\/\/saferedact\.io\/news"/);
-
-  // The two surfaces point at each other and keep distinct headings.
-  assert.match(newsHtml, /href="\/blog"/);
-  assert.doesNotMatch(newsHtml, /Blog &amp; Insights<\/h1>/);
-  assert.doesNotMatch(blogHtml, /News &amp; Announcements<\/h1>/);
-
-  // It carries the same strict policy as every other public route.
-  const policy = news.headers.get("content-security-policy") ?? "";
-  assert.match(policy, /^script-src 'self' 'nonce-/);
-  assert.doesNotMatch(policy, /unsafe-eval/);
-  assert.equal(newsHtml.match(/<script>/g)?.length ?? 0, 0);
+  assert.equal(response.status, 308);
+  assert.equal(response.headers.get("location"), "/blog?type=news");
 });
 
-test("the newsroom is reachable from public navigation and listed for crawlers", async () => {
-  const [home, sitemap] = await Promise.all([get("/"), get("/sitemap.xml")]);
-  const [homeHtml, xml] = await Promise.all([home.text(), sitemap.text()]);
+test("Insights is the single content hub and carries the content-type filters", async () => {
+  const response = await get("/blog");
+  const html = await response.text();
 
-  assert.match(homeHtml, /href="\/news"/);
-  assert.match(xml, /https:\/\/saferedact\.io\/news<\/loc>/);
+  assert.equal(response.status, 200);
+  for (const label of [
+    "All content",
+    "Company News",
+    "Product Updates",
+    "Industry Insights",
+    "Guides &amp; Tutorials",
+  ]) {
+    assert.ok(html.includes(label), `the hub must offer the ${label} filter`);
+  }
+
+  // One content entry in the navigation, and it is the hub.
+  assert.match(html, /href="\/blog"/);
+  assert.doesNotMatch(html, /href="\/news"/);
+
+  // The category row's "All insights" chip pointed at /blog too, so the hub carried
+  // two identical chips both claiming aria-current="page" — a screen reader was told
+  // the reader was on two pages at once. The type row owns the "all" affordance now.
+  assert.doesNotMatch(html, /All insights/);
 });
 
-test("out-of-range newsroom pages are not found rather than empty", async () => {
-  const response = await get("/news?page=99");
-  assert.equal(response.status, 404);
+test("only the active view claims aria-current on the hub", async () => {
+  const [plain, filtered] = await Promise.all([get("/blog"), get("/blog?type=news")]);
+  const [plainHtml, filteredHtml] = await Promise.all([plain.text(), filtered.text()]);
+
+  // The desktop nav and the mobile menu each mark the Insights section, and exactly
+  // one filter chip marks the view. Anything more is a conflicting "you are here".
+  const chipCurrent = (html) =>
+    (html.match(/aria-current="page"[^>]*href="\/blog\?type=[^"]*"/g) ?? []).length;
+
+  assert.equal(chipCurrent(plainHtml), 0, "the unfiltered hub highlights All content, not a typed chip");
+  assert.equal(chipCurrent(filteredHtml), 1, "exactly one type chip is current");
+});
+
+test("a type filter is canonical while search and deeper pages are not indexed", async () => {
+  const [unfiltered, filtered, searched] = await Promise.all([
+    get("/blog"),
+    get("/blog?type=news"),
+    get("/blog?query=privacy"),
+  ]);
+  const [plainHtml, filteredHtml, searchedHtml] = await Promise.all([
+    unfiltered.text(),
+    filtered.text(),
+    searched.text(),
+  ]);
+
+  assert.match(plainHtml, /rel="canonical" href="https:\/\/saferedact\.io\/blog"/);
+  assert.match(filteredHtml, /rel="canonical" href="https:\/\/saferedact\.io\/blog\?type=news"/);
+  assert.doesNotMatch(plainHtml, /<meta name="robots" content="[^"]*noindex/i);
+  assert.match(searchedHtml, /<meta name="robots" content="[^"]*noindex/i);
+});
+
+test("an unknown type falls back to the whole hub rather than erroring", async () => {
+  const response = await get("/blog?type=not-a-type");
+  const html = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.match(html, /rel="canonical" href="https:\/\/saferedact\.io\/blog"/);
 });
 
 test("staff surfaces are kept out of crawls and out of the sitemap", async () => {

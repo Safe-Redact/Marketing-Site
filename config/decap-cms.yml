@@ -77,8 +77,8 @@ collections:
         name: type
         widget: select
         default: article
-        hint: Articles and guides appear under /blog; news and product updates appear
-          under /news.
+        hint: All four kinds publish to the Insights hub at /blog, where readers filter
+          by content type. Pick the one that describes the entry.
         options:
           - label: Blog article
             value: article
