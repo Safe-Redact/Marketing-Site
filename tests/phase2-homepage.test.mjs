@@ -93,14 +93,19 @@ test("format tabs reference one stable tab panel", async () => {
   assert.doesNotMatch(section, /aria-controls=\{`format-panel-/);
 });
 
-test("contact form discloses its current validation-only delivery behavior", async () => {
+test("contact form states the delivery outcome instead of assuming one", async () => {
   const content = await read("src/content/final-cta.ts");
   const section = await read("src/components/sections/FinalCta.tsx");
 
   assert.match(content, /deliveryNotice/);
-  assert.match(content, /does not store it, send email, or create a CRM record/i);
   assert.match(section, /form\.deliveryNotice/);
-  assert.match(section, /validated, but it was not stored, emailed, or added to a CRM/i);
+
+  // Delivery is reported from the response, never asserted by the form itself, and
+  // an undelivered enquiry must say so rather than implying it reached someone.
+  assert.match(section, /result\.delivered/);
+  assert.match(section, /has been sent to the SafeRedact team/i);
+  assert.match(section, /delivery is not yet switched on, so nobody has received it/i);
+  assert.doesNotMatch(content, /we will reply/i);
 });
 
 test("outcome grid applies edge and divider styles to sibling wrappers", async () => {

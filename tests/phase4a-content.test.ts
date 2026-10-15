@@ -9,6 +9,7 @@ import {
   getPublishedArticleBySlug,
   getRelatedArticles,
   loadPublishedArticles,
+  parseArticleFrontmatter,
   parseArticleSource,
   queryArticles,
   validateMarkdownBody,
@@ -127,4 +128,101 @@ test("Decap configuration uses the reviewed Git target and pull-request editoria
   assert.equal(config.backend.auth_endpoint, "auth");
   assert.equal(config.backend.auth_scope, "public_repo");
   assert.equal(config.backend.app_id, undefined);
+});
+
+test("articles carry a content type that defaults to the editorial article", async () => {
+  const articles = await loadPublishedArticles({ directory: fixturesDirectory, now: fixedNow });
+
+  // Every existing fixture predates the field, so the default has to keep them loading.
+  for (const article of articles) {
+    assert.equal(article.type, "article");
+    assert.deepEqual(article.tags, []);
+    assert.deepEqual(article.tagSlugs, []);
+  }
+});
+
+test("the content type is constrained to the four approved kinds", () => {
+  const base = {
+    title: "A valid development fixture title",
+    slug: "type-validation-fixture",
+    excerpt: "A development fixture used to verify that the content type field accepts only approved kinds.",
+    author: "SafeRedact Editorial",
+    category: "Education",
+    date: "2026-01-10T09:00:00.000Z",
+    status: "published",
+    seoDescription: "Development fixture verifying that the article content type accepts only approved kinds.",
+  };
+
+  for (const type of ["article", "news", "product-update", "guide"]) {
+    assert.equal(parseArticleFrontmatter({ ...base, type }).type, type);
+  }
+  for (const type of ["announcement", "", "ARTICLE", 7]) {
+    assert.throws(() => parseArticleFrontmatter({ ...base, type }), /type/i);
+  }
+});
+
+test("tags are bounded, de-duplicated, and carry URL slugs", () => {
+  const base = {
+    title: "A valid development fixture title",
+    slug: "tag-validation-fixture",
+    excerpt: "A development fixture used to verify that article tags are bounded and produce safe URL slugs.",
+    author: "SafeRedact Editorial",
+    category: "Education",
+    date: "2026-01-10T09:00:00.000Z",
+    status: "published",
+    seoDescription: "Development fixture verifying that article tags are bounded and produce safe URL slugs.",
+  };
+
+  const parsed = parseArticleFrontmatter({ ...base, tags: ["Redaction", "Video Review", "redaction"] });
+  assert.deepEqual(parsed.tags, ["Redaction", "Video Review"]);
+  assert.deepEqual(parsed.tagSlugs, ["redaction", "video-review"]);
+
+  // A tag that cannot produce a slug, and more tags than an article may carry.
+  assert.throws(() => parseArticleFrontmatter({ ...base, tags: ["***"] }), /tag/i);
+  assert.throws(
+    () => parseArticleFrontmatter({ ...base, tags: ["a1", "b2", "c3", "d4", "e5", "f6", "g7"] }),
+    /tag/i
+  );
+});
+
+test("queries filter by content type and by tag", () => {
+  const article = (slug: string, type: string, tagSlugs: string[]) =>
+    ({
+      title: slug,
+      slug,
+      excerpt: "",
+      author: "SafeRedact Editorial",
+      category: "Education",
+      categorySlug: "education",
+      date: "2026-01-10T09:00:00.000Z",
+      status: "published",
+      featured: false,
+      seoDescription: "",
+      body: "",
+      readingMinutes: 1,
+      type,
+      tags: tagSlugs,
+      tagSlugs,
+    }) as never;
+
+  const articles = [
+    article("one", "article", ["redaction"]),
+    article("two", "news", ["company"]),
+    article("three", "product-update", ["redaction"]),
+    article("four", "guide", []),
+  ];
+
+  assert.deepEqual(
+    queryArticles(articles, { type: "news" }).items.map((a) => a.slug),
+    ["two"]
+  );
+  assert.deepEqual(
+    queryArticles(articles, { type: ["news", "product-update"] }).items.map((a) => a.slug),
+    ["two", "three"]
+  );
+  assert.deepEqual(
+    queryArticles(articles, { tag: "redaction" }).items.map((a) => a.slug),
+    ["one", "three"]
+  );
+  assert.equal(queryArticles(articles, {}).totalItems, 4);
 });

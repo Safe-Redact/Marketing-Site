@@ -12,6 +12,7 @@ import {
   loadPublishedArticles,
   queryArticles,
 } from "@/lib/blog/content";
+import { EDITORIAL_TYPES } from "@/lib/blog/types";
 
 interface BlogPageProps {
   searchParams: Promise<{ query?: string | string[]; page?: string | string[] }>;
@@ -53,7 +54,11 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const parameters = await searchParams;
   const query = firstValue(parameters.query).trim().slice(0, 100);
   const page = parsePage(firstValue(parameters.page));
-  const articles = await loadPublishedArticles();
+  // /blog is the editorial surface. Company news and product updates are
+  // announcements and have their own listing at /news.
+  const articles = (await loadPublishedArticles()).filter((article) =>
+    EDITORIAL_TYPES.includes(article.type)
+  );
   const categories = getArticleCategories(articles);
   const featured = !query && page === 1
     ? articles.find((article) => article.featured) ?? articles[0]

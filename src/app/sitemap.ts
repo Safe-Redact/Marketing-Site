@@ -1,10 +1,11 @@
 import type { MetadataRoute } from "next";
-import { getArticleCategories, loadPublishedArticles } from "@/lib/blog/content";
+import { getArticleCategories, isAnnouncement, loadPublishedArticles } from "@/lib/blog/content";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://saferedact.io";
   const articles = await loadPublishedArticles();
   const categories = getArticleCategories(articles);
+  const announcements = articles.filter(isAnnouncement);
 
   return [
     {
@@ -16,6 +17,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: `${baseUrl}/blog`,
       lastModified: articles[0]?.updatedDate ?? articles[0]?.date ?? new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/news`,
+      lastModified: announcements[0]?.updatedDate ?? announcements[0]?.date ?? new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
     },

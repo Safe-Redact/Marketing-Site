@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ArticleTypeBadge } from "@/components/blog/ArticleTypeBadge";
 import type { BlogArticle } from "@/lib/blog/types";
 
 export function formatArticleDate(value: string): string {
@@ -30,6 +31,7 @@ export function ArticleCard({ article }: { article: BlogArticle }) {
 
       <div className="flex flex-1 flex-col p-6">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-caption uppercase tracking-[0.04em] text-accent-cool">
+          <ArticleTypeBadge article={article} />
           <span>{article.category}</span>
           <span aria-hidden="true" className="text-border-subtle">•</span>
           <time dateTime={article.date} className="normal-case tracking-normal text-ink-muted">

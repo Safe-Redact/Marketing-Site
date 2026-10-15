@@ -85,7 +85,7 @@ export function Header() {
             <span><span className="text-accent-warm">Safe</span>Redact</span>
           </a>
 
-          <div className="hidden items-center gap-4 min-[992px]:flex xl:gap-6">
+          <div className="hidden items-center gap-3 min-[992px]:flex min-[1120px]:gap-4 xl:gap-6">
             {navLinks.map((link) => {
               if (link.href.startsWith("#")) {
                 return (

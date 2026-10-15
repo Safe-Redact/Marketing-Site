@@ -23,7 +23,7 @@ export const finalCtaContent = {
     messagePlaceholder:
       "Tell us about your redaction needs: what type of files, approximate volume, and any specific requirements.",
     deliveryNotice:
-      "Current form behavior: this site validates the inquiry but does not store it, send email, or create a CRM record. Email support directly when delivery matters.",
+      "Your enquiry is validated and sent only to the SafeRedact team. The confirmation after you submit states whether it was delivered; when delivery is unavailable it says so, and you can email support directly.",
     submitLabel: "Submit Demo Enquiry",
     submittingLabel: "Submitting...",
   },

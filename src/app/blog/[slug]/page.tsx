@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArticleBody } from "@/components/blog/ArticleBody";
 import { ArticleCard, formatArticleDate } from "@/components/blog/ArticleCard";
+import { CommentThread } from "@/components/blog/CommentThread";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import {
@@ -69,6 +70,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           </div>
         </Container>
       </section>
+
+      {/* Absent entirely when comments are switched off for the deployment: a form
+          that refused every submission would be worse than no form. */}
+      <CommentThread articleSlug={article.slug} />
 
       {related.length ? (
         <section className="border-t border-border-subtle bg-surface-raised/45 py-14 sm:py-16 lg:py-20" aria-labelledby="related-articles-heading">

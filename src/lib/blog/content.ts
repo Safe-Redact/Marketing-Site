@@ -5,12 +5,15 @@ import remarkParse from "remark-parse";
 import { visit } from "unist-util-visit";
 import { parseDocument } from "yaml";
 import { z } from "zod";
-import type { ArticleQuery, BlogArticle, ContentOptions, PaginatedArticles } from "./types";
+import { ARTICLE_TYPES } from "./types";
+import type { ArticleQuery, ArticleType, BlogArticle, ContentOptions, PaginatedArticles } from "./types";
 
 export const BLOG_PAGE_SIZE = 6;
 export const DEFAULT_BLOG_DIRECTORY = path.join(process.cwd(), "content", "blog");
 
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+export const MAX_ARTICLE_TAGS = 6;
 
 const optionalText = z.preprocess(
   (value) => (value === null || value === "" ? undefined : value),
@@ -28,7 +31,12 @@ const articleFrontmatterSchema = z
     slug: z.string().trim().min(3).max(100).regex(slugPattern),
     excerpt: z.string().trim().min(40).max(240),
     author: z.string().trim().min(2).max(80),
+    type: z.enum(ARTICLE_TYPES).default("article"),
     category: z.string().trim().min(2).max(60),
+    tags: z.preprocess(
+      (value) => (value === null || value === "" ? undefined : value),
+      z.array(z.string().trim().min(2).max(30)).max(MAX_ARTICLE_TAGS).default([])
+    ),
     date: dateText,
     updatedDate: z.preprocess(
       (value) => (value === null || value === "" ? undefined : value),
@@ -42,6 +50,15 @@ const articleFrontmatterSchema = z
   })
   .strict()
   .superRefine((value, context) => {
+    for (const [index, tag] of value.tags.entries()) {
+      if (!slugifyCategory(tag)) {
+        context.addIssue({
+          code: "custom",
+          path: ["tags", index],
+          message: "Each tag must contain letters or digits so it can produce a URL slug.",
+        });
+      }
+    }
     if (value.featuredImage && !isSafeBlogImagePath(value.featuredImage)) {
       context.addIssue({
         code: "custom",
@@ -64,6 +81,36 @@ const articleFrontmatterSchema = z
       });
     }
   });
+
+export type ArticleFrontmatter = Omit<
+  BlogArticle,
+  "body" | "readingMinutes"
+>;
+
+/**
+ * Validates one article's frontmatter and derives the URL slugs the public routes
+ * filter on. Tags are de-duplicated by slug so "Redaction" and "redaction" cannot
+ * produce two archives of the same thing; the first spelling wins.
+ */
+export function parseArticleFrontmatter(data: unknown): ArticleFrontmatter {
+  const frontmatter = articleFrontmatterSchema.parse(data);
+
+  const categorySlug = slugifyCategory(frontmatter.category);
+  if (!categorySlug) {
+    throw new Error("Article category cannot produce a valid URL slug.");
+  }
+
+  const tags: string[] = [];
+  const tagSlugs: string[] = [];
+  for (const tag of frontmatter.tags) {
+    const tagSlug = slugifyCategory(tag);
+    if (!tagSlug || tagSlugs.includes(tagSlug)) continue;
+    tags.push(tag);
+    tagSlugs.push(tagSlug);
+  }
+
+  return { ...frontmatter, categorySlug, tags, tagSlugs };
+}
 
 export function isValidArticleSlug(slug: string): boolean {
   return slugPattern.test(slug);
@@ -152,7 +199,7 @@ export function parseArticleSource(source: string): { data: unknown; content: st
 export async function parseArticleFile(filePath: string): Promise<BlogArticle> {
   const source = await readFile(filePath, "utf8");
   const parsed = parseArticleSource(source);
-  const frontmatter = articleFrontmatterSchema.parse(parsed.data);
+  const frontmatter = parseArticleFrontmatter(parsed.data);
   const filename = path.basename(filePath, path.extname(filePath));
 
   if (filename !== frontmatter.slug) {
@@ -160,12 +207,9 @@ export async function parseArticleFile(filePath: string): Promise<BlogArticle> {
   }
 
   validateMarkdownBody(parsed.content);
-  const categorySlug = slugifyCategory(frontmatter.category);
-  if (!categorySlug) throw new Error(`Article category cannot produce a valid URL slug: ${filename}.md`);
 
   return {
     ...frontmatter,
-    categorySlug,
     body: parsed.content.trim(),
     readingMinutes: calculateReadingTime(parsed.content),
   };
@@ -213,19 +257,23 @@ export async function getPublishedArticleBySlug(
 
 export function queryArticles(
   articles: BlogArticle[],
-  { query = "", category, page = 1, pageSize = BLOG_PAGE_SIZE }: ArticleQuery = {}
+  { query = "", category, type, tag, page = 1, pageSize = BLOG_PAGE_SIZE }: ArticleQuery = {}
 ): PaginatedArticles {
   const normalizedQuery = query.trim().toLocaleLowerCase("en");
   const normalizedCategory = category?.trim().toLocaleLowerCase("en");
+  const normalizedTag = tag?.trim().toLocaleLowerCase("en");
+  const types = type === undefined ? null : new Set(Array.isArray(type) ? type : [type]);
   const safePage = Number.isInteger(page) && page > 0 ? page : 1;
   const safePageSize = Number.isInteger(pageSize) && pageSize > 0 && pageSize <= 24
     ? pageSize
     : BLOG_PAGE_SIZE;
 
   const filtered = articles.filter((article) => {
+    if (types && !types.has(article.type)) return false;
     if (normalizedCategory && article.categorySlug !== normalizedCategory) return false;
+    if (normalizedTag && !article.tagSlugs.includes(normalizedTag)) return false;
     if (!normalizedQuery) return true;
-    return [article.title, article.excerpt, article.author, article.category]
+    return [article.title, article.excerpt, article.author, article.category, ...article.tags]
       .join(" ")
       .toLocaleLowerCase("en")
       .includes(normalizedQuery);
@@ -259,4 +307,59 @@ export function getArticleCategories(articles: BlogArticle[]): Array<{ name: str
     article.categorySlug,
     { name: article.category, slug: article.categorySlug },
   ])).values()].sort((left, right) => left.name.localeCompare(right.name));
+}
+
+export function getArticleTags(articles: BlogArticle[]): Array<{ name: string; slug: string; count: number }> {
+  const tags = new Map<string, { name: string; slug: string; count: number }>();
+  for (const article of articles) {
+    for (const [index, slug] of article.tagSlugs.entries()) {
+      const existing = tags.get(slug);
+      if (existing) existing.count += 1;
+      else tags.set(slug, { name: article.tags[index], slug, count: 1 });
+    }
+  }
+  return [...tags.values()].sort(
+    (left, right) => right.count - left.count || left.name.localeCompare(right.name)
+  );
+}
+
+/**
+ * Related entries prefer the same content type, then fall back to the same
+ * category, so an announcement never trails a list of unrelated guides.
+ */
+export function getRelatedByType(
+  articles: BlogArticle[],
+  article: BlogArticle,
+  limit = 3
+): BlogArticle[] {
+  const candidates = articles.filter((candidate) => candidate.slug !== article.slug);
+  const sameTypeAndCategory = candidates.filter(
+    (candidate) => candidate.type === article.type && candidate.categorySlug === article.categorySlug
+  );
+  const sameType = candidates.filter(
+    (candidate) => candidate.type === article.type && !sameTypeAndCategory.includes(candidate)
+  );
+  const sameCategory = candidates.filter(
+    (candidate) =>
+      candidate.categorySlug === article.categorySlug &&
+      !sameTypeAndCategory.includes(candidate) &&
+      !sameType.includes(candidate)
+  );
+
+  return [...sameTypeAndCategory, ...sameType, ...sameCategory].slice(0, Math.max(0, limit));
+}
+
+export function isAnnouncement(article: BlogArticle): boolean {
+  return article.type === "news" || article.type === "product-update";
+}
+
+const articleTypeLabels: Record<ArticleType, string> = {
+  article: "Article",
+  news: "Company news",
+  "product-update": "Product update",
+  guide: "Guide",
+};
+
+export function articleTypeLabel(type: ArticleType): string {
+  return articleTypeLabels[type];
 }

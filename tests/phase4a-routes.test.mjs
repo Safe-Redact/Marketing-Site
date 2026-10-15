@@ -268,3 +268,73 @@ test("the admin blob allowance never leaks into a response header", async () => 
     assert.doesNotMatch(html, /connect-src/);
   }
 });
+
+test("the newsroom listing is public, canonical, and separate from the blog", async () => {
+  const [news, blog] = await Promise.all([get("/news"), get("/blog")]);
+  const [newsHtml, blogHtml] = await Promise.all([news.text(), blog.text()]);
+
+  assert.equal(news.status, 200);
+  assert.match(newsHtml, /News &amp; Announcements/);
+  assert.match(newsHtml, /No announcements have been published yet/i);
+  assert.match(newsHtml, /rel="canonical" href="https:\/\/saferedact\.io\/news"/);
+
+  // The two surfaces point at each other and keep distinct headings.
+  assert.match(newsHtml, /href="\/blog"/);
+  assert.doesNotMatch(newsHtml, /Blog &amp; Insights<\/h1>/);
+  assert.doesNotMatch(blogHtml, /News &amp; Announcements<\/h1>/);
+
+  // It carries the same strict policy as every other public route.
+  const policy = news.headers.get("content-security-policy") ?? "";
+  assert.match(policy, /^script-src 'self' 'nonce-/);
+  assert.doesNotMatch(policy, /unsafe-eval/);
+  assert.equal(newsHtml.match(/<script>/g)?.length ?? 0, 0);
+});
+
+test("the newsroom is reachable from public navigation and listed for crawlers", async () => {
+  const [home, sitemap] = await Promise.all([get("/"), get("/sitemap.xml")]);
+  const [homeHtml, xml] = await Promise.all([home.text(), sitemap.text()]);
+
+  assert.match(homeHtml, /href="\/news"/);
+  assert.match(xml, /https:\/\/saferedact\.io\/news<\/loc>/);
+});
+
+test("out-of-range newsroom pages are not found rather than empty", async () => {
+  const response = await get("/news?page=99");
+  assert.equal(response.status, 404);
+});
+
+test("staff surfaces are kept out of crawls and out of the sitemap", async () => {
+  const [robots, sitemap, moderation] = await Promise.all([
+    get("/robots.txt"),
+    get("/sitemap.xml"),
+    get("/moderation"),
+  ]);
+  const [robotsText, xml, html] = await Promise.all([robots.text(), sitemap.text(), moderation.text()]);
+
+  for (const path of ["/admin", "/moderation", "/api/"]) {
+    assert.ok(robotsText.includes(`Disallow: ${path}`), `robots must disallow ${path}`);
+  }
+  assert.doesNotMatch(xml, /\/moderation|\/admin|\/api\//);
+
+  // The moderation tool is noindexed, carries the strict public policy, and grants
+  // nothing by being reachable: every action is authorized server side.
+  assert.equal(moderation.status, 200);
+  assert.match(html, /<meta name="robots" content="[^"]*noindex/i);
+  assert.match(moderation.headers.get("content-security-policy") ?? "", /^script-src 'self' 'nonce-/);
+  assert.equal(html.match(/<script>/g)?.length ?? 0, 0);
+});
+
+test("moderation endpoints never answer a public caller with data", async () => {
+  const responses = await Promise.all([
+    get("/api/moderation/comments"),
+    get("/api/moderation/history?comment=x"),
+    get("/api/moderation/comments", { method: "POST", headers: { authorization: "Bearer forged" } }),
+  ]);
+
+  for (const response of responses) {
+    // 503 when comments are switched off for the deployment, 403 once they are on.
+    assert.ok([403, 405, 503].includes(response.status), `unexpected ${response.status}`);
+    const body = await response.text();
+    assert.doesNotMatch(body, /authorKey|author_key|COMMENTS_DATABASE_URL|postgres/i);
+  }
+});

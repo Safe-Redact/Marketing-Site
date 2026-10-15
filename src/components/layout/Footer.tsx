@@ -12,6 +12,7 @@ const footerGroups = [
       { label: "Product workflow", href: "#how-it-works" },
       { label: "Why SafeRedact", href: "#why-saferedact" },
       { label: "Blog & insights", href: "/blog" },
+      { label: "News & announcements", href: "/news" },
     ],
   },
   {

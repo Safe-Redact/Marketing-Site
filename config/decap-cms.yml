@@ -34,6 +34,18 @@ collections:
       - status
       - category
     view_filters:
+      - label: Blog articles
+        field: type
+        pattern: article
+      - label: Guides
+        field: type
+        pattern: guide
+      - label: Company news
+        field: type
+        pattern: news
+      - label: Product updates
+        field: type
+        pattern: product-update
       - label: Drafts
         field: status
         pattern: draft
@@ -61,10 +73,40 @@ collections:
         name: author
         widget: string
         hint: Use an approved SafeRedact staff byline. Do not invent biographies or contributors.
+      - label: Content type
+        name: type
+        widget: select
+        default: article
+        hint: Articles and guides appear under /blog; news and product updates appear
+          under /news.
+        options:
+          - label: Blog article
+            value: article
+          - label: Educational guide
+            value: guide
+          - label: Company news
+            value: news
+          - label: Product update
+            value: product-update
       - label: Category
         name: category
         widget: string
         hint: Reuse an approved category name consistently.
+      - label: Tags
+        name: tags
+        widget: list
+        required: false
+        default: []
+        max: 6
+        hint: Up to six short topic tags. Reuse existing spellings; tags that differ
+          only by case are merged.
+        field:
+          label: Tag
+          name: tag
+          widget: string
+          pattern:
+            - ^(?=.*[A-Za-z0-9]).{2,30}$
+            - Use 2 to 30 characters including at least one letter or digit.
       - label: Publication date
         name: date
         widget: datetime
