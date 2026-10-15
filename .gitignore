@@ -62,3 +62,7 @@ public/admin/config.yml
 
 # Next.js
 .eslintcache
+
+# Screenshot masters. assets/product-screenshots/raw/ holds the approved source art
+# for every product visual; it is tracked, because losing it would mean the served
+# images could not be regenerated. It sits outside public/ so it is never served.

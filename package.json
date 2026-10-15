@@ -17,6 +17,7 @@
     "cms:config": "node --env-file-if-exists=.env.local scripts/render-cms-config.mjs",
     "cms:config:test": "node scripts/render-cms-config.mjs --disabled",
     "check:secrets": "node scripts/check-secrets.mjs",
+    "images:product": "node scripts/build-product-images.mjs",
     "comments:migrate": "node --env-file-if-exists=.env.local scripts/migrate-comments.mjs",
     "pretest": "npm run cms:config:test",
     "test": "npm run test:static && npm run test:content && npm run test:routes && npm run test:oauth",

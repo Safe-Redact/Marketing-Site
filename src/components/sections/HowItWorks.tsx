@@ -37,7 +37,7 @@ export function HowItWorks() {
           </AnimateOnScroll>
           <AnimateOnScroll delay={100} className="lg:pt-4">
             <p className="mb-5 text-sm font-medium leading-6 text-ink-muted">
-              Select a step to update the original workflow illustration.
+              Select a step to see the SafeRedact screen it happens on.
             </p>
             <Accordion
               items={accordionItems}

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Icon } from "@/components/ui/Icon";
 
 interface FormatPreviewProps {
@@ -5,10 +6,45 @@ interface FormatPreviewProps {
   fileLabel: string;
 }
 
+/**
+ * The per-format panel under "Why SafeRedact".
+ *
+ * All three formats show authentic captures of the application, each at its own
+ * aspect ratio so the whole screen is visible rather than cropped into a fixed box.
+ */
+interface Screenshot {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+}
+
+const screenshots: Record<string, Screenshot> = {
+  document: {
+    src: "/images/product/format-documents.png",
+    alt: "Screenshot of the SafeRedact document editor: a page marked for redaction beside the manual redaction tools, the reason library and the findings list",
+    width: 1463,
+    height: 869,
+  },
+  audio: {
+    src: "/images/product/format-audio.png",
+    alt: "Screenshot of the SafeRedact audio workspace: a waveform beside a speaker-separated transcript, with transport controls and the timeline below",
+    width: 1102,
+    height: 715,
+  },
+  video: {
+    src: "/images/product/format-video.png",
+    alt: "Screenshot of the SafeRedact video workspace: a frame in the preview pane with the pixelate effect and its level, beside the project files and the timeline",
+    width: 1479,
+    height: 806,
+  },
+};
+
 export function FormatPreview({ visual, fileLabel }: FormatPreviewProps) {
+  const screenshot = screenshots[visual];
+
   return (
     <figure className="relative min-h-[310px] overflow-hidden rounded-panel border border-border-subtle bg-[#0c111f] p-5 sm:min-h-[390px] sm:p-7">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_18%,rgba(51,183,255,0.12),transparent_38%)]" />
       <div className="relative flex items-center justify-between border-b border-border-subtle pb-4">
         <div className="flex items-center gap-3">
           <span className="grid h-9 w-9 place-items-center rounded-control bg-accent-cool/10 text-accent-cool">
@@ -22,54 +58,33 @@ export function FormatPreview({ visual, fileLabel }: FormatPreviewProps) {
         <span className="rounded-control border border-accent-mint/25 bg-accent-mint/10 px-2 py-1 text-[9px] font-semibold uppercase tracking-wide text-accent-mint">Ready</span>
       </div>
 
-      {visual === "audio" ? <AudioVisual /> : visual === "video" ? <VideoVisual /> : <DocumentVisual />}
-      <figcaption className="sr-only">Original SafeRedact illustration for the selected format workflow.</figcaption>
+      {screenshot ? <ScreenshotPanel {...screenshot} /> : null}
+      <figcaption className="sr-only">{screenshot?.alt}</figcaption>
     </figure>
   );
 }
 
-function DocumentVisual() {
+/**
+ * Full width of the figure, at the screenshot's own aspect ratio, so the whole
+ * application screen is visible and nothing is cropped. The earlier 380px width cap
+ * was inherited from the illustration these replaced and stranded the screenshot in
+ * empty space.
+ */
+function ScreenshotPanel({ src, alt, width, height }: Screenshot) {
   return (
-    <div className="relative mx-auto mt-6 h-[235px] max-w-[380px] rounded-card bg-[#eef2f7] p-5 shadow-panel sm:h-[290px] sm:p-7">
-      <div className="h-2 w-2/3 rounded bg-slate-400/60" />
-      <div className="mt-6 space-y-4">
-        <div className="flex gap-2"><span className="h-2 flex-1 rounded bg-slate-300" /><span className="h-3 w-24 rounded-sm bg-accent-cool/55 ring-1 ring-accent-cool" /></div>
-        <div className="h-2 w-5/6 rounded bg-slate-300" />
-        <div className="flex gap-2"><span className="h-3 w-20 rounded-sm bg-accent-warm/55 ring-1 ring-accent-warm" /><span className="h-2 flex-1 rounded bg-slate-300" /></div>
-        <div className="h-2 w-11/12 rounded bg-slate-300" />
-      </div>
-      <div className="absolute bottom-5 right-5 rounded bg-slate-900 px-3 py-2 text-[9px] font-semibold text-white">2 findings</div>
-    </div>
-  );
-}
-
-function AudioVisual() {
-  const bars = [18, 34, 24, 52, 40, 28, 62, 44, 30, 56, 38, 22, 48, 32, 18];
-  return (
-    <div className="relative mt-8">
-      <div className="flex h-28 items-center gap-1.5 rounded-card border border-border-subtle bg-surface-raised/70 px-5">
-        {bars.map((height, index) => <span key={index} className="flex-1 rounded-full bg-accent-cool/70" style={{height}} />)}
-      </div>
-      <div className="mt-5 space-y-3 rounded-card border border-border-subtle bg-surface-raised/70 p-4">
-        <p className="text-[10px] uppercase tracking-[0.14em] text-ink-muted">Transcript</p>
-        <p className="text-xs leading-5 text-ink">Please send the <span className="rounded bg-accent-warm/20 px-1 text-accent-warm">account reference</span> with the revised record.</p>
-        <div className="h-1.5 w-3/4 rounded bg-white/10" />
-      </div>
-    </div>
-  );
-}
-
-function VideoVisual() {
-  return (
-    <div className="relative mt-6 overflow-hidden rounded-card border border-border-subtle bg-surface-raised/70">
-      <div className="relative h-48 bg-[linear-gradient(145deg,#172033,#0d1321)] sm:h-56">
-        <div className="absolute left-[18%] top-[24%] h-20 w-16 rounded border-2 border-accent-cool"><span className="absolute -top-5 left-0 text-[9px] font-semibold text-accent-cool">Face</span></div>
-        <div className="absolute bottom-[22%] right-[16%] h-10 w-24 rounded border-2 border-accent-warm"><span className="absolute -top-5 right-0 text-[9px] font-semibold text-accent-warm">Plate</span></div>
-        <div className="absolute inset-x-0 bottom-0 h-14 bg-black/25" />
-      </div>
-      <div className="flex items-center gap-2 border-t border-border-subtle p-3">
-        {[0,1,2,3,4,5].map(i=><span key={i} className={`h-6 flex-1 rounded-sm ${i===2||i===3?"bg-accent-warm/45":"bg-white/[0.07]"}`} />)}
-      </div>
+    <div
+      className="product-visual relative mt-6 w-full overflow-hidden"
+      style={{ aspectRatio: `${width} / ${height}` }}
+    >
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        // ~290px on a phone, ~612px from sm; 2x of the widest case keeps UI text crisp.
+        sizes="(max-width: 639px) 100vw, 640px"
+        quality={92}
+        className="object-cover"
+      />
     </div>
   );
 }

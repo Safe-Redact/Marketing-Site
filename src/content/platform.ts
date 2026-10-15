@@ -91,9 +91,9 @@ export const workflowPreviewLabels = {
     { label: "Email address", status: "Approved", tone: "warm" },
     { label: "Reference ID", status: "Pending", tone: "cool" },
   ],
-  figureLabel: "Original illustration of a SafeRedact document review workflow",
+  figureLabel: "Screenshot of the SafeRedact screen for the selected workflow step",
   caption:
-    "A SafeRedact project showing a document page, candidate findings, review states, and the selected workflow step.",
+    "A screenshot of SafeRedact at the selected workflow step: the project workspace, the editor mid-review, or the export dialog.",
 } as const;
 
 export const formatTabs = [
@@ -188,7 +188,8 @@ export const workbenchLabels = {
   guidance: "Review each suggested redaction before export.",
   view: "Detection view",
   status: "Ready for review",
-  figureLabel: "Illustration of the SafeRedact review workbench",
+  figureLabel:
+    "Screenshot of the SafeRedact editor: a document mid-review with detected items listed for an operator to accept or adjust",
   caption:
-    "An original SafeRedact interface illustration showing candidate sensitive information highlighted in a document and organized for review.",
+    "A screenshot of the SafeRedact editor showing a document mid-review: detected items are listed in the findings panel for an operator to accept or adjust before export.",
 } as const;
