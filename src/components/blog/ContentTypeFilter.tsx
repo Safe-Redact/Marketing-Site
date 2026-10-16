@@ -21,25 +21,27 @@ interface ContentTypeFilterProps {
   activeType: ArticleType | null;
   /** Carried through so a filter does not silently discard the reader's search. */
   query?: string;
+  tag?: string;
 }
 
-export function filterHref(type: ArticleType | null, query?: string): string {
+export function filterHref(type: ArticleType | null, query?: string, tag?: string): string {
   const params = new URLSearchParams();
   if (type) params.set("type", type);
+  if (tag) params.set("tag", tag);
   if (query) params.set("query", query);
   const search = params.toString();
   return search ? `/blog?${search}` : "/blog";
 }
 
-export function ContentTypeFilter({ activeType, query }: ContentTypeFilterProps) {
+export function ContentTypeFilter({ activeType, query, tag }: ContentTypeFilterProps) {
   return (
     <nav aria-label="Filter content by type" className="flex flex-wrap gap-2">
       {CONTENT_FILTERS.map(({ label, type }) => {
-        const isActive = activeType === type;
+        const isActive = activeType === type && (type !== null || !tag);
         return (
           <Link
             key={label}
-            href={filterHref(type, query)}
+            href={filterHref(type, query, tag)}
             aria-current={isActive ? "page" : undefined}
             className={cn(
               "inline-flex min-h-11 items-center rounded-full border px-4 text-body-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool",

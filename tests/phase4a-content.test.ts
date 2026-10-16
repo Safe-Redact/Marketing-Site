@@ -3,9 +3,13 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import YAML from "yaml";
 
+import { TagNavigation } from "../src/components/blog/TagNavigation";
 import {
+  getArticleTags,
   getPublishedArticleBySlug,
   getRelatedArticles,
   loadPublishedArticles,
@@ -225,4 +229,59 @@ test("queries filter by content type and by tag", () => {
     ["one", "three"]
   );
   assert.equal(queryArticles(articles, {}).totalItems, 4);
+});
+
+test("tag navigation exposes usable filtered links and a single active state", () => {
+  const tags = getArticleTags([
+    {
+      title: "First",
+      slug: "first",
+      excerpt: "",
+      author: "SafeRedact Editorial",
+      category: "Education",
+      categorySlug: "education",
+      date: "2026-01-10T09:00:00.000Z",
+      status: "published",
+      featured: false,
+      seoDescription: "",
+      body: "",
+      readingMinutes: 1,
+      type: "guide",
+      tags: ["Privacy", "Review"],
+      tagSlugs: ["privacy", "review"],
+    },
+    {
+      title: "Second",
+      slug: "second",
+      excerpt: "",
+      author: "SafeRedact Editorial",
+      category: "Education",
+      categorySlug: "education",
+      date: "2026-01-09T09:00:00.000Z",
+      status: "published",
+      featured: false,
+      seoDescription: "",
+      body: "",
+      readingMinutes: 1,
+      type: "article",
+      tags: ["Privacy"],
+      tagSlugs: ["privacy"],
+    },
+  ]);
+
+  assert.deepEqual(tags, [
+    { name: "Privacy", slug: "privacy", count: 2 },
+    { name: "Review", slug: "review", count: 1 },
+  ]);
+
+  const html = renderToStaticMarkup(createElement(TagNavigation, {
+    tags,
+    activeSlug: "privacy",
+    query: "careful review",
+    type: "guide",
+  }));
+  assert.match(html, /aria-label="Filter content by tag"/);
+  assert.match(html, /href="\/blog\?type=guide&amp;tag=privacy&amp;query=careful\+review"/);
+  assert.match(html, /aria-current="page"[^>]*>Privacy <span[^>]*>2<\/span>/);
+  assert.equal((html.match(/aria-current="page"/g) ?? []).length, 1);
 });

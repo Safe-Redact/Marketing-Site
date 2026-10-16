@@ -1,4 +1,5 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
+import { trustedClientAddress } from "@/lib/request-address";
 
 export interface RateLimitDecision {
   allowed: boolean;
@@ -28,7 +29,7 @@ export interface RateLimiterOptions {
  * replica count. The durable limits in the service — counted from the stored rows —
  * are what actually survive a restart or a second instance; this is only the cheap
  * first gate. A shared store is required before the site runs more than one
- * instance. (Recorded in docs/marketing-revamp/COMMENTS_ACTIVATION.md.)
+ * instance; the deployment requirements are recorded in the root README.
  */
 export function createRateLimiter({
   limit,
@@ -70,16 +71,13 @@ export function createRateLimiter({
 /**
  * Reads the submitting address for the sole purpose of deriving an abuse key.
  *
- * Only the first forwarded hop is considered, because later entries are supplied by
- * the client. Requests with no usable address share one bucket rather than escaping
- * the limit altogether. The return value is never stored or logged — it goes
- * straight into deriveAuthorKey.
+ * Only the configured trusted proxy suffix is considered. Requests with no trusted
+ * proxy contract share one bucket rather than trusting caller-supplied forwarding
+ * data. The return value is never stored or logged — it goes straight into
+ * deriveAuthorKey.
  */
-export function requestAddress(request: Request): string {
-  const forwarded = request.headers.get("x-forwarded-for");
-  const first = forwarded?.split(",", 1)[0]?.trim();
-  const candidate = first || request.headers.get("x-real-ip")?.trim();
-  return candidate && candidate.length <= 64 ? candidate : "unattributed";
+export function requestAddress(request: Request, hops?: number): string {
+  return trustedClientAddress(request, hops);
 }
 
 /**

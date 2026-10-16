@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
+import { spawnSync } from "node:child_process";
 import test from "node:test";
 
 const root = new URL("../", import.meta.url);
@@ -65,13 +68,62 @@ test("Decap source configuration is provider-neutral and generated from public d
   assert.doesNotMatch(renderer, /NETLIFY_|api\.netlify\.com/i);
 });
 
-test("OAuth deployment plan requires exact callbacks and rejects the reviewed broker as-is", async () => {
-  const plan = await read("docs/marketing-revamp/DECAP_NETLIFY_AUTH_PLAN.md");
+test("OAuth operational notes require exact callbacks and retain upstream provenance", async () => {
+  const [readme, security, provenance] = await Promise.all([
+    read("services/cms-oauth-broker/README.md"),
+    read("services/cms-oauth-broker/SECURITY.md"),
+    read("services/cms-oauth-broker/UPSTREAM.md"),
+  ]);
 
-  assert.match(plan, /exact HTTPS callback/i);
-  assert.match(plan, /Wildcard callbacks are prohibited/i);
-  assert.match(plan, /not recommended for production unchanged/i);
-  assert.match(plan, /33674be7ec77c1b771983650d979cae88160e093/);
+  assert.match(readme, /exact HTTPS callback/i);
+  assert.match(security, /wildcard matching must be disabled/i);
+  assert.match(provenance, /not copied or deployed unchanged/i);
+  assert.match(provenance, /33674be7ec77c1b771983650d979cae88160e093/);
+});
+
+test("obsolete phase documents are removed while root operations remain discoverable", async () => {
+  const rootReadme = await read("README.md");
+
+  await assert.rejects(read("docs/marketing-revamp/REPOSITORY_AUDIT.md"), /ENOENT/);
+  for (const requirement of [
+    "npm run comments:migrate",
+    "pg_dump --format=custom",
+    "npm run oauth:dev",
+    "CMS_PUBLISH_BRANCH",
+    "LEAD_DELIVERY_ENDPOINT",
+    "TRUST_PROXY_HOPS",
+  ]) {
+    assert.match(rootReadme, new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  }
+});
+
+test("the repository commit hook rejects unwanted Claude attribution trailers", async () => {
+  const temporaryDirectory = await mkdtemp(path.join(tmpdir(), "saferedact-commit-hook-"));
+  const messagePath = path.join(temporaryDirectory, "COMMIT_EDITMSG");
+  try {
+    await writeFile(messagePath, "Document release\n", "utf8");
+    const accepted = spawnSync(
+      "git",
+      ["-c", "core.hooksPath=.githooks", "hook", "run", "commit-msg", "--", messagePath],
+      { cwd: new URL("../", import.meta.url), encoding: "utf8" }
+    );
+    assert.equal(accepted.status, 0, accepted.stderr);
+
+    await writeFile(
+      messagePath,
+      "Document release\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\n",
+      "utf8"
+    );
+    const rejected = spawnSync(
+      "git",
+      ["-c", "core.hooksPath=.githooks", "hook", "run", "commit-msg", "--", messagePath],
+      { cwd: new URL("../", import.meta.url), encoding: "utf8" }
+    );
+    assert.notEqual(rejected.status, 0);
+    assert.match(rejected.stderr, /AI attribution/i);
+  } finally {
+    await rm(temporaryDirectory, { recursive: true, force: true });
+  }
 });
 
 test("CMS renderer fails closed and rejects unsafe deployment configuration", async () => {

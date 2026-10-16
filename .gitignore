@@ -49,6 +49,10 @@ next-env.d.ts
 *.swo
 *~
 
+# Local Claude Code workspace state and auxiliary worktrees
+.claude/launch.json
+.claude/worktrees/
+
 # OS
 Thumbs.db
 ehthumbs.db

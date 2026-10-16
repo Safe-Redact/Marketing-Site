@@ -6,10 +6,12 @@ import { ArticleSearch } from "@/components/blog/ArticleSearch";
 import { CategoryNavigation } from "@/components/blog/CategoryNavigation";
 import { FeaturedArticle } from "@/components/blog/FeaturedArticle";
 import { Pagination } from "@/components/blog/Pagination";
+import { TagNavigation } from "@/components/blog/TagNavigation";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import {
   getArticleCategories,
+  getArticleTags,
   loadPublishedArticles,
   queryArticles,
 } from "@/lib/blog/content";
@@ -22,6 +24,7 @@ interface BlogPageProps {
     query?: string | string[];
     page?: string | string[];
     type?: string | string[];
+    tag?: string | string[];
   }>;
 }
 
@@ -45,10 +48,11 @@ export async function generateMetadata({ searchParams }: BlogPageProps): Promise
   const query = firstValue(parameters.query).trim();
   const page = parsePage(firstValue(parameters.page));
   const type = parseType(firstValue(parameters.type));
+  const tag = firstValue(parameters.tag).trim().toLowerCase();
 
   // A type filter is a real, linkable view of the hub, so it keeps its own canonical.
   // Search and paging are not: they point back at the view they refine.
-  const canonical = type ? filterHref(type) : page > 1 && !query ? `/blog?page=${page}` : "/blog";
+  const canonical = type ? filterHref(type) : "/blog";
   const label = type ? CONTENT_FILTERS.find((filter) => filter.type === type)?.label : undefined;
 
   return {
@@ -58,7 +62,7 @@ export async function generateMetadata({ searchParams }: BlogPageProps): Promise
     alternates: { canonical },
     // Search results and deeper pages are refinements of a page that is already
     // indexed; indexing them would compete with it.
-    robots: query || page > 1 ? { index: false, follow: true } : undefined,
+    robots: query || tag || page > 1 ? { index: false, follow: true } : undefined,
     openGraph: {
       type: "website",
       url: canonical,
@@ -74,15 +78,19 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const query = firstValue(parameters.query).trim().slice(0, 100);
   const page = parsePage(firstValue(parameters.page));
   const type = parseType(firstValue(parameters.type));
+  const requestedTag = firstValue(parameters.tag).trim().toLowerCase();
 
   // Insights is the single content hub: company news and product updates sit here
   // alongside editorial writing, and the type filter is how a reader narrows it.
   const articles = await loadPublishedArticles();
   const categories = getArticleCategories(articles);
+  const tags = getArticleTags(articles);
+  const activeTag = requestedTag ? tags.find((tag) => tag.slug === requestedTag) : undefined;
+  if (requestedTag && !activeTag) notFound();
 
   // The featured slot belongs to the unfiltered front page only; under a filter or a
   // search it would promote something the reader did not ask for.
-  const featured = !query && !type && page === 1
+  const featured = !query && !type && !activeTag && page === 1
     ? articles.find((article) => article.featured) ?? articles[0]
     : undefined;
   const listingArticles = featured
@@ -92,6 +100,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     query,
     page,
     type: type ?? undefined,
+    tag: activeTag?.slug,
   });
   // Guarded against `type === null`, which would otherwise match the "All content"
   // filter and make the unfiltered hub describe itself as a filtered view.
@@ -117,10 +126,22 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       <section className="py-14 sm:py-16 lg:py-20" aria-label="Article directory">
         <Container>
           <div className="border-b border-border-subtle pb-10">
-            <ContentTypeFilter activeType={type} query={query || undefined} />
+            <ContentTypeFilter
+              activeType={type}
+              query={query || undefined}
+              tag={activeTag?.slug}
+            />
             <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
-              <ArticleSearch query={query} type={type ?? undefined} />
+              <ArticleSearch query={query} type={type ?? undefined} tag={activeTag?.slug} />
               <CategoryNavigation categories={categories} showAllLink={false} />
+            </div>
+            <div className="mt-6">
+              <TagNavigation
+                tags={tags}
+                activeSlug={activeTag?.slug}
+                query={query || undefined}
+                type={type ?? undefined}
+              />
             </div>
           </div>
 
@@ -131,12 +152,12 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
               <div className="mt-12 flex flex-wrap items-end justify-between gap-4">
                 <div>
                   <Eyebrow>
-                    {query ? "Search results" : activeLabel ?? "Latest insights"}
+                    {query ? "Search results" : activeTag ? "Topic" : activeLabel ?? "Latest insights"}
                   </Eyebrow>
                   <h2 className="mt-3 font-heading text-heading-xl text-ink">
                     {query
                       ? `Results for “${query}”`
-                      : activeLabel ?? "From the SafeRedact team"}
+                      : activeTag?.name ?? activeLabel ?? "From the SafeRedact team"}
                   </h2>
                 </div>
                 <p className="text-body-sm text-ink-muted">
@@ -152,12 +173,13 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 basePath="/blog"
                 query={query || undefined}
                 type={type ?? undefined}
+                tag={activeTag?.slug}
               />
             </>
           ) : (
             <div className="mx-auto mt-14 max-w-2xl rounded-panel border border-border-subtle bg-surface-raised px-6 py-12 text-center sm:px-10">
               <Eyebrow>
-                {query || type ? "No matching results" : "Publication queue"}
+                {query || type || activeTag ? "No matching results" : "Publication queue"}
               </Eyebrow>
               <h2 className="mt-4 font-heading text-heading-xl text-ink">
                 {query
@@ -167,7 +189,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                     : "No content has been published yet"}
               </h2>
               <p className="mt-4 text-body leading-7 text-ink-muted">
-                {query || type ? (
+                {query || type || activeTag ? (
                   <>
                     Try a different phrase, or{" "}
                     <Link href="/blog" className="font-semibold text-accent-cool underline-offset-4 hover:underline">
