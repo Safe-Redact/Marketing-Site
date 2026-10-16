@@ -15,7 +15,7 @@ tags:
 date: 2026-10-16T20:46:00.000Z
 updatedDate: ""
 status: published
-featured: true
+featured: false
 seoDescription: Learn how document redaction protects sensitive information, why
   visual hiding is not enough, and how structured review supports safer document
   sharing.
