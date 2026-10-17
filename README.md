@@ -19,6 +19,7 @@ The normal HTTP site is available at `http://localhost:3000`. The CMS authentica
 
 | Command | Purpose |
 | --- | --- |
+| `npm run content:validate` | Validate every article, slug, image reference, date, and publication intent |
 | `npm run typecheck` | TypeScript validation |
 | `npm run lint` | ESLint through the current Next.js integration |
 | `npm run build` | Production build with fail-closed CMS configuration |
@@ -26,9 +27,11 @@ The normal HTTP site is available at `http://localhost:3000`. The CMS authentica
 | `npm run check:secrets` | Deterministic tracked-file secret-pattern check |
 | `npm audit --omit=dev --audit-level=low` | Root production dependency audit |
 | `npm --prefix services/cms-oauth-broker audit --omit=dev --audit-level=low` | Broker production dependency audit |
+| `npm run release:package` | Assemble the standalone `.release/bundle` from a completed build |
+| `npm run release:verify` | Exercise readiness, blue/green traffic switching, article visibility, assets, and rollback locally |
 | `git diff --check` | Whitespace and conflict-marker check |
 
-CI runs these checks without deploying. The intended required GitHub checks are `quality / verify`, `security / production-audit`, and `security / tracked-secret-policy`. Repository administrators must separately enforce pull requests, independent approval, current checks, resolved review conversations, and blocked force-push/deletion on the production branch.
+Pull requests into `master` or the current publishing-development branch run provider-neutral CI without secrets or deployment permissions. A separate workflow runs only after an approved commit reaches `master`; it repeats validation, builds the exact SHA, verifies the standalone release, and uploads an immutable artifact. It does not deploy. The intended required GitHub checks are `quality / verify`, `security / production-audit`, and `security / tracked-secret-policy`. Repository administrators must separately enforce pull requests, independent approval, current checks, resolved review conversations, and blocked force-push/deletion on `master`.
 
 This checkout enables `.githooks/commit-msg` through the repository-local `core.hooksPath` setting. New clones should run `git config --local core.hooksPath .githooks`; the hook rejects known automated AI attribution trailers without changing the human author or committer identity.
 
@@ -40,9 +43,15 @@ Copy `.env.example` to the ignored `.env.local` only for local development. Depl
 
 ## Insights and publishing
 
-Public content lives as validated Markdown in `content/blog`. Only entries with `status: published` and a current or past publication date appear in listings, article routes, filters, or the sitemap. Draft, scheduled, and archived entries remain undiscoverable.
+Public content lives as validated Markdown in `content/blog`. Git and Decap's `editorial_workflow` are authoritative for Draft, In review, Approved, and Published: saving creates or updates a temporary `cms/...` branch and pull request; publishing merges that pull request only when GitHub protection permits it. Frontmatter deliberately has no competing draft status. Its `publication` field controls post-merge visibility only:
 
-The editor is served at `/admin/index.html` (`/admin` redirects there). Its generated public configuration is `public/admin/config.yml`; the file is ignored and must contain deployment coordinates only, never credentials. Configure the root environment with:
+- `immediate`: visible as soon as the approved release is healthy; a date more than five minutes in the future is rejected.
+- `scheduled`: included in the release but hidden until the configured UTC time, then evaluated dynamically by Insights, article/category routes, and the sitemap.
+- `archived`: retained in Git and excluded from public routes, search, filters, metadata, comments, and the sitemap.
+
+Changing an existing slug or deleting an article must be reviewed in GitHub because it changes a public URL. Prefer `archived` for withdrawal. Git history is the recovery and rollback mechanism.
+
+The editor is served at `/admin/index.html` (`/admin` redirects there). `/admin/config.yml` is generated dynamically from public deployment coordinates, so a standalone artifact can move between compatible hosts without embedding an origin or branch. Missing/invalid settings fail closed with non-routable `.invalid` coordinates. Configure the application environment with:
 
 - `CMS_ENABLED`
 - `PUBLIC_SITE_ORIGIN`
@@ -52,7 +61,9 @@ The editor is served at `/admin/index.html` (`/admin` redirects there). Its gene
 - `CMS_PUBLISH_BRANCH`
 - `CMS_AUTH_SCOPE` (currently exactly `public_repo`)
 
-Run `npm run cms:config` and inspect the generated file before starting an enabled CMS. Missing configuration renders non-routable `.invalid` origins. Use a reviewed non-production publishing branch for acceptance; OAuth authentication does not replace GitHub branch protection or editorial approval.
+`npm run cms:config` validates these values without writing a static file. Development may target `feat/saferedact-publishing-and-comments`; after this code is reviewed and merged, the production application must set `CMS_PUBLISH_BRANCH=master`. OAuth authentication does not replace branch protection or independent approval.
+
+The CMS disables generic deploy-preview links because no provider-neutral draft deployment service exists. Its authenticated editor preview renders draft content inside the studio, checks the current public article URL with a same-origin HEAD request, links to it only when the deployed release returns success, and otherwise states that review, merge, and release are still pending. No public draft route exists.
 
 ## CMS and OAuth
 
@@ -74,7 +85,9 @@ npm run dev:https
 
 The broker requires `GITHUB_OAUTH_CLIENT_ID`, `GITHUB_OAUTH_CLIENT_SECRET`, `OAUTH_PUBLIC_ORIGIN`, `OAUTH_CALLBACK_URL`, `OAUTH_ALLOWED_ORIGINS`, `OAUTH_ALLOWED_REPOSITORY`, `OAUTH_ALLOWED_GITHUB_USER_IDS`, `OAUTH_STATE_SECRET`, `OAUTH_GITHUB_SCOPE`, `OAUTH_TLS_CERT_PATH`, and `OAUTH_TLS_KEY_PATH`. Optional limits are documented in the broker environment template.
 
-The current in-memory OAuth transaction store supports one long-running HTTPS process only. Do not deploy it to multiple replicas or an ephemeral serverless runtime until an atomic shared consume-once TTL store is implemented. The Safe-Redact organization must approve the OAuth App before organization-restricted staff can complete login.
+The current in-memory OAuth transaction store supports one long-running HTTPS process only. Do not deploy it to multiple replicas or an ephemeral serverless runtime until an atomic shared consume-once TTL store is implemented. Organization approval and real CMS repository writes have been confirmed externally; every new broker deployment still requires exact-origin/callback acceptance with approved credentials.
+
+Decap's GitHub workflow does not provide separate Writer, Reviewer, and Publisher roles. All CMS users need repository push access, and a user who clicks Publish asks GitHub to merge the editorial pull request. Enforce separation with GitHub teams and `master` protection: require a pull request, at least one approval from someone other than the last pusher, current required checks, resolved conversations, no force pushes/deletion, and no bypass permission for ordinary CMS staff.
 
 ## Visitor comments and moderation
 
@@ -116,4 +129,6 @@ Before production activation, approve the provider and destination, configure sh
 - GitHub branch protection and organization OAuth approval.
 - Legal/privacy destinations and final cross-browser, mobile, accessibility, and performance acceptance.
 
-The production host is intentionally not hardcoded. CI contains no deploy job, and temporary preview hosting is not part of the application architecture.
+The production host is intentionally not hardcoded. CI contains no deploy job, and temporary preview hosting is not part of the application architecture. Each successful `master` run uploads `.release/bundle`, whose `release-manifest.json` records the commit SHA, build identity, Next build ID, start command, readiness path, and traffic-switch contract.
+
+The infrastructure adapter must unpack each artifact into a new immutable release directory, inject runtime secrets and public CMS coordinates, start `node server.js` on a new internal port, require HTTP 200 from `/api/health`, and only then atomically switch the reverse proxy/load balancer. Keep the previous release and its `/_next/static` assets addressable until in-flight requests drain. On failed health or post-switch checks, leave or restore the previous upstream. Database migrations must be backward-compatible across both versions and run separately before traffic switching. The repository's `release:verify` command demonstrates this contract locally; selecting/configuring the real proxy, host, credentials, monitoring, retention, and rollback store remains **DEPLOYMENT-PENDING**.

@@ -7,15 +7,34 @@ async function get(pathname, options) {
   return fetch(`${baseUrl}${pathname}`, { redirect: "manual", ...options });
 }
 
-test("empty production blog renders an honest accessible landing page", async () => {
-  const response = await get("/blog");
-  const html = await response.text();
+test("the published CMS article renders and remains discoverable across Insights", async () => {
+  const [hub, article, search, tag, archived, sitemap] = await Promise.all([
+    get("/blog"),
+    get("/blog/understanding-document-redaction"),
+    get("/blog?query=document"),
+    get("/blog?tag=data-privacy"),
+    get("/blog/cms-publishing-test"),
+    get("/sitemap.xml"),
+  ]);
+  const [hubHtml, articleHtml, searchHtml, tagHtml, sitemapXml] = await Promise.all([
+    hub.text(),
+    article.text(),
+    search.text(),
+    tag.text(),
+    sitemap.text(),
+  ]);
 
-  assert.equal(response.status, 200);
-  assert.match(html, /<h1[^>]*>\s*Insights\s*<\/h1>/);
-  assert.match(html, /No content has been published yet/i);
-  assert.doesNotMatch(html, /development fixture/i);
-  assert.match(html, /<form[^>]+role="search"/);
+  for (const response of [hub, article, search, tag, sitemap]) assert.equal(response.status, 200);
+  assert.equal(archived.status, 404);
+  assert.match(hubHtml, /<h1[^>]*>\s*Insights\s*<\/h1>/);
+  assert.match(hubHtml, /Understanding Document Redaction and Why It Matters/);
+  assert.doesNotMatch(hubHtml, /No content has been published yet/i);
+  assert.match(articleHtml, /rel="canonical" href="https:\/\/saferedact\.io\/blog\/understanding-document-redaction"/);
+  assert.match(searchHtml, /Understanding Document Redaction and Why It Matters/);
+  assert.match(tagHtml, /Understanding Document Redaction and Why It Matters/);
+  assert.match(sitemapXml, /\/blog\/understanding-document-redaction<\/loc>/);
+  assert.doesNotMatch(sitemapXml, /cms-publishing-test/);
+  assert.match(hubHtml, /<form[^>]+role="search"/);
 });
 
 test("search results are not indexed as duplicate editorial pages", async () => {

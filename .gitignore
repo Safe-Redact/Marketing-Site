@@ -7,6 +7,7 @@ node_modules/
 # Build outputs
 .next/
 out/
+.release/
 
 # Production
 build/
@@ -60,9 +61,6 @@ Desktop.ini
 
 # Testing
 coverage/
-
-# Generated public CMS configuration (rendered from config/decap-cms.yml)
-public/admin/config.yml
 
 # Next.js
 .eslintcache

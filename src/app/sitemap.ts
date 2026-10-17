@@ -2,6 +2,10 @@ import type { MetadataRoute } from "next";
 import { CONTENT_FILTERS } from "@/components/blog/ContentTypeFilter";
 import { getArticleCategories, isAnnouncement, loadPublishedArticles } from "@/lib/blog/content";
 
+// Scheduled content enters the sitemap at its approved UTC publication time without
+// requiring a host-specific cron rebuild.
+export const dynamic = "force-dynamic";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://saferedact.io";
   const articles = await loadPublishedArticles();

@@ -1,6 +1,5 @@
 ---
-title: Understanding Document Redaction and Why It MattersUnderstanding Document
-  Redaction and Why It Matters
+title: Understanding Document Redaction and Why It Matters
 slug: understanding-document-redaction
 excerpt: Document redaction helps organizations protect sensitive information
   before sharing files. Learn what redaction means, why it matters, and how a
@@ -10,18 +9,16 @@ type: article
 category: Data Privacy
 tags:
   - Document Redaction
-  - Data PrivacyData Privacy
+  - Data Privacy
   - Sensitive Information
 date: 2026-10-16T20:46:00.000Z
 updatedDate: ""
-status: published
+publication: immediate
 featured: false
 seoDescription: Learn how document redaction protects sensitive information, why
   visual hiding is not enough, and how structured review supports safer document
   sharing.
 ---
-# Understanding Document Redaction and Why It Matters
-
 Organizations routinely share documents containing sensitive information. These may include contracts, financial records, reports, correspondence, and identification details.
 
 Before such information is shared externally, teams need to determine what should remain visible and what should be removed.

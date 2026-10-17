@@ -59,7 +59,9 @@ const baseUrl = `http://127.0.0.1:${port}`;
 const nextBin = path.join(repositoryRoot, "node_modules", "next", "dist", "bin", "next");
 const server = spawn(process.execPath, [nextBin, "start", "-H", "127.0.0.1", "-p", String(port)], {
   cwd: repositoryRoot,
-  env: { ...process.env, PORT: String(port) },
+  // Route acceptance must exercise the deterministic fail-closed CMS profile,
+  // never a developer's ignored .env.local deployment coordinates.
+  env: { ...process.env, PORT: String(port), CMS_ENABLED: "false" },
   stdio: ["ignore", "pipe", "pipe"],
 });
 

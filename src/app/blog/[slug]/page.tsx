@@ -18,9 +18,9 @@ interface ArticlePageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  return (await loadPublishedArticles()).map(({ slug }) => ({ slug }));
-}
+// Publication eligibility is evaluated at request time so scheduled and archived
+// entries follow the deployed content manifest without requiring an extra rebuild.
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;

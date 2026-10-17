@@ -176,7 +176,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 tag={activeTag?.slug}
               />
             </>
-          ) : (
+          ) : featured ? null : (
             <div className="mx-auto mt-14 max-w-2xl rounded-panel border border-border-subtle bg-surface-raised px-6 py-12 text-center sm:px-10">
               <Eyebrow>
                 {query || type || activeTag ? "No matching results" : "Publication queue"}

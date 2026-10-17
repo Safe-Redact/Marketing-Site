@@ -6,6 +6,7 @@ const applicationRoot = path.dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  output: "standalone",
   outputFileTracingRoot: applicationRoot,
   images: {
     formats: ["image/avif", "image/webp"],

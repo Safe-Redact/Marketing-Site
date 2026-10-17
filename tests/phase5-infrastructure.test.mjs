@@ -268,14 +268,16 @@ test("local environment files load through Node natively and add no dependency",
   const packageJson = JSON.parse(packageJsonText);
   const brokerPackageJson = JSON.parse(brokerPackageJsonText);
 
-  // The renderer runs in predev/prebuild, before Next reads any env file, so it
-  // loads the root file itself through the Node runtime flag.
+  // The renderer can be checked locally with deployment coordinates, while the
+  // application serves the public configuration dynamically at runtime.
   assert.match(packageJson.scripts["cms:config"], /^node --env-file-if-exists=\.env\.local /);
   assert.equal(
     packageJson.scripts["dev:https"],
     "node --env-file-if-exists=.env.local scripts/dev-https.mjs"
   );
-  assert.equal(packageJson.scripts["predev:https"], "npm run cms:config");
+  assert.equal(packageJson.scripts["predev:https"], "npm run content:validate");
+  assert.equal(packageJson.scripts.prebuild, "npm run content:validate");
+  assert.equal(packageJson.scripts.prestart, "npm run content:validate");
   assert.equal(packageJson.scripts["oauth:dev"], "npm --prefix services/cms-oauth-broker run dev");
   assert.equal(
     brokerPackageJson.scripts.dev,
@@ -287,10 +289,11 @@ test("local environment files load through Node natively and add no dependency",
   assert.equal(brokerPackageJson.scripts.start, "node src/start.mjs");
   assert.doesNotMatch(brokerPackageJson.scripts.test, /--env-file/);
 
-  // Test and CI renders use a fixed disabled environment, never .env.local.
+  // The optional check profile is deterministic and tests never generate a static
+  // file that could shadow the runtime route.
   assert.equal(packageJson.scripts["cms:config:test"], "node scripts/render-cms-config.mjs --disabled");
   for (const hook of ["pretest", "pretest:static", "pretest:content"]) {
-    assert.equal(packageJson.scripts[hook], "npm run cms:config:test");
+    assert.equal(packageJson.scripts[hook], undefined);
   }
 
   for (const manifest of [packageJson, brokerPackageJson]) {

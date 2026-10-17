@@ -1,5 +1,4 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
@@ -24,7 +23,7 @@ const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url))
 const fixturesDirectory = path.join(repositoryRoot, "tests", "fixtures", "blog");
 const fixedNow = new Date("2026-10-14T12:00:00.000Z");
 
-test("published loader excludes drafts, archived entries, and future-dated entries", async () => {
+test("published loader excludes archived entries and future scheduled entries", async () => {
   const articles = await loadPublishedArticles({ directory: fixturesDirectory, now: fixedNow });
 
   assert.deepEqual(
@@ -113,10 +112,8 @@ test("article metadata and structured data use verified frontmatter only", async
 });
 
 test("Decap configuration uses the reviewed Git target and pull-request editorial workflow", async () => {
-  const configText = await readFile(
-    path.join(repositoryRoot, "public", "admin", "config.yml"),
-    "utf8"
-  );
+  const { buildCmsConfig } = await import("../scripts/render-cms-config.mjs");
+  const configText = buildCmsConfig({ CMS_ENABLED: "false" });
   const config = YAML.parse(configText);
   const articles = config.collections.find((collection: { name: string }) => collection.name === "articles");
 
@@ -128,6 +125,8 @@ test("Decap configuration uses the reviewed Git target and pull-request editoria
   assert.equal(config.public_folder, "/images/blog");
   assert.equal(articles.folder, "content/blog");
   assert.equal(articles.format, "frontmatter");
+  assert.equal(articles.fields.some((field: { name: string }) => field.name === "status"), false);
+  assert.ok(articles.fields.some((field: { name: string }) => field.name === "publication"));
   assert.equal(config.backend.base_url, "https://cms-auth.invalid");
   assert.equal(config.backend.auth_endpoint, "auth");
   assert.equal(config.backend.auth_scope, "public_repo");
@@ -153,7 +152,7 @@ test("the content type is constrained to the four approved kinds", () => {
     author: "SafeRedact Editorial",
     category: "Education",
     date: "2026-01-10T09:00:00.000Z",
-    status: "published",
+    publication: "immediate",
     seoDescription: "Development fixture verifying that the article content type accepts only approved kinds.",
   };
 
@@ -173,7 +172,7 @@ test("tags are bounded, de-duplicated, and carry URL slugs", () => {
     author: "SafeRedact Editorial",
     category: "Education",
     date: "2026-01-10T09:00:00.000Z",
-    status: "published",
+    publication: "immediate",
     seoDescription: "Development fixture verifying that article tags are bounded and produce safe URL slugs.",
   };
 
@@ -199,7 +198,7 @@ test("queries filter by content type and by tag", () => {
       category: "Education",
       categorySlug: "education",
       date: "2026-01-10T09:00:00.000Z",
-      status: "published",
+      publication: "immediate",
       featured: false,
       seoDescription: "",
       body: "",
@@ -241,7 +240,7 @@ test("tag navigation exposes usable filtered links and a single active state", (
       category: "Education",
       categorySlug: "education",
       date: "2026-01-10T09:00:00.000Z",
-      status: "published",
+      publication: "immediate",
       featured: false,
       seoDescription: "",
       body: "",
@@ -258,7 +257,7 @@ test("tag navigation exposes usable filtered links and a single active state", (
       category: "Education",
       categorySlug: "education",
       date: "2026-01-09T09:00:00.000Z",
-      status: "published",
+      publication: "immediate",
       featured: false,
       seoDescription: "",
       body: "",

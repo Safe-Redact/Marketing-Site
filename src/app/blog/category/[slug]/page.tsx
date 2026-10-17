@@ -18,10 +18,6 @@ interface CategoryPageProps {
   searchParams: Promise<{ page?: string | string[] }>;
 }
 
-export async function generateStaticParams() {
-  return getArticleCategories(await loadPublishedArticles()).map(({ slug }) => ({ slug }));
-}
-
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const { slug } = await params;
   const category = getArticleCategories(await loadPublishedArticles())
