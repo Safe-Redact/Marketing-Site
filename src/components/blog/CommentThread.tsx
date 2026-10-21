@@ -49,7 +49,7 @@ function CommentNode({
               </span>
               {comment.isStaff ? (
                 <span className="inline-flex items-center rounded-sm border border-accent-cool/40 bg-accent-cool/10 px-2 py-0.5 font-heading text-caption font-semibold uppercase tracking-[0.04em] text-accent-cool">
-                  SafeRedact team
+                  OpenRedakt team
                 </span>
               ) : null}
               <time dateTime={comment.createdAt} className="text-caption text-ink-muted">
@@ -113,7 +113,7 @@ export async function CommentThread({ articleSlug }: { articleSlug: string }) {
           {total === 0 ? "No comments yet" : `${total} ${total === 1 ? "comment" : "comments"}`}
         </h2>
         <p className="mt-3 text-body-sm leading-6 text-ink-muted">
-          Comments are reviewed by the SafeRedact team before they appear. Please keep
+          Comments are reviewed by the OpenRedakt team before they appear. Please keep
           personal and client information out of your comment.
         </p>
 

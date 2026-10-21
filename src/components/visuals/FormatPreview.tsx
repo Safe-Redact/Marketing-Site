@@ -1,5 +1,17 @@
+"use client";
+
 import Image from "next/image";
-import { Icon } from "@/components/ui/Icon";
+import { ShowcaseThemeToggle } from "@/components/visuals/ShowcaseThemeToggle";
+import { useShowcaseTheme } from "@/components/visuals/ShowcaseThemeProvider";
+import {
+  getShowcaseAspectRatio,
+  getShowcaseImageUrl,
+  resolveShowcaseScreenshot,
+  showcaseScreenshots,
+  type ShowcaseScreenshot,
+  type ShowcaseScreenshotId,
+  type ShowcaseScreenshotVariants,
+} from "@/components/visuals/showcase-screenshots";
 
 interface FormatPreviewProps {
   visual: string;
@@ -7,58 +19,43 @@ interface FormatPreviewProps {
 }
 
 /**
- * The per-format panel under "Why SafeRedact".
+ * The per-format panel under "Why OpenRedakt".
  *
  * All three formats show authentic captures of the application, each at its own
  * aspect ratio so the whole screen is visible rather than cropped into a fixed box.
  */
-interface Screenshot {
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
-}
-
-const screenshots: Record<string, Screenshot> = {
-  document: {
-    src: "/images/product/format-documents.png",
-    alt: "Screenshot of the SafeRedact document editor: a page marked for redaction beside the manual redaction tools, the reason library and the findings list",
-    width: 1463,
-    height: 869,
-  },
-  audio: {
-    src: "/images/product/format-audio.png",
-    alt: "Screenshot of the SafeRedact audio workspace: a waveform beside a speaker-separated transcript, with transport controls and the timeline below",
-    width: 1102,
-    height: 715,
-  },
-  video: {
-    src: "/images/product/format-video.png",
-    alt: "Screenshot of the SafeRedact video workspace: a frame in the preview pane with the pixelate effect and its level, beside the project files and the timeline",
-    width: 1479,
-    height: 806,
-  },
+const formatScreenshotIds: Record<string, ShowcaseScreenshotId> = {
+  document: "format-document",
+  audio: "format-audio",
+  video: "format-video",
 };
 
-export function FormatPreview({ visual, fileLabel }: FormatPreviewProps) {
-  const screenshot = screenshots[visual];
+export function FormatPreview({ visual }: FormatPreviewProps) {
+  const { theme } = useShowcaseTheme();
+  const screenshotId = formatScreenshotIds[visual];
+  const variants = screenshotId ? showcaseScreenshots[screenshotId] : null;
+  const lightAvailable = variants?.light != null;
+  const effectiveTheme = lightAvailable ? theme : "dark";
+  const screenshot = variants ? resolveShowcaseScreenshot(variants, effectiveTheme) : null;
 
   return (
-    <figure className="relative min-h-[310px] overflow-hidden rounded-panel border border-border-subtle bg-[#0c111f] p-5 sm:min-h-[390px] sm:p-7">
-      <div className="relative flex items-center justify-between border-b border-border-subtle pb-4">
-        <div className="flex items-center gap-3">
-          <span className="grid h-9 w-9 place-items-center rounded-control bg-accent-cool/10 text-accent-cool">
-            <Icon name={visual === "audio" ? "audio" : visual === "video" ? "video" : "document"} size={18} />
-          </span>
-          <div>
-            <p className="font-heading text-xs font-semibold text-ink">{fileLabel}</p>
-            <p className="text-[10px] text-ink-muted">Review workspace</p>
+    <figure className="relative overflow-hidden rounded-panel border border-border-subtle bg-[#0c111f] p-3 sm:p-4">
+      {screenshot && variants ? (
+        <>
+          <div
+            data-showcase-theme-controls="true"
+            className="relative mb-3 flex min-h-7 items-center justify-end"
+          >
+            <ShowcaseThemeToggle lightAvailable={lightAvailable} />
           </div>
-        </div>
-        <span className="rounded-control border border-accent-mint/25 bg-accent-mint/10 px-2 py-1 text-[9px] font-semibold uppercase tracking-wide text-accent-mint">Ready</span>
-      </div>
-
-      {screenshot ? <ScreenshotPanel {...screenshot} /> : null}
+          <ScreenshotPanel
+            screenshot={screenshot}
+            screenshotId={screenshotId}
+            variants={variants}
+            theme={effectiveTheme}
+          />
+        </>
+      ) : null}
       <figcaption className="sr-only">{screenshot?.alt}</figcaption>
     </figure>
   );
@@ -70,20 +67,35 @@ export function FormatPreview({ visual, fileLabel }: FormatPreviewProps) {
  * was inherited from the illustration these replaced and stranded the screenshot in
  * empty space.
  */
-function ScreenshotPanel({ src, alt, width, height }: Screenshot) {
+function ScreenshotPanel({
+  screenshot,
+  screenshotId,
+  variants,
+  theme,
+}: {
+  screenshot: ShowcaseScreenshot;
+  screenshotId: ShowcaseScreenshotId;
+  variants: ShowcaseScreenshotVariants;
+  theme: "dark" | "light";
+}) {
+  const { alt, revision } = screenshot;
+  const src = getShowcaseImageUrl(screenshot);
+
   return (
     <div
-      className="product-visual relative mt-6 w-full overflow-hidden"
-      style={{ aspectRatio: `${width} / ${height}` }}
+      data-showcase-screenshot="true"
+      className="product-visual relative w-full overflow-hidden"
+      style={{ aspectRatio: getShowcaseAspectRatio(variants) }}
     >
       <Image
+        key={`${screenshotId}-${theme}-${revision ?? "unversioned"}`}
         src={src}
         alt={alt}
         fill
         // ~290px on a phone, ~612px from sm; 2x of the widest case keeps UI text crisp.
         sizes="(max-width: 639px) 100vw, 640px"
         quality={92}
-        className="object-cover"
+        className="object-contain motion-safe:animate-fade-in"
       />
     </div>
   );

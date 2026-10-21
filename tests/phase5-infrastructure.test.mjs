@@ -217,18 +217,19 @@ test("OAuth broker remains isolated, provider-neutral in deployment, and part of
   assert.doesNotMatch(activeSource, /\bgh[pousr]_[A-Za-z0-9]{20,}\b|BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY/);
 });
 
-test("the Decap eval exception is confined to the admin document policy", async () => {
+test("eval is limited to the Decap shell and the Next development runtime", async () => {
   const [shell, nextConfig, middleware] = await Promise.all([
     read("public/admin/index.html"),
     read("next.config.ts"),
     read("src/middleware.ts"),
   ]);
 
-  // No response header may ever grant eval: next.config.ts and src/middleware.ts are
-  // the only header sources in this application, and the exception must not leak into
-  // a route pattern or the per-request public policy.
+  // Static production headers never grant eval. The request middleware has one
+  // explicit development-only exception for Next's source maps and React Refresh;
+  // the production route suite below verifies that branch never reaches a release.
   assert.doesNotMatch(nextConfig, /unsafe-eval/);
-  assert.doesNotMatch(middleware, /unsafe-eval/);
+  assert.match(middleware, /process\.env\.NODE_ENV === "development"/);
+  assert.match(middleware, /\? `script-src [^`]*'unsafe-eval'`/);
 
   const policy = /http-equiv="Content-Security-Policy"[\s\S]*?content="([^"]+)"/.exec(shell)?.[1];
   assert.ok(policy, "the admin shell must declare a document-level CSP");
@@ -409,6 +410,7 @@ test("the pages that render inline scripts read the nonce, which keeps them out 
     assert.match(source, /contentSecurityPolicyNonce/);
     assert.match(source, /<script[^>]*nonce=\{nonce\}/);
   }
+  assert.match(layout, /<script[^>]*suppressHydrationWarning[^>]*nonce=\{nonce\}|<script[^>]*nonce=\{nonce\}[^>]*suppressHydrationWarning/);
   assert.match(layout, /export default async function RootLayout/);
 
   // Nothing below the root layout may be prerendered: a prerendered document would be

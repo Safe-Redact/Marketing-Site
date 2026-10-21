@@ -53,7 +53,7 @@ export function createPopupResponse({ origin, outcome }) {
   const nonce = randomBytes(18).toString("base64url");
   const body = `<!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>SafeRedact CMS authentication</title></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>OpenRedakt CMS authentication</title></head>
 <body><p>Completing secure authentication…</p>
 <script nonce="${nonce}">
 (() => {

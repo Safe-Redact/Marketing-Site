@@ -1,6 +1,6 @@
-# SafeRedact marketing site
+# OpenRedakt marketing site
 
-The public marketing website for SafeRedact, an AI-powered redaction software platform. It explains verified product capabilities, hosts the Insights content hub, accepts demo/contact enquiries, and can expose moderated article discussions. It does not distribute the desktop application or provide an application login.
+The public marketing website for OpenRedakt, an AI-powered redaction software platform. It explains verified product capabilities, hosts the Insights content hub, accepts demo/contact enquiries, and can expose moderated article discussions. It does not distribute the desktop application or provide an application login.
 
 The site is a Next.js 15 App Router application using React 19, TypeScript, and Tailwind CSS. It requires a Node.js server for middleware, API routes, and dynamic content; it is not a static export.
 
@@ -117,6 +117,20 @@ Do not restore development data into production and do not reuse the development
 `POST /api/contact` validates and bounds JSON, applies a honeypot and in-process throttling, and logs only an opaque reference and outcome. With no provider configured it returns an honest accepted-but-not-delivered response. Real delivery requires all of `LEAD_DELIVERY_ENDPOINT`, `LEAD_DELIVERY_TOKEN`, `LEAD_DELIVERY_FROM`, and `LEAD_DELIVERY_TO`; only a successful provider acknowledgement is reported as delivered.
 
 Before production activation, approve the provider and destination, configure shared/edge abuse protection for multi-instance hosting, verify a real non-production delivery, add monitoring, and approve privacy and retention terms. The current application-level lead limiter is process-local.
+
+## Public support chat
+
+The optional Chatwoot website SDK is disabled by default. When enabled, the site shows an OpenRedakt-styled launcher but makes no Chatwoot request until a visitor activates it. The native conversation panel then opens with Chatwoot's own controls. File upload is disabled and the integration sends no visitor identity or custom metadata.
+
+Configure all three values in the Next.js server environment:
+
+- `OPENREDAKT_CHATWOOT_ENABLED=true`
+- `OPENREDAKT_CHATWOOT_BASE_URL` — the exact HTTPS origin of the dedicated OpenRedakt Chatwoot instance, with no path, query, credentials, or wildcard
+- `OPENREDAKT_CHATWOOT_WEBSITE_TOKEN` — the public website-inbox token for OpenRedakt, never a private Chatwoot API credential
+
+Missing, partial, or invalid configuration fails closed and renders no launcher. Do not reuse the Safaridesk inbox or token. The CSP adds only the configured HTTPS and WebSocket origins, and only while the validated integration is enabled. A live OpenRedakt inbox, token, remote greeting, retention policy, legal disclosure, and final support email remain production prerequisites.
+
+The canonical site URL and direct-contact address still use the functioning legacy `saferedact.io` coordinates until official OpenRedakt replacements are approved. They are recorded in `src/content/site.ts` as `legacy-pending-migration`; do not present them as new-brand coordinates.
 
 ## Deployment requirements
 

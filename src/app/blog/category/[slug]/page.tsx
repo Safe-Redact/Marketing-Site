@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
   return {
     title: `${category.name} Insights`,
-    description: `Published SafeRedact articles in the ${category.name} category.`,
+    description: `Published OpenRedakt articles in the ${category.name} category.`,
     alternates: { canonical: `/blog/category/${category.slug}` },
   };
 }
@@ -53,7 +53,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
             {category.name}
           </h1>
           <p className="mt-5 max-w-2xl text-body-lg leading-8 text-ink-muted">
-            Browse published SafeRedact insights in this category.
+            Browse published OpenRedakt insights in this category.
           </p>
         </Container>
       </section>

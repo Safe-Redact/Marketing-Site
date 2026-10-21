@@ -15,7 +15,7 @@ test("homepage exposes the approved Phase 1 platform narrative", async () => {
   // described image instead of text that used to sit in a drawn title bar.
   assert.match(html, /data-hero-workbench/);
   assert.match(html, /hero-document-review/);
-  assert.match(html, /Screenshot of the SafeRedact editor/);
+  assert.match(html, /Screenshot of the current redaction editor/);
   assert.match(html, /Documents &amp; images/);
   assert.match(html, /Video/);
   assert.match(html, /Audio/);

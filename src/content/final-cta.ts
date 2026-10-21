@@ -1,7 +1,7 @@
 export const finalCtaContent = {
-  headline: "Request a SafeRedact Demo",
+  headline: "Request an OpenRedakt Demo",
   subheadline:
-    "Tell us which source formats and review workflow you want to evaluate. You can also contact SafeRedact directly by email.",
+    "Tell us which source formats and review workflow you want to evaluate. You can also contact OpenRedakt directly by email.",
   form: {
     nameLabel: "Full Name",
     namePlaceholder: "Your name",
@@ -23,7 +23,7 @@ export const finalCtaContent = {
     messagePlaceholder:
       "Tell us about your redaction needs: what type of files, approximate volume, and any specific requirements.",
     deliveryNotice:
-      "Your enquiry is validated and sent only to the SafeRedact team. The confirmation after you submit states whether it was delivered; when delivery is unavailable it says so, and you can email support directly.",
+      "Your enquiry is validated before delivery is attempted. The confirmation after you submit states whether it was delivered; when delivery is unavailable it says so, and you can use direct contact instead.",
     submitLabel: "Submit Demo Enquiry",
     submittingLabel: "Submitting...",
   },

@@ -14,7 +14,7 @@ export default function ModerationPage() {
   return (
     <main id="main-content" className="min-h-screen bg-canvas text-ink">
       <Container className="max-w-[60rem] py-14 sm:py-16">
-        <Eyebrow>SafeRedact staff</Eyebrow>
+        <Eyebrow>OpenRedakt staff</Eyebrow>
         <h1 className="mt-3 font-heading text-[clamp(2rem,4vw,3rem)] font-semibold leading-[1.08] tracking-[-0.03em] text-ink">
           Comment moderation
         </h1>

@@ -143,7 +143,6 @@ const requiredPublicDirectives = [
   "base-uri 'self'",
   "form-action 'self'",
   "frame-ancestors 'none'",
-  "frame-src 'none'",
 ];
 
 const publicRoutes = [
@@ -171,6 +170,24 @@ function directives(policy) {
   );
 }
 
+function expectedChatwootSources(parsed, route) {
+  const frameSrc = parsed.get("frame-src");
+
+  if (frameSrc === "'none'") {
+    return null;
+  }
+
+  assert.match(frameSrc ?? "", /^https:\/\/[^\s/]+(?::\d+)?$/, `${route} must use one exact HTTPS chat origin`);
+  const origin = new URL(frameSrc).origin;
+  assert.equal(frameSrc, origin, `${route} must not grant a path or trailing slash in frame-src`);
+
+  const socketOrigin = origin.replace(/^https:/, "wss:");
+  assert.equal(parsed.get("img-src"), `'self' data: ${origin}`, route);
+  assert.equal(parsed.get("connect-src"), `'self' ${origin} ${socketOrigin}`, route);
+
+  return origin;
+}
+
 test("every public route serves the strict nonce-based policy", async () => {
   const responses = await Promise.all(publicRoutes.map((route) => get(route)));
 
@@ -183,8 +200,13 @@ test("every public route serves the strict nonce-based policy", async () => {
       assert.ok(policy.includes(directive), `${route} must keep ${directive}`);
     }
 
-    const scriptSrc = directives(policy).get("script-src");
-    assert.match(scriptSrc ?? "", /^'self' 'nonce-[A-Za-z0-9+/]{22}=='$/, route);
+    const parsed = directives(policy);
+    const chatwootOrigin = expectedChatwootSources(parsed, route);
+    const scriptSrc = parsed.get("script-src");
+    const expectedScript = chatwootOrigin
+      ? new RegExp(`^'self' 'nonce-[A-Za-z0-9+/]{22}==' ${chatwootOrigin.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`)
+      : /^'self' 'nonce-[A-Za-z0-9+/]{22}=='$/;
+    assert.match(scriptSrc ?? "", expectedScript, route);
   }
 });
 
@@ -200,9 +222,10 @@ test("the public policy never grants eval or inline script, and keeps inline sty
     assert.doesNotMatch(parsed.get("script-src") ?? "", /'unsafe-inline'|\*|data:/, route);
     assert.doesNotMatch(parsed.get("style-src") ?? "", /'unsafe-inline'/, route);
 
-    // The admin document widens connect-src to blob: for the editor's media reads.
-    // Public routes must stay at 'self' exactly, with no scheme added.
-    assert.equal(parsed.get("connect-src"), "'self'", route);
+    // The public policy stays at 'self' unless the fail-closed support integration
+    // is configured, in which case only one exact HTTPS origin and its WSS peer
+    // are permitted. The admin document's blob: allowance must never leak here.
+    expectedChatwootSources(parsed, route);
 
     // The single inline allowance is scoped to the style attribute and nowhere else.
     const inlineAllowances = [...parsed].filter(([, sources]) => sources.includes("'unsafe-inline'"));

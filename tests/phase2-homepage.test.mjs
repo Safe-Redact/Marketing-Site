@@ -103,7 +103,7 @@ test("contact form states the delivery outcome instead of assuming one", async (
   // Delivery is reported from the response, never asserted by the form itself, and
   // an undelivered enquiry must say so rather than implying it reached someone.
   assert.match(section, /result\.delivered/);
-  assert.match(section, /has been sent to the SafeRedact team/i);
+  assert.match(section, /has been delivered/i);
   assert.match(section, /delivery is not yet switched on, so nobody has received it/i);
   assert.doesNotMatch(content, /we will reply/i);
 });

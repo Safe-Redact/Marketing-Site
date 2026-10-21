@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { finalCtaContent } from "@/content/final-cta";
-import { siteConfig } from "@/content/site";
+import { publicSupportEmail } from "@/content/site";
 import { AnimateOnScroll } from "@/components/ui/AnimateOnScroll";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -51,7 +51,7 @@ export function FinalCta() {
         setHasError(true);
         setStatusMessage(
           result.error ??
-            "The site could not accept the submission. Please try again or email support@saferedact.io directly."
+            `The site could not accept the submission. Please try again or email ${publicSupportEmail} directly.`
         );
         return;
       }
@@ -59,13 +59,13 @@ export function FinalCta() {
       setIsSubmitted(true);
       setStatusMessage(
         result.delivered
-          ? "Your demo enquiry has been sent to the SafeRedact team. We will reply to the address you provided."
-          : "Your demo enquiry was validated, but delivery is not yet switched on, so nobody has received it. Please email support@saferedact.io directly."
+          ? "Your demo enquiry has been delivered. We will reply to the address you provided."
+          : `Your demo enquiry was validated, but delivery is not yet switched on, so nobody has received it. Please email ${publicSupportEmail} directly.`
       );
     } catch {
       setHasError(true);
       setStatusMessage(
-        "The site could not reach the server. Please try again or email support@saferedact.io directly."
+        `The site could not reach the server. Please try again or email ${publicSupportEmail} directly.`
       );
     } finally {
       setIsSubmitting(false);
@@ -89,14 +89,14 @@ export function FinalCta() {
                   Bring reviewed redaction into one workspace
                 </h2>
                 <p className="mt-5 max-w-xl text-base leading-7 text-canvas/75 sm:text-lg">
-                  Explore how SafeRedact supports your source formats, review decisions, and redacted-output workflow.
+                  Explore how OpenRedakt supports your source formats, review decisions, and redacted-output workflow.
                 </p>
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                   <a href="#demo-enquiry" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-control bg-canvas px-6 py-3 font-semibold text-ink transition-colors hover:bg-surface-active">
                     Request a Demo
                     <Icon name="arrow" size={17} />
                   </a>
-                  <a href={`mailto:${siteConfig.email}`} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-control border border-canvas/30 bg-white/20 px-6 py-3 font-semibold text-canvas transition-colors hover:bg-white/30">
+                  <a href={`mailto:${publicSupportEmail}`} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-control border border-canvas/30 bg-white/20 px-6 py-3 font-semibold text-canvas transition-colors hover:bg-white/30">
                     Direct Contact
                     <Icon name="send" size={17} />
                   </a>
@@ -125,9 +125,9 @@ export function FinalCta() {
                 </div>
               ))}
             </div>
-            <a href={`mailto:${siteConfig.email}`} className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-accent-warm hover:text-accent-warm-hover">
+            <a href={`mailto:${publicSupportEmail}`} className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-accent-warm hover:text-accent-warm-hover">
               <Icon name="send" size={16} />
-              {siteConfig.email}
+              {publicSupportEmail}
             </a>
           </AnimateOnScroll>
 
@@ -149,9 +149,9 @@ export function FinalCta() {
                   </span>
                   <h3 ref={successHeadingRef} tabIndex={-1} className="mt-6 font-heading text-2xl font-semibold text-ink outline-none">Enquiry validated</h3>
                   <p className="mt-4 max-w-md text-base leading-7 text-ink-muted">{statusMessage}</p>
-                  <a href={`mailto:${siteConfig.email}`} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-accent-warm hover:text-accent-warm-hover">
+                  <a href={`mailto:${publicSupportEmail}`} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-accent-warm hover:text-accent-warm-hover">
                     <Icon name="send" size={16} />
-                    Email {siteConfig.email} when delivery matters
+                    Email {publicSupportEmail} when delivery matters
                   </a>
                 </div>
               ) : (

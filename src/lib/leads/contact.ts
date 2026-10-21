@@ -151,7 +151,7 @@ export function createContactHandler({
             accepted: false,
             delivered: false,
             referenceId,
-            error: "Your enquiry could not be delivered. Please email support@saferedact.io directly.",
+            error: "Your enquiry could not be delivered. Please use the direct contact option.",
           },
           { status: 502, headers: noStore }
         );

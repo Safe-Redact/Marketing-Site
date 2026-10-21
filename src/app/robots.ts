@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { publicSiteUrl } from "@/content/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -11,6 +12,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/admin", "/admin/", "/moderation", "/api/"],
       },
     ],
-    sitemap: "https://saferedact.io/sitemap.xml",
+    sitemap: `${publicSiteUrl}/sitemap.xml`,
   };
 }

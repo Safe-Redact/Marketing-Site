@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
   outputFileTracingRoot: applicationRoot,
   images: {
     formats: ["image/avif", "image/webp"],
+    localPatterns: [{ pathname: "/images/product/**" }],
+    qualities: [92],
   },
   async redirects() {
     return [

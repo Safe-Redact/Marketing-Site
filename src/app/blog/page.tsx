@@ -58,7 +58,7 @@ export async function generateMetadata({ searchParams }: BlogPageProps): Promise
   return {
     title: type && label ? `${label} | Insights` : "Insights",
     description:
-      "SafeRedact company news, product updates, industry insights, and practical guides about responsible redaction workflows.",
+      "OpenRedakt company news, product updates, industry insights, and practical guides about responsible redaction workflows.",
     alternates: { canonical },
     // Search results and deeper pages are refinements of a page that is already
     // indexed; indexing them would compete with it.
@@ -66,9 +66,9 @@ export async function generateMetadata({ searchParams }: BlogPageProps): Promise
     openGraph: {
       type: "website",
       url: canonical,
-      title: type && label ? `${label} | SafeRedact Insights` : "Insights | SafeRedact",
+      title: type && label ? `${label} | OpenRedakt Insights` : "Insights | OpenRedakt",
       description:
-        "Company news, product updates, industry insights, and practical guides from SafeRedact.",
+        "Company news, product updates, industry insights, and practical guides from OpenRedakt.",
     },
   };
 }
@@ -112,7 +112,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     <>
       <section className="blog-hero border-b border-border-subtle pt-[8.75rem] sm:pt-[10rem] lg:pt-[11.5rem]">
         <Container className="pb-14 sm:pb-16 lg:pb-20">
-          <Eyebrow>SafeRedact resources</Eyebrow>
+          <Eyebrow>OpenRedakt resources</Eyebrow>
           <h1 className="mt-5 max-w-4xl font-heading text-[clamp(2.4rem,6vw,4.8rem)] font-semibold leading-[1.04] tracking-[-0.04em] text-ink text-balance">
             Insights
           </h1>
@@ -157,7 +157,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                   <h2 className="mt-3 font-heading text-heading-xl text-ink">
                     {query
                       ? `Results for “${query}”`
-                      : activeTag?.name ?? activeLabel ?? "From the SafeRedact team"}
+                      : activeTag?.name ?? activeLabel ?? "From the OpenRedakt team"}
                   </h2>
                 </div>
                 <p className="text-body-sm text-ink-muted">
@@ -198,7 +198,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                     .
                   </>
                 ) : (
-                  "Approved SafeRedact content will appear here after editorial review and publication."
+                  "Approved OpenRedakt content will appear here after editorial review and publication."
                 )}
               </p>
             </div>

@@ -37,6 +37,7 @@ async function waitForServer(baseUrl, processHandle) {
 function runTests(baseUrl) {
   const testFiles = [
     "tests/marketing-only.test.mjs",
+    "tests/openredakt-routes.test.mjs",
     "tests/phase1-homepage.test.mjs",
     "tests/phase4a-routes.test.mjs",
   ];

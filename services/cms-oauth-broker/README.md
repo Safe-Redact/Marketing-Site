@@ -1,4 +1,4 @@
-# SafeRedact CMS OAuth broker
+# OpenRedakt CMS OAuth broker
 
 This is an isolated, independently deployable Node.js 22 HTTPS service for the Decap CMS GitHub authorization-code flow. It is not imported by the Next.js application and has no runtime dependencies.
 

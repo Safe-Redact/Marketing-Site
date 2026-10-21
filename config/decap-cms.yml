@@ -16,7 +16,7 @@ collections:
   - name: articles
     label: Blog articles
     label_singular: Blog article
-    description: Draft, review, and publish factual SafeRedact articles and company updates.
+    description: Draft, review, and publish factual OpenRedakt articles and company updates.
     folder: content/blog
     create: true
     extension: md
@@ -74,7 +74,7 @@ collections:
       - label: Author
         name: author
         widget: string
-        hint: Use an approved SafeRedact staff byline. Do not invent biographies or contributors.
+        hint: Use an approved OpenRedakt staff byline. Do not invent biographies or contributors.
       - label: Content type
         name: type
         widget: select

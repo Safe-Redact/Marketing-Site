@@ -82,7 +82,7 @@ export function Header() {
             <span className="flex h-8 w-8 items-center justify-center rounded-control border border-accent-warm/30 bg-accent-warm/10">
               <Image src="/favicon.svg" alt="" width={22} height={22} priority />
             </span>
-            <span><span className="text-accent-warm">Safe</span>Redact</span>
+            <span><span className="text-accent-warm">Open</span>Redakt</span>
           </a>
 
           <div className="hidden items-center gap-3 min-[992px]:flex min-[1120px]:gap-4 xl:gap-6">

@@ -8,20 +8,23 @@ import { Industries } from "@/components/sections/Industries";
 import { WhySafeRedact } from "@/components/sections/WhySafeRedact";
 import { Faq } from "@/components/sections/Faq";
 import { FinalCta } from "@/components/sections/FinalCta";
+import { ShowcaseThemeProvider } from "@/components/visuals/ShowcaseThemeProvider";
 
 export default function HomePage() {
   return (
     <>
       <Header />
       <main id="main-content">
-        <Hero />
-        <TrustBar />
-        <Services />
-        <HowItWorks />
-        <WhySafeRedact />
-        <Industries />
-        <Faq />
-        <FinalCta />
+        <ShowcaseThemeProvider>
+          <Hero />
+          <TrustBar />
+          <Services />
+          <HowItWorks />
+          <WhySafeRedact />
+          <Industries />
+          <Faq />
+          <FinalCta />
+        </ShowcaseThemeProvider>
       </main>
       <Footer homePage />
     </>

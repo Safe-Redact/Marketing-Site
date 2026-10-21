@@ -5,7 +5,7 @@ export const steps: Step[] = [
     number: 1,
     title: "Open Your File",
     description:
-      "Add a supported document, image, audio recording, or video to a SafeRedact project.",
+      "Add a supported document, image, audio recording, or video to an OpenRedakt project.",
   },
   {
     number: 2,

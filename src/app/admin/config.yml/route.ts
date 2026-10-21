@@ -16,7 +16,7 @@ export async function GET() {
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "CMS configuration is unavailable.";
-    return new Response(`# SafeRedact Content Studio disabled\n# ${message}\n`, {
+    return new Response(`# OpenRedakt Content Studio disabled\n# ${message}\n`, {
       status: 503,
       headers: responseHeaders,
     });
