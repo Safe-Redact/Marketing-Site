@@ -14,5 +14,5 @@ Current deployment constraints:
 - The `public_repo` OAuth scope can reach public repositories available to the editor. The broker checks the configured repository and staff identity, but GitHub OAuth scopes are not repository-specific.
 - The returned token is held by Decap in the editor browser. A compromise of the approved admin origin can therefore compromise that token.
 
-Report suspected credential exposure by revoking the OAuth grant, rotating both broker secrets, invalidating active sessions, preserving sanitized evidence, and following SafeRedact's incident process.
+Report suspected credential exposure by revoking the OAuth grant, rotating both broker secrets, invalidating active sessions, preserving sanitized evidence, and following OpenRedakt's incident process.
 

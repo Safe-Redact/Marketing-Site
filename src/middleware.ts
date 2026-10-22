@@ -1,4 +1,9 @@
 import { NextResponse, type NextRequest } from "next/server";
+import {
+  chatwootWebSocketOrigin,
+  resolveChatwootPublicConfig,
+  type ChatwootPublicConfig,
+} from "@/lib/support/chatwoot-config";
 
 /**
  * The App Router ships its flight payload and hydration bootstrap as inline
@@ -8,23 +13,37 @@ import { NextResponse, type NextRequest } from "next/server";
  * *request* header and stamp it onto every script it emits, so the policy is built
  * per request here instead of in next.config.ts.
  */
-const sharedDirectives = [
-  "default-src 'self'",
-  "style-src 'self'",
-  // React renders dynamic geometry (reveal delays, chart bar heights) and next/image
-  // renders its placeholder through the style attribute. style-src-attr keeps that
-  // allowance away from <style> elements, which stay restricted to 'self'.
-  "style-src-attr 'unsafe-inline'",
-  "img-src 'self' data:",
-  "font-src 'self'",
-  "connect-src 'self'",
-  "object-src 'none'",
-  "base-uri 'self'",
-  "form-action 'self'",
-  "frame-ancestors 'none'",
-  "frame-src 'none'",
-  "upgrade-insecure-requests",
-];
+function sharedDirectives(chatwoot: ChatwootPublicConfig | null) {
+  const strictBaseline = [
+    "default-src 'self'",
+    "style-src 'self'",
+    // React renders dynamic geometry (reveal delays, chart bar heights) and next/image
+    // renders its placeholder through the style attribute. style-src-attr keeps that
+    // allowance away from <style> elements, which stay restricted to 'self'.
+    "style-src-attr 'unsafe-inline'",
+    "img-src 'self' data:",
+    "font-src 'self'",
+    "connect-src 'self'",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "frame-ancestors 'none'",
+    "frame-src 'none'",
+    "upgrade-insecure-requests",
+  ];
+
+  if (!chatwoot) return strictBaseline;
+
+  const websocketOrigin = chatwootWebSocketOrigin(chatwoot);
+  return strictBaseline.map((directive) => {
+    if (directive === "img-src 'self' data:") return `${directive} ${chatwoot.baseUrl}`;
+    if (directive === "connect-src 'self'") {
+      return `${directive} ${chatwoot.baseUrl} ${websocketOrigin}`;
+    }
+    if (directive === "frame-src 'none'") return `frame-src ${chatwoot.baseUrl}`;
+    return directive;
+  });
+}
 
 /**
  * The Decap shell declares its own document policy in public/admin/index.html, where
@@ -52,7 +71,18 @@ export function middleware(request: NextRequest) {
   }
 
   const nonce = createNonce();
-  const policy = [`script-src 'self' 'nonce-${nonce}'`, ...sharedDirectives].join("; ");
+  const chatwoot = resolveChatwootPublicConfig(process.env);
+  const chatwootOrigin = chatwoot?.baseUrl;
+  // Next's development runtime uses eval for source maps and React Refresh. Keep
+  // that exception development-only; production retains the strict nonce policy.
+  const scriptDirective =
+    process.env.NODE_ENV === "development"
+      ? `script-src 'self' 'nonce-${nonce}' 'unsafe-eval'`
+      : `script-src 'self' 'nonce-${nonce}'`;
+  const scopedScriptDirective = chatwootOrigin
+    ? `${scriptDirective} ${chatwootOrigin}`
+    : scriptDirective;
+  const policy = [scopedScriptDirective, ...sharedDirectives(chatwoot)].join("; ");
 
   // The request copy is what the renderer reads the nonce from; the response copy is
   // what the browser enforces. Both must carry the same nonce.

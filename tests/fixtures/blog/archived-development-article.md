@@ -5,7 +5,7 @@ excerpt: "This fixture verifies that archived content is excluded from the listi
 author: "SafeRedact Editorial"
 category: "Company news"
 date: "2025-02-20T10:30:00.000Z"
-status: "archived"
+publication: "archived"
 featured: false
 seoDescription: "Archived development fixture that must never remain publicly discoverable."
 ---

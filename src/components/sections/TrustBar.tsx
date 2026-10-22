@@ -6,7 +6,7 @@ export function TrustBar() {
   return (
     <section
       className="border-b border-border-subtle bg-canvas pb-14 pt-6 md:pb-20 md:pt-6"
-      aria-label="Supported SafeRedact workflows"
+      aria-label="Supported OpenRedakt workflows"
     >
       <Container>
         <p className="text-center font-heading text-xs font-semibold uppercase tracking-[0.08em] text-ink-muted">

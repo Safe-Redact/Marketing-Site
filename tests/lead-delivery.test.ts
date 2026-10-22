@@ -130,14 +130,23 @@ test("the rate limiter bounds a single client and recovers after its window", ()
   assert.equal(check("198.51.100.7", start + 60_001).allowed, true);
 });
 
-test("the rate-limit key uses only the first forwarded hop", () => {
-  const keyOf = (headers: Record<string, string>) =>
-    clientKey(new Request("http://localhost/api/contact", { headers }));
+test("the rate-limit key trusts only the configured proxy suffix", () => {
+  const keyOf = (headers: Record<string, string>, trustedProxyHops?: number) =>
+    clientKey(new Request("http://localhost/api/contact", { headers }), trustedProxyHops);
 
-  assert.equal(keyOf({ "x-forwarded-for": "198.51.100.7, 10.0.0.1" }), "198.51.100.7");
-  assert.equal(keyOf({ "x-real-ip": "203.0.113.9" }), "203.0.113.9");
-  assert.equal(keyOf({}), "unattributed");
-  assert.equal(keyOf({ "x-forwarded-for": "x".repeat(100) }), "unattributed");
+  // With no trusted proxy configuration, caller-supplied forwarding headers are ignored.
+  assert.equal(keyOf({ "x-forwarded-for": "198.51.100.7" }, 0), "unattributed");
+  // A single trusted proxy appends the actual peer after anything the client supplied.
+  assert.equal(
+    keyOf({ "x-forwarded-for": "192.0.2.55, 198.51.100.7" }, 1),
+    "198.51.100.7"
+  );
+  assert.equal(
+    keyOf({ "x-forwarded-for": "198.51.100.7, 10.0.0.1" }, 2),
+    "198.51.100.7"
+  );
+  assert.equal(keyOf({ "x-forwarded-for": "not-an-address" }, 1), "unattributed");
+  assert.equal(keyOf({}, 1), "unattributed");
 });
 
 test("bulk submission heuristics reject link stuffing and non-names", () => {

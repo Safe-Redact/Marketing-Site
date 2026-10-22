@@ -1,3 +1,5 @@
+import { trustedClientAddress } from "@/lib/request-address";
+
 export interface RateLimitDecision {
   allowed: boolean;
   retryAfterSeconds: number;
@@ -45,15 +47,12 @@ export function createRateLimiter({ limit, windowMs, capacity = 10_000 }: RateLi
 }
 
 /**
- * Derives a rate-limit key from the request. Only the first forwarded hop is used,
- * because later entries are attacker-controlled. Requests with no usable address
- * share one bucket rather than bypassing the limit entirely.
+ * Derives a rate-limit key from the trusted deployment proxy suffix. Requests with
+ * no configured proxy contract share one bucket rather than trusting a visitor's
+ * forwarding header and allowing rate-limit evasion.
  */
-export function clientKey(request: Request): string {
-  const forwarded = request.headers.get("x-forwarded-for");
-  const first = forwarded?.split(",", 1)[0]?.trim();
-  const candidate = first || request.headers.get("x-real-ip")?.trim();
-  return candidate && candidate.length <= 64 ? candidate : "unattributed";
+export function clientKey(request: Request, hops?: number): string {
+  return trustedClientAddress(request, hops);
 }
 
 const urlPattern = /\bhttps?:\/\/|\bwww\./gi;

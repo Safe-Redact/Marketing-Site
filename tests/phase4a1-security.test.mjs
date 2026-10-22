@@ -33,7 +33,8 @@ test("Next tracing root is explicitly bound to this application", async () => {
 });
 
 test("Decap remains a GitHub editorial workflow with no embedded secret", async () => {
-  const config = await read("public/admin/config.yml");
+  const { buildCmsConfig } = await import("../scripts/render-cms-config.mjs");
+  const config = buildCmsConfig({ CMS_ENABLED: "false" });
 
   assert.match(config, /name:\s*github/);
   assert.match(config, /repo:\s*Safe-Redact\/Marketing-Site/);

@@ -1,4 +1,4 @@
-export type ArticleStatus = "draft" | "published" | "archived";
+export type ArticlePublication = "immediate" | "scheduled" | "archived";
 
 /**
  * The four kinds of entry the Insights hub carries. "news" and "product-update" are
@@ -24,7 +24,7 @@ export interface BlogArticle {
   updatedDate?: string;
   featuredImage?: string;
   imageAlt?: string;
-  status: ArticleStatus;
+  publication: ArticlePublication;
   featured: boolean;
   seoDescription: string;
   body: string;
@@ -50,5 +50,6 @@ export interface PaginatedArticles {
 
 export interface ContentOptions {
   directory?: string;
+  mediaDirectory?: string;
   now?: Date;
 }

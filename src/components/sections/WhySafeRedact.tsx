@@ -29,12 +29,12 @@ export function WhySafeRedact() {
     <section id="why-saferedact" className="relative overflow-hidden bg-canvas py-section text-ink">
       <Container>
         <AnimateOnScroll className="max-w-4xl">
-          <p className="font-heading text-[0.8125rem] font-bold uppercase tracking-[0.04em] text-accent-cool">Why SafeRedact</p>
+          <p className="font-heading text-[0.8125rem] font-bold uppercase tracking-[0.04em] text-accent-cool">Why OpenRedakt</p>
           <h2 className="mt-4 font-heading text-display font-bold text-ink text-balance">
             Review content in the <span className="gradient-text">right context</span>
           </h2>
           <p className="mt-5 max-w-2xl text-base leading-7 text-ink-muted sm:text-lg">
-            Pages, transcripts, frames, and timelines each need a different review surface. SafeRedact brings them into one Windows desktop application.
+            Pages, transcripts, frames, and timelines each need a different review surface. OpenRedakt brings them into one Windows desktop application.
           </p>
         </AnimateOnScroll>
 
@@ -42,7 +42,7 @@ export function WhySafeRedact() {
           <div className="pointer-events-none absolute right-0 top-0 z-10 h-12 w-10 bg-gradient-to-l from-canvas to-transparent md:hidden" />
           <div
             role="tablist"
-            aria-label="SafeRedact format workflows"
+            aria-label="OpenRedakt format workflows"
             className="flex gap-3 overflow-x-auto pb-3 pr-7 [scrollbar-width:thin] [scrollbar-color:#222B44_transparent]"
           >
             {formatTabs.map((tab, index) => (

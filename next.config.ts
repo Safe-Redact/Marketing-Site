@@ -6,9 +6,12 @@ const applicationRoot = path.dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  output: "standalone",
   outputFileTracingRoot: applicationRoot,
   images: {
     formats: ["image/avif", "image/webp"],
+    localPatterns: [{ pathname: "/images/product/**" }],
+    qualities: [92],
   },
   async redirects() {
     return [

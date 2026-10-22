@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { siteConfig } from "@/content/site";
+import { publicSupportEmail, siteConfig } from "@/content/site";
 import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/ui/Icon";
 
@@ -10,7 +10,7 @@ const footerGroups = [
     links: [
       { label: "Capabilities", href: "#services" },
       { label: "Product workflow", href: "#how-it-works" },
-      { label: "Why SafeRedact", href: "#why-saferedact" },
+      { label: "Why OpenRedakt", href: "#why-saferedact" },
       { label: "Insights", href: "/blog" },
     ],
   },
@@ -35,7 +35,7 @@ export function Footer({ homePage = false }: { homePage?: boolean }) {
               <span className="grid h-8 w-8 place-items-center rounded-control border border-accent-warm/30 bg-accent-warm/10">
                 <Image src="/favicon.svg" alt="" width={22} height={22} />
               </span>
-              <span><span className="text-accent-warm">Safe</span>Redact</span>
+              <span><span className="text-accent-warm">Open</span>Redakt</span>
             </Link>
             <p className="mt-5 max-w-xs text-sm leading-6 text-ink-muted">
               AI-assisted redaction workflows for documents, images, audio, and video in a native Windows application.
@@ -69,7 +69,7 @@ export function Footer({ homePage = false }: { homePage?: boolean }) {
                   Request a Demo
                 </Link>
               )}
-              <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-2 text-sm text-ink-muted transition-colors hover:text-ink">
+              <a href={`mailto:${publicSupportEmail}`} className="flex items-center gap-2 text-sm text-ink-muted transition-colors hover:text-ink">
                 <Icon name="send" size={16} />
                 Direct contact
               </a>

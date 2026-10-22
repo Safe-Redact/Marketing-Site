@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import type { BlogArticle } from "./types";
+import { publicSiteUrl, siteConfig } from "@/content/site";
 
-const siteUrl = "https://saferedact.io";
+const siteUrl = publicSiteUrl;
 
 export function buildArticleMetadata(article: BlogArticle): Metadata {
   const path = `/blog/${article.slug}`;
@@ -16,7 +17,7 @@ export function buildArticleMetadata(article: BlogArticle): Metadata {
     openGraph: {
       type: "article",
       url: path,
-      siteName: "SafeRedact",
+      siteName: siteConfig.name,
       title: article.title,
       description: article.seoDescription,
       publishedTime: article.date,
@@ -46,7 +47,7 @@ export function buildArticleJsonLd(article: BlogArticle) {
     },
     publisher: {
       "@type": "Organization",
-      name: "SafeRedact",
+      name: siteConfig.name,
       url: siteUrl,
     },
     mainEntityOfPage: `${siteUrl}/blog/${article.slug}`,

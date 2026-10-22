@@ -627,12 +627,16 @@ test("the abuse key is a keyed digest, not the address, and rotates with the sec
   assert.throws(() => deriveAuthorKey(address, ""), /abuse-key secret/);
 });
 
-test("only the first forwarded hop is trusted for the abuse key", () => {
+test("only the configured trusted proxy suffix supplies the abuse key address", () => {
   const forged = new Request("https://saferedact.test/api/comments", {
     headers: { "x-forwarded-for": "198.51.100.10, 203.0.113.7, 192.0.2.1" },
   });
   const none = new Request("https://saferedact.test/api/comments");
 
-  assert.equal(requestAddress(forged), "198.51.100.10");
-  assert.equal(requestAddress(none), "unattributed");
+  assert.equal(requestAddress(forged, 0), "unattributed");
+  assert.equal(requestAddress(forged, 1), "192.0.2.1");
+  assert.equal(requestAddress(forged, 2), "203.0.113.7");
+  assert.equal(requestAddress(forged, 3), "198.51.100.10");
+  assert.equal(requestAddress(forged, 4), "unattributed");
+  assert.equal(requestAddress(none, 1), "unattributed");
 });

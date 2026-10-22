@@ -1,0 +1,119 @@
+/*
+ * Chatwoot's SDK injects these holder rules through an inline <style> element.
+ * OpenRedakt intentionally keeps a strict `style-src 'self'` CSP, so the browser
+ * rejects that element. Shipping the small holder contract as local CSS preserves
+ * the CSP while leaving the hosted iframe and custom launcher intact.
+ */
+.woot-widget-holder {
+  position: fixed !important;
+  z-index: 2147483000 !important;
+  overflow: hidden !important;
+  box-shadow: 0 5px 40px rgb(0 0 0 / 16%);
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.2s linear,
+    transform 0.25s linear;
+  will-change: transform, opacity;
+}
+
+.woot-widget-holder iframe {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100vh !important;
+  border: 0;
+  color-scheme: normal;
+}
+
+.woot-widget-holder.woot-elements--left {
+  left: 20px;
+}
+
+.woot-widget-holder.woot-elements--right {
+  right: 20px;
+}
+
+.woot-widget-holder.has-unread-view {
+  bottom: 94px;
+  min-height: 80px !important;
+  height: auto;
+  border: 0;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.woot-widget--without-bubble {
+  bottom: 20px !important;
+}
+
+.woot--hide {
+  top: unset !important;
+  bottom: -100vh !important;
+  z-index: -1 !important;
+  visibility: hidden !important;
+  opacity: 0;
+}
+
+.woot-widget-holder.woot--hide {
+  transform: translateY(40px);
+}
+
+.woot-hidden {
+  display: none !important;
+}
+
+@media only screen and (max-width: 667px) {
+  .woot-widget-holder.woot-elements--right {
+    right: 0;
+  }
+
+  .woot-widget-holder.woot-elements--left {
+    left: 0;
+  }
+
+  .woot-widget-holder {
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .woot-widget-holder iframe {
+    min-height: 100% !important;
+  }
+
+  .woot-widget-holder.has-unread-view {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    max-height: 100vh;
+    padding: 0 8px;
+  }
+
+  .woot-widget-holder.has-unread-view iframe {
+    min-height: unset !important;
+  }
+
+  .woot-widget-holder.has-unread-view.woot-elements--left {
+    left: 0;
+  }
+}
+
+@media only screen and (min-width: 667px) {
+  .woot-widget-holder {
+    bottom: 104px;
+    width: 400px !important;
+    min-height: 250px !important;
+    height: calc(90% - 84px);
+    max-height: 640px !important;
+    border-radius: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .woot-widget-holder {
+    transition: none;
+  }
+}

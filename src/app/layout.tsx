@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import { contentSecurityPolicyNonce } from "@/lib/csp";
+import { SupportChat } from "@/components/support/SupportChat";
+import {
+  publicSiteUrl,
+  publicSupportEmail,
+  siteConfig,
+} from "@/content/site";
+import { resolveChatwootPublicConfig } from "@/lib/support/chatwoot-config";
+import "@/components/support/chatwoot-widget.css";
 import "./globals.css";
 
 const inter = Inter({
@@ -25,8 +33,8 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: {
-    default: "SafeRedact | AI-Powered Redaction Software",
-    template: "%s | SafeRedact",
+    default: "OpenRedakt | AI-Powered Redaction Software",
+    template: "%s | OpenRedakt",
   },
   description:
     "Windows redaction software with AI-assisted workflows for documents, images, audio, and video.",
@@ -36,15 +44,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://saferedact.io",
-    siteName: "SafeRedact",
-    title: "SafeRedact | AI-Powered Redaction Software",
+    url: publicSiteUrl,
+    siteName: siteConfig.name,
+    title: "OpenRedakt | AI-Powered Redaction Software",
     description:
       "Windows redaction software with AI-assisted workflows for documents, images, audio, and video.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SafeRedact | AI-Powered Redaction Software",
+    title: "OpenRedakt | AI-Powered Redaction Software",
     description:
       "Windows redaction software with AI-assisted workflows for documents, images, audio, and video.",
   },
@@ -59,7 +67,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  metadataBase: new URL("https://saferedact.io"),
+  metadataBase: new URL(publicSiteUrl),
 };
 
 export default async function RootLayout({
@@ -68,6 +76,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const nonce = await contentSecurityPolicyNonce();
+  const chatwootConfig = resolveChatwootPublicConfig(process.env);
 
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
@@ -75,22 +84,28 @@ export default async function RootLayout({
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <script
           type="application/ld+json"
+          suppressHydrationWarning
           nonce={nonce}
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "SoftwareApplication",
-              name: "SafeRedact",
+              name: siteConfig.name,
               description:
                 "Windows redaction software with AI-assisted workflows for documents, images, audio, and video.",
-              url: "https://saferedact.io",
+              url: publicSiteUrl,
               applicationCategory: "BusinessApplication",
               operatingSystem: "Windows",
             }),
           }}
         />
       </head>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        {children}
+        {chatwootConfig ? (
+          <SupportChat config={chatwootConfig} fallbackEmail={publicSupportEmail} />
+        ) : null}
+      </body>
     </html>
   );
 }

@@ -152,11 +152,17 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     // and CI renders never depend on a developer's .env.local or exported shell values.
     const forceDisabled = process.argv.slice(2).includes("--disabled");
     const environment = forceDisabled ? { CMS_ENABLED: "false" } : process.env;
-    const outputPath = await writeCmsConfig(environment);
+    const shouldWrite = process.argv.slice(2).includes("--write");
     const profile = forceDisabled ? "disabled profile" : "deployment profile";
-    console.log(
-      `Generated public Decap configuration (${profile}): ${path.relative(repositoryRoot, outputPath)}`
-    );
+    if (shouldWrite) {
+      const outputPath = await writeCmsConfig(environment);
+      console.log(
+        `Generated public Decap configuration (${profile}): ${path.relative(repositoryRoot, outputPath)}`
+      );
+    } else {
+      buildCmsConfig(environment);
+      console.log(`Validated public Decap configuration (${profile}); runtime delivery remains dynamic.`);
+    }
   } catch (error) {
     console.error(error instanceof Error ? error.message : error);
     process.exitCode = 1;

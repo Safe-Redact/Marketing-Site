@@ -23,7 +23,7 @@ export function Faq() {
               What to know before you begin
             </h2>
             <p className="mt-5 max-w-md text-base leading-7 text-ink-muted">
-              SafeRedact is Windows desktop software. Availability of local models, conversion tools, and optional engines depends on setup and job configuration.
+              OpenRedakt is Windows desktop software. Availability of local models, conversion tools, and optional engines depends on setup and job configuration.
             </p>
           </AnimateOnScroll>
           <AnimateOnScroll delay={100}>

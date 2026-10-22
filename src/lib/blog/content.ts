@@ -1,4 +1,4 @@
-import { readdir, readFile } from "node:fs/promises";
+import { access, readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { unified } from "unified";
 import remarkParse from "remark-parse";
@@ -10,6 +10,7 @@ import type { ArticleQuery, ArticleType, BlogArticle, ContentOptions, PaginatedA
 
 export const BLOG_PAGE_SIZE = 6;
 export const DEFAULT_BLOG_DIRECTORY = path.join(process.cwd(), "content", "blog");
+export const DEFAULT_BLOG_MEDIA_DIRECTORY = path.join(process.cwd(), "public", "images", "blog");
 
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -44,13 +45,27 @@ const articleFrontmatterSchema = z
     ),
     featuredImage: optionalText,
     imageAlt: optionalText,
-    status: z.enum(["draft", "published", "archived"]),
+    publication: z.enum(["immediate", "scheduled", "archived"]),
     featured: z.boolean().default(false),
     seoDescription: z.string().trim().min(50).max(170),
   })
   .strict()
   .superRefine((value, context) => {
+    if (hasRepeatedAdjacentText(value.title)) {
+      context.addIssue({
+        code: "custom",
+        path: ["title"],
+        message: "Article title contains repeated adjacent text.",
+      });
+    }
     for (const [index, tag] of value.tags.entries()) {
+      if (hasRepeatedAdjacentText(tag)) {
+        context.addIssue({
+          code: "custom",
+          path: ["tags", index],
+          message: "Article tag contains repeated adjacent text.",
+        });
+      }
       if (!slugifyCategory(tag)) {
         context.addIssue({
           code: "custom",
@@ -78,6 +93,13 @@ const articleFrontmatterSchema = z
         code: "custom",
         path: ["imageAlt"],
         message: "Image alt text requires a featured image.",
+      });
+    }
+    if (value.updatedDate && new Date(value.updatedDate) < new Date(value.date)) {
+      context.addIssue({
+        code: "custom",
+        path: ["updatedDate"],
+        message: "Updated date cannot be earlier than the publication date.",
       });
     }
   });
@@ -113,7 +135,17 @@ export function parseArticleFrontmatter(data: unknown): ArticleFrontmatter {
 }
 
 export function isValidArticleSlug(slug: string): boolean {
-  return slugPattern.test(slug);
+  return slug.length >= 3 && slug.length <= 100 && slugPattern.test(slug);
+}
+
+export function hasRepeatedAdjacentText(value: string): boolean {
+  const normalized = value.trim().replace(/\s+/g, " ");
+  const separatedDuplicate = /^(.{2,}?)\s+\1$/iu.exec(normalized);
+  if (separatedDuplicate) return true;
+  if (normalized.length < 4 || normalized.length % 2 !== 0) return false;
+  const midpoint = normalized.length / 2;
+  return normalized.slice(0, midpoint).toLocaleLowerCase("en") ===
+    normalized.slice(midpoint).toLocaleLowerCase("en");
 }
 
 export function slugifyCategory(category: string): string {
@@ -148,6 +180,10 @@ export function validateMarkdownBody(markdown: string): void {
   visit(tree, (node) => {
     if (node.type === "html") {
       throw new Error("Raw HTML is not permitted in article content.");
+    }
+
+    if (node.type === "heading" && node.depth === 1) {
+      throw new Error("Article content must not repeat the page title as a level-one heading.");
     }
 
     if (node.type === "image") {
@@ -216,7 +252,8 @@ export async function parseArticleFile(filePath: string): Promise<BlogArticle> {
 }
 
 export async function loadArticlesFromDirectory(
-  directory = DEFAULT_BLOG_DIRECTORY
+  directory = DEFAULT_BLOG_DIRECTORY,
+  mediaDirectory?: string
 ): Promise<BlogArticle[]> {
   let entries;
   try {
@@ -230,15 +267,61 @@ export async function loadArticlesFromDirectory(
     .filter((entry) => entry.isFile() && [".md", ".markdown"].includes(path.extname(entry.name)))
     .map((entry) => path.join(directory, entry.name));
 
-  return Promise.all(articleFiles.map(parseArticleFile));
+  const articles = await Promise.all(articleFiles.map(parseArticleFile));
+  const slugs = new Set<string>();
+  for (const article of articles) {
+    if (slugs.has(article.slug)) {
+      throw new Error(`Duplicate article slug: ${article.slug}`);
+    }
+    slugs.add(article.slug);
+  }
+
+  const resolvedDirectory = path.resolve(directory);
+  const resolvedMediaDirectory = mediaDirectory ?? (
+    resolvedDirectory === path.resolve(DEFAULT_BLOG_DIRECTORY)
+      ? DEFAULT_BLOG_MEDIA_DIRECTORY
+      : undefined
+  );
+  if (resolvedMediaDirectory) {
+    for (const article of articles) {
+      if (!article.featuredImage) continue;
+      const relativeImage = article.featuredImage.replace(/^\/images\/blog\//, "");
+      try {
+        await access(path.join(resolvedMediaDirectory, relativeImage));
+      } catch {
+        throw new Error(
+          `Featured image does not exist for ${article.slug}: ${article.featuredImage}`
+        );
+      }
+    }
+  }
+
+  return articles;
 }
 
 export function isPublishedArticle(article: BlogArticle, now = new Date()): boolean {
-  return article.status === "published" && new Date(article.date).getTime() <= now.getTime();
+  if (article.publication === "archived") return false;
+  if (article.publication === "immediate") return true;
+  return new Date(article.date).getTime() <= now.getTime();
+}
+
+export function validatePublicationTiming(
+  article: BlogArticle,
+  now = new Date(),
+  immediateClockToleranceMs = 5 * 60 * 1000
+): void {
+  if (
+    article.publication === "immediate" &&
+    new Date(article.date).getTime() > now.getTime() + immediateClockToleranceMs
+  ) {
+    throw new Error(
+      `Immediate article ${article.slug} has a future publication time; use scheduled publication instead.`
+    );
+  }
 }
 
 export async function loadPublishedArticles(options: ContentOptions = {}): Promise<BlogArticle[]> {
-  const articles = await loadArticlesFromDirectory(options.directory);
+  const articles = await loadArticlesFromDirectory(options.directory, options.mediaDirectory);
   const now = options.now ?? new Date();
 
   return articles

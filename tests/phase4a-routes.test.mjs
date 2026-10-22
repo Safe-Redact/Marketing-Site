@@ -7,15 +7,34 @@ async function get(pathname, options) {
   return fetch(`${baseUrl}${pathname}`, { redirect: "manual", ...options });
 }
 
-test("empty production blog renders an honest accessible landing page", async () => {
-  const response = await get("/blog");
-  const html = await response.text();
+test("the published CMS article renders and remains discoverable across Insights", async () => {
+  const [hub, article, search, tag, archived, sitemap] = await Promise.all([
+    get("/blog"),
+    get("/blog/understanding-document-redaction"),
+    get("/blog?query=document"),
+    get("/blog?tag=data-privacy"),
+    get("/blog/cms-publishing-test"),
+    get("/sitemap.xml"),
+  ]);
+  const [hubHtml, articleHtml, searchHtml, tagHtml, sitemapXml] = await Promise.all([
+    hub.text(),
+    article.text(),
+    search.text(),
+    tag.text(),
+    sitemap.text(),
+  ]);
 
-  assert.equal(response.status, 200);
-  assert.match(html, /<h1[^>]*>\s*Insights\s*<\/h1>/);
-  assert.match(html, /No content has been published yet/i);
-  assert.doesNotMatch(html, /development fixture/i);
-  assert.match(html, /<form[^>]+role="search"/);
+  for (const response of [hub, article, search, tag, sitemap]) assert.equal(response.status, 200);
+  assert.equal(archived.status, 404);
+  assert.match(hubHtml, /<h1[^>]*>\s*Insights\s*<\/h1>/);
+  assert.match(hubHtml, /Understanding Document Redaction and Why It Matters/);
+  assert.doesNotMatch(hubHtml, /No content has been published yet/i);
+  assert.match(articleHtml, /rel="canonical" href="https:\/\/saferedact\.io\/blog\/understanding-document-redaction"/);
+  assert.match(searchHtml, /Understanding Document Redaction and Why It Matters/);
+  assert.match(tagHtml, /Understanding Document Redaction and Why It Matters/);
+  assert.match(sitemapXml, /\/blog\/understanding-document-redaction<\/loc>/);
+  assert.doesNotMatch(sitemapXml, /cms-publishing-test/);
+  assert.match(hubHtml, /<form[^>]+role="search"/);
 });
 
 test("search results are not indexed as duplicate editorial pages", async () => {
@@ -124,7 +143,6 @@ const requiredPublicDirectives = [
   "base-uri 'self'",
   "form-action 'self'",
   "frame-ancestors 'none'",
-  "frame-src 'none'",
 ];
 
 const publicRoutes = [
@@ -152,6 +170,24 @@ function directives(policy) {
   );
 }
 
+function expectedChatwootSources(parsed, route) {
+  const frameSrc = parsed.get("frame-src");
+
+  if (frameSrc === "'none'") {
+    return null;
+  }
+
+  assert.match(frameSrc ?? "", /^https:\/\/[^\s/]+(?::\d+)?$/, `${route} must use one exact HTTPS chat origin`);
+  const origin = new URL(frameSrc).origin;
+  assert.equal(frameSrc, origin, `${route} must not grant a path or trailing slash in frame-src`);
+
+  const socketOrigin = origin.replace(/^https:/, "wss:");
+  assert.equal(parsed.get("img-src"), `'self' data: ${origin}`, route);
+  assert.equal(parsed.get("connect-src"), `'self' ${origin} ${socketOrigin}`, route);
+
+  return origin;
+}
+
 test("every public route serves the strict nonce-based policy", async () => {
   const responses = await Promise.all(publicRoutes.map((route) => get(route)));
 
@@ -164,8 +200,13 @@ test("every public route serves the strict nonce-based policy", async () => {
       assert.ok(policy.includes(directive), `${route} must keep ${directive}`);
     }
 
-    const scriptSrc = directives(policy).get("script-src");
-    assert.match(scriptSrc ?? "", /^'self' 'nonce-[A-Za-z0-9+/]{22}=='$/, route);
+    const parsed = directives(policy);
+    const chatwootOrigin = expectedChatwootSources(parsed, route);
+    const scriptSrc = parsed.get("script-src");
+    const expectedScript = chatwootOrigin
+      ? new RegExp(`^'self' 'nonce-[A-Za-z0-9+/]{22}==' ${chatwootOrigin.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`)
+      : /^'self' 'nonce-[A-Za-z0-9+/]{22}=='$/;
+    assert.match(scriptSrc ?? "", expectedScript, route);
   }
 });
 
@@ -181,9 +222,10 @@ test("the public policy never grants eval or inline script, and keeps inline sty
     assert.doesNotMatch(parsed.get("script-src") ?? "", /'unsafe-inline'|\*|data:/, route);
     assert.doesNotMatch(parsed.get("style-src") ?? "", /'unsafe-inline'/, route);
 
-    // The admin document widens connect-src to blob: for the editor's media reads.
-    // Public routes must stay at 'self' exactly, with no scheme added.
-    assert.equal(parsed.get("connect-src"), "'self'", route);
+    // The public policy stays at 'self' unless the fail-closed support integration
+    // is configured, in which case only one exact HTTPS origin and its WSS peer
+    // are permitted. The admin document's blob: allowance must never leak here.
+    expectedChatwootSources(parsed, route);
 
     // The single inline allowance is scoped to the style attribute and nowhere else.
     const inlineAllowances = [...parsed].filter(([, sources]) => sources.includes("'unsafe-inline'"));

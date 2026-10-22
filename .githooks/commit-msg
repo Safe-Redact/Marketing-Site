@@ -1,0 +1,10 @@
+#!/bin/sh
+
+message_file=$1
+
+if grep -Eiq '^[[:space:]]*(Co-authored-by:[[:space:]]*(Claude|ChatGPT|OpenAI|Codex|GitHub Copilot|Gemini)|Generated (with|by) (Claude|ChatGPT|OpenAI|Codex|GitHub Copilot|Gemini))' "$message_file"; then
+  echo "Commit rejected: remove automated AI attribution from the commit message." >&2
+  exit 1
+fi
+
+exit 0

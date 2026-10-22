@@ -91,9 +91,9 @@ export const workflowPreviewLabels = {
     { label: "Email address", status: "Approved", tone: "warm" },
     { label: "Reference ID", status: "Pending", tone: "cool" },
   ],
-  figureLabel: "Screenshot of the SafeRedact screen for the selected workflow step",
+  figureLabel: "Screenshot of the redaction workspace for the selected workflow step",
   caption:
-    "A screenshot of SafeRedact at the selected workflow step: the project workspace, the editor mid-review, or the export dialog.",
+    "A screenshot of the current product interface at the selected workflow step: the project workspace, the editor mid-review, or the export dialog.",
 } as const;
 
 export const formatTabs = [
@@ -104,7 +104,7 @@ export const formatTabs = [
     eyebrow: "Page and region review",
     title: "Work through findings in document context",
     description:
-      "SafeRedact combines detected findings with manual text and area controls so reviewers can inspect each page or still image before export.",
+      "OpenRedakt combines detected findings with manual text and area controls so reviewers can inspect each page or still image before export.",
     bullets: [
       "PDF and supported converted document intake",
       "Manual text and area selection",
@@ -178,7 +178,7 @@ export const useCaseGroups = [
 ] as const;
 
 export const workbenchLabels = {
-  product: "SafeRedact Workbench",
+  product: "OpenRedakt Workbench",
   file: "case-records.pdf",
   record: "Intake record",
   page: "Page 01 / 03",
@@ -189,7 +189,7 @@ export const workbenchLabels = {
   view: "Detection view",
   status: "Ready for review",
   figureLabel:
-    "Screenshot of the SafeRedact editor: a document mid-review with detected items listed for an operator to accept or adjust",
+    "Screenshot of the current redaction editor: a document mid-review with detected items listed for an operator to accept or adjust",
   caption:
-    "A screenshot of the SafeRedact editor showing a document mid-review: detected items are listed in the findings panel for an operator to accept or adjust before export.",
+    "A screenshot of the current redaction editor showing a document mid-review: detected items are listed in the findings panel for an operator to accept or adjust before export.",
 } as const;

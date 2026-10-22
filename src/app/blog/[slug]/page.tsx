@@ -18,9 +18,9 @@ interface ArticlePageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  return (await loadPublishedArticles()).map(({ slug }) => ({ slug }));
-}
+// Publication eligibility is evaluated at request time so scheduled and archived
+// entries follow the deployed content manifest without requiring an extra rebuild.
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -64,6 +64,19 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         <Container className="max-w-[50rem]">
           <ArticleBody content={article.body} />
           <div className="mt-14 border-t border-border-subtle pt-7">
+            {article.tags.length ? (
+              <nav aria-label="Article topics" className="mb-6 flex flex-wrap gap-2">
+                {article.tags.map((tag, index) => (
+                  <Link
+                    key={article.tagSlugs[index]}
+                    href={`/blog?tag=${article.tagSlugs[index]}`}
+                    className="inline-flex min-h-10 items-center rounded-full border border-border-subtle px-3 text-caption text-ink-muted transition-colors hover:border-accent-cool/40 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"
+                  >
+                    {tag}
+                  </Link>
+                ))}
+              </nav>
+            ) : null}
             <Link href="/blog" className="font-heading text-body-sm font-semibold text-accent-warm transition-colors hover:text-accent-warm-hover">
               ← Back to all insights
             </Link>

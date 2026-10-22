@@ -1,0 +1,70 @@
+name: Production release artifact
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate-package:
+    name: validate and package exact master commit
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CMS_ENABLED: "false"
+      RELEASE_COMMIT_SHA: ${{ github.sha }}
+      RELEASE_BUILD_ID: github-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: Check out the exact release commit
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            services/cms-oauth-broker/package-lock.json
+      - name: Install locked application dependencies
+        run: npm ci
+      - name: Install locked OAuth broker dependencies
+        run: npm --prefix services/cms-oauth-broker ci
+      - name: Validate article repository
+        run: npm run content:validate
+      - name: TypeScript
+        run: npm run typecheck
+      - name: ESLint
+        run: npm run lint
+      - name: Secret-pattern check
+        run: npm run check:secrets
+      - name: Production dependency audit
+        run: |
+          npm audit --omit=dev --audit-level=low
+          npm --prefix services/cms-oauth-broker audit --omit=dev --audit-level=low
+      - name: Build the exact production release
+        run: npm run build
+      - name: Complete regression suite
+        run: npm test
+      - name: Package provider-neutral standalone release
+        run: npm run release:package
+      - name: Verify blue-green readiness, switch, published article, and rollback contracts
+        run: npm run release:verify
+      - name: Upload immutable release artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: saferedact-${{ github.sha }}
+          path: .release/bundle
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 30

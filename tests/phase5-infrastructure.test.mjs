@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
+import { spawnSync } from "node:child_process";
 import test from "node:test";
 
 const root = new URL("../", import.meta.url);
@@ -65,13 +68,62 @@ test("Decap source configuration is provider-neutral and generated from public d
   assert.doesNotMatch(renderer, /NETLIFY_|api\.netlify\.com/i);
 });
 
-test("OAuth deployment plan requires exact callbacks and rejects the reviewed broker as-is", async () => {
-  const plan = await read("docs/marketing-revamp/DECAP_NETLIFY_AUTH_PLAN.md");
+test("OAuth operational notes require exact callbacks and retain upstream provenance", async () => {
+  const [readme, security, provenance] = await Promise.all([
+    read("services/cms-oauth-broker/README.md"),
+    read("services/cms-oauth-broker/SECURITY.md"),
+    read("services/cms-oauth-broker/UPSTREAM.md"),
+  ]);
 
-  assert.match(plan, /exact HTTPS callback/i);
-  assert.match(plan, /Wildcard callbacks are prohibited/i);
-  assert.match(plan, /not recommended for production unchanged/i);
-  assert.match(plan, /33674be7ec77c1b771983650d979cae88160e093/);
+  assert.match(readme, /exact HTTPS callback/i);
+  assert.match(security, /wildcard matching must be disabled/i);
+  assert.match(provenance, /not copied or deployed unchanged/i);
+  assert.match(provenance, /33674be7ec77c1b771983650d979cae88160e093/);
+});
+
+test("obsolete phase documents are removed while root operations remain discoverable", async () => {
+  const rootReadme = await read("README.md");
+
+  await assert.rejects(read("docs/marketing-revamp/REPOSITORY_AUDIT.md"), /ENOENT/);
+  for (const requirement of [
+    "npm run comments:migrate",
+    "pg_dump --format=custom",
+    "npm run oauth:dev",
+    "CMS_PUBLISH_BRANCH",
+    "LEAD_DELIVERY_ENDPOINT",
+    "TRUST_PROXY_HOPS",
+  ]) {
+    assert.match(rootReadme, new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  }
+});
+
+test("the repository commit hook rejects unwanted Claude attribution trailers", async () => {
+  const temporaryDirectory = await mkdtemp(path.join(tmpdir(), "saferedact-commit-hook-"));
+  const messagePath = path.join(temporaryDirectory, "COMMIT_EDITMSG");
+  try {
+    await writeFile(messagePath, "Document release\n", "utf8");
+    const accepted = spawnSync(
+      "git",
+      ["-c", "core.hooksPath=.githooks", "hook", "run", "commit-msg", "--", messagePath],
+      { cwd: new URL("../", import.meta.url), encoding: "utf8" }
+    );
+    assert.equal(accepted.status, 0, accepted.stderr);
+
+    await writeFile(
+      messagePath,
+      "Document release\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\n",
+      "utf8"
+    );
+    const rejected = spawnSync(
+      "git",
+      ["-c", "core.hooksPath=.githooks", "hook", "run", "commit-msg", "--", messagePath],
+      { cwd: new URL("../", import.meta.url), encoding: "utf8" }
+    );
+    assert.notEqual(rejected.status, 0);
+    assert.match(rejected.stderr, /AI attribution/i);
+  } finally {
+    await rm(temporaryDirectory, { recursive: true, force: true });
+  }
 });
 
 test("CMS renderer fails closed and rejects unsafe deployment configuration", async () => {
@@ -165,18 +217,19 @@ test("OAuth broker remains isolated, provider-neutral in deployment, and part of
   assert.doesNotMatch(activeSource, /\bgh[pousr]_[A-Za-z0-9]{20,}\b|BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY/);
 });
 
-test("the Decap eval exception is confined to the admin document policy", async () => {
+test("eval is limited to the Decap shell and the Next development runtime", async () => {
   const [shell, nextConfig, middleware] = await Promise.all([
     read("public/admin/index.html"),
     read("next.config.ts"),
     read("src/middleware.ts"),
   ]);
 
-  // No response header may ever grant eval: next.config.ts and src/middleware.ts are
-  // the only header sources in this application, and the exception must not leak into
-  // a route pattern or the per-request public policy.
+  // Static production headers never grant eval. The request middleware has one
+  // explicit development-only exception for Next's source maps and React Refresh;
+  // the production route suite below verifies that branch never reaches a release.
   assert.doesNotMatch(nextConfig, /unsafe-eval/);
-  assert.doesNotMatch(middleware, /unsafe-eval/);
+  assert.match(middleware, /process\.env\.NODE_ENV === "development"/);
+  assert.match(middleware, /\? `script-src [^`]*'unsafe-eval'`/);
 
   const policy = /http-equiv="Content-Security-Policy"[\s\S]*?content="([^"]+)"/.exec(shell)?.[1];
   assert.ok(policy, "the admin shell must declare a document-level CSP");
@@ -216,14 +269,16 @@ test("local environment files load through Node natively and add no dependency",
   const packageJson = JSON.parse(packageJsonText);
   const brokerPackageJson = JSON.parse(brokerPackageJsonText);
 
-  // The renderer runs in predev/prebuild, before Next reads any env file, so it
-  // loads the root file itself through the Node runtime flag.
+  // The renderer can be checked locally with deployment coordinates, while the
+  // application serves the public configuration dynamically at runtime.
   assert.match(packageJson.scripts["cms:config"], /^node --env-file-if-exists=\.env\.local /);
   assert.equal(
     packageJson.scripts["dev:https"],
     "node --env-file-if-exists=.env.local scripts/dev-https.mjs"
   );
-  assert.equal(packageJson.scripts["predev:https"], "npm run cms:config");
+  assert.equal(packageJson.scripts["predev:https"], "npm run content:validate");
+  assert.equal(packageJson.scripts.prebuild, "npm run content:validate");
+  assert.equal(packageJson.scripts.prestart, "npm run content:validate");
   assert.equal(packageJson.scripts["oauth:dev"], "npm --prefix services/cms-oauth-broker run dev");
   assert.equal(
     brokerPackageJson.scripts.dev,
@@ -235,10 +290,11 @@ test("local environment files load through Node natively and add no dependency",
   assert.equal(brokerPackageJson.scripts.start, "node src/start.mjs");
   assert.doesNotMatch(brokerPackageJson.scripts.test, /--env-file/);
 
-  // Test and CI renders use a fixed disabled environment, never .env.local.
+  // The optional check profile is deterministic and tests never generate a static
+  // file that could shadow the runtime route.
   assert.equal(packageJson.scripts["cms:config:test"], "node scripts/render-cms-config.mjs --disabled");
   for (const hook of ["pretest", "pretest:static", "pretest:content"]) {
-    assert.equal(packageJson.scripts[hook], "npm run cms:config:test");
+    assert.equal(packageJson.scripts[hook], undefined);
   }
 
   for (const manifest of [packageJson, brokerPackageJson]) {
@@ -354,6 +410,7 @@ test("the pages that render inline scripts read the nonce, which keeps them out 
     assert.match(source, /contentSecurityPolicyNonce/);
     assert.match(source, /<script[^>]*nonce=\{nonce\}/);
   }
+  assert.match(layout, /<script[^>]*suppressHydrationWarning[^>]*nonce=\{nonce\}|<script[^>]*nonce=\{nonce\}[^>]*suppressHydrationWarning/);
   assert.match(layout, /export default async function RootLayout/);
 
   // Nothing below the root layout may be prerendered: a prerendered document would be
