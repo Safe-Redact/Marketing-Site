@@ -106,7 +106,11 @@ export async function CommentThread({ articleSlug }: { articleSlug: string }) {
   const total = countComments(comments);
 
   return (
-    <section id="comments" aria-labelledby="comments-heading" className="border-t border-border-subtle py-14 sm:py-16">
+    <section
+      id="comments"
+      aria-labelledby="comments-heading"
+      className="border-t border-border-subtle bg-canvas py-14 sm:py-16"
+    >
       <Container className="max-w-[58rem]">
         <Eyebrow>Discussion</Eyebrow>
         <h2 id="comments-heading" className="mt-3 font-heading text-heading-xl text-ink">

@@ -23,7 +23,7 @@
     "comments:migrate": "node --env-file-if-exists=.env.local scripts/migrate-comments.mjs",
     "test": "npm run test:static && npm run test:content && npm run test:routes && npm run test:oauth",
     "test:static": "node --test tests/phase1-components.test.mjs tests/phase2-homepage.test.mjs tests/phase3-production.test.mjs tests/phase4a1-security.test.mjs tests/phase5-infrastructure.test.mjs tests/release-pipeline.test.mjs",
-    "test:content": "tsx --env-file-if-exists=.env.local --test tests/chatwoot-integration.test.ts tests/comments-domain.test.ts tests/comments-moderation.test.ts tests/comments-postgres.test.ts tests/comments-routes.test.ts tests/contact-route.test.ts tests/csp-middleware.test.ts tests/lead-delivery.test.ts tests/openredakt-branding.test.ts tests/phase4a-content.test.ts tests/publishing-lifecycle.test.ts tests/showcase-theme.test.ts",
+    "test:content": "tsx --env-file-if-exists=.env.local --test tests/chatwoot-integration.test.ts tests/comments-domain.test.ts tests/comments-moderation.test.ts tests/comments-postgres.test.ts tests/comments-routes.test.ts tests/contact-route.test.ts tests/csp-middleware.test.ts tests/insights-editorial.test.ts tests/lead-delivery.test.ts tests/openredakt-branding.test.ts tests/phase4a-content.test.ts tests/publishing-lifecycle.test.ts tests/showcase-theme.test.ts",
     "test:routes": "node scripts/run-route-tests.mjs",
     "test:oauth": "npm --prefix services/cms-oauth-broker test",
     "release:package": "node scripts/release/package-release.mjs",

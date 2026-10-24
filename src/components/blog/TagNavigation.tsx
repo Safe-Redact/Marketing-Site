@@ -21,8 +21,8 @@ export function TagNavigation({ tags, activeSlug, query, type }: TagNavigationPr
   if (!tags.length) return null;
 
   return (
-    <nav aria-label="Filter content by tag" className="flex flex-wrap items-center gap-2">
-      <span className="mr-1 font-heading text-caption font-semibold uppercase tracking-[0.05em] text-ink-muted">
+    <nav aria-label="Filter content by tag" className="flex max-w-full items-center gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible">
+      <span className="mr-1 shrink-0 font-heading text-caption font-semibold uppercase tracking-[0.05em] text-ink-muted">
         Topics
       </span>
       {tags.map((tag) => {
@@ -33,10 +33,10 @@ export function TagNavigation({ tags, activeSlug, query, type }: TagNavigationPr
             href={tagHref(tag.slug, query, type)}
             aria-current={isActive ? "page" : undefined}
             className={cn(
-              "inline-flex min-h-10 items-center gap-1.5 rounded-full border px-3 text-caption font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool",
+              "inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border px-3 text-caption font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool",
               isActive
-                ? "border-accent-cool/60 bg-accent-cool/10 text-accent-cool"
-                : "border-border-subtle text-ink-muted hover:border-accent-cool/40 hover:text-ink"
+                ? "border-white bg-white text-canvas"
+                : "border-border-subtle bg-surface-raised text-ink-muted hover:border-accent-cool/40 hover:text-white"
             )}
           >
             {tag.name} <span className="text-[0.7rem] opacity-70">{tag.count}</span>

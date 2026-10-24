@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArticleCard } from "@/components/blog/ArticleCard";
+import { ArticleArchive } from "@/components/blog/ArticleArchive";
 import { ArticleSearch } from "@/components/blog/ArticleSearch";
 import { CategoryNavigation } from "@/components/blog/CategoryNavigation";
+import { EditorialHero } from "@/components/blog/EditorialHero";
 import { FeaturedArticle } from "@/components/blog/FeaturedArticle";
 import { Pagination } from "@/components/blog/Pagination";
 import { TagNavigation } from "@/components/blog/TagNavigation";
 import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Eyebrow";
 import {
   getArticleCategories,
   getArticleTags,
+  groupArticlesByMonth,
   loadPublishedArticles,
   queryArticles,
 } from "@/lib/blog/content";
@@ -85,6 +86,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const articles = await loadPublishedArticles();
   const categories = getArticleCategories(articles);
   const tags = getArticleTags(articles);
+  const availableTypes = [...new Set(articles.map((article) => article.type))];
   const activeTag = requestedTag ? tags.find((tag) => tag.slug === requestedTag) : undefined;
   if (requestedTag && !activeTag) notFound();
 
@@ -110,63 +112,60 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 
   return (
     <>
-      <section className="blog-hero border-b border-border-subtle pt-[8.75rem] sm:pt-[10rem] lg:pt-[11.5rem]">
-        <Container className="pb-14 sm:pb-16 lg:pb-20">
-          <Eyebrow>OpenRedakt resources</Eyebrow>
-          <h1 className="mt-5 max-w-4xl font-heading text-[clamp(2.4rem,6vw,4.8rem)] font-semibold leading-[1.04] tracking-[-0.04em] text-ink text-balance">
-            Insights
-          </h1>
-          <p className="mt-6 max-w-2xl text-body-lg leading-8 text-ink-muted">
-            Company news, product updates, industry perspectives, and practical guides
-            for teams building careful, reviewable redaction workflows — all in one place.
-          </p>
-        </Container>
-      </section>
+      <EditorialHero />
 
-      <section className="py-14 sm:py-16 lg:py-20" aria-label="Article directory">
-        <Container>
-          <div className="border-b border-border-subtle pb-10">
-            <ContentTypeFilter
-              activeType={type}
-              query={query || undefined}
-              tag={activeTag?.slug}
-            />
-            <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+      {featured ? (
+        <section className="pb-12 sm:pb-14 lg:pb-16" aria-label="Featured story">
+          <Container className="!max-w-5xl">
+            <FeaturedArticle article={featured} />
+          </Container>
+        </section>
+      ) : null}
+
+      <section
+        className={featured ? "pb-16 sm:pb-20 lg:pb-24" : "pb-16 pt-10 sm:pb-20 lg:pb-24"}
+        aria-label="Article directory"
+      >
+        <Container className="!max-w-5xl">
+          <div className="border-t border-border-subtle pt-7 sm:pt-8">
+            <div>
               <ArticleSearch query={query} type={type ?? undefined} tag={activeTag?.slug} />
-              <CategoryNavigation categories={categories} showAllLink={false} />
             </div>
-            <div className="mt-6">
-              <TagNavigation
-                tags={tags}
-                activeSlug={activeTag?.slug}
+            <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+              <ContentTypeFilter
+                activeType={type}
                 query={query || undefined}
-                type={type ?? undefined}
+                tag={activeTag?.slug}
+                availableTypes={availableTypes}
               />
+              {categories.length > 1 ? <div className="min-w-0 sm:ml-auto">
+                <p className="sr-only">Categories</p>
+                <CategoryNavigation categories={categories} showAllLink={false} />
+              </div> : null}
             </div>
+            {articles.length > 3 || activeTag ? (
+              <div className="mt-4">
+                <TagNavigation
+                  tags={tags}
+                  activeSlug={activeTag?.slug}
+                  query={query || undefined}
+                  type={type ?? undefined}
+                />
+              </div>
+            ) : null}
           </div>
-
-          {featured ? <div className="mt-12"><FeaturedArticle article={featured} /></div> : null}
 
           {results.items.length ? (
             <>
-              <div className="mt-12 flex flex-wrap items-end justify-between gap-4">
-                <div>
-                  <Eyebrow>
-                    {query ? "Search results" : activeTag ? "Topic" : activeLabel ?? "Latest insights"}
-                  </Eyebrow>
-                  <h2 className="mt-3 font-heading text-heading-xl text-ink">
-                    {query
-                      ? `Results for “${query}”`
-                      : activeTag?.name ?? activeLabel ?? "From the OpenRedakt team"}
-                  </h2>
-                </div>
-                <p className="text-body-sm text-ink-muted">
-                  {results.totalItems} {results.totalItems === 1 ? "item" : "items"}
-                </p>
-              </div>
-              <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {results.items.map((article) => <ArticleCard key={article.slug} article={article} />)}
-              </div>
+              <ArticleArchive
+                groups={groupArticlesByMonth(results.items)}
+                totalItems={results.totalItems}
+                contextLabel={
+                  query
+                    ? `Results for “${query}”`
+                    : activeTag?.name ?? activeLabel ?? "Latest from OpenRedakt"
+                }
+              />
               <Pagination
                 currentPage={results.page}
                 totalPages={results.totalPages}
@@ -176,12 +175,12 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 tag={activeTag?.slug}
               />
             </>
-          ) : featured ? null : (
+          ) : featured && !query && !type && !activeTag ? null : (
             <div className="mx-auto mt-14 max-w-2xl rounded-panel border border-border-subtle bg-surface-raised px-6 py-12 text-center sm:px-10">
-              <Eyebrow>
+              <p className="font-heading text-caption font-semibold uppercase tracking-[0.12em] text-accent-warm">
                 {query || type || activeTag ? "No matching results" : "Publication queue"}
-              </Eyebrow>
-              <h2 className="mt-4 font-heading text-heading-xl text-ink">
+              </p>
+              <h2 className="mt-4 font-heading text-heading-xl text-white">
                 {query
                   ? "No content matches your search"
                   : activeLabel

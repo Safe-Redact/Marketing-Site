@@ -17,6 +17,7 @@ export function SupportChatLauncher({
     return (
       <div
         role="status"
+        data-support-launcher
         className="fixed bottom-5 right-5 z-[70] max-w-[min(22rem,calc(100vw-2.5rem))] rounded-panel border border-border-subtle bg-surface-raised p-4 shadow-panel sm:bottom-6 sm:right-6"
       >
         <p className="text-body-sm font-medium text-ink">Chat is unavailable right now.</p>
@@ -32,7 +33,7 @@ export function SupportChatLauncher({
   }
 
   return (
-    <div className="fixed bottom-5 right-5 z-[70] sm:bottom-6 sm:right-6">
+    <div data-support-launcher className="fixed bottom-5 right-5 z-[70] sm:bottom-6 sm:right-6">
       <button
         type="button"
         onClick={onActivate}

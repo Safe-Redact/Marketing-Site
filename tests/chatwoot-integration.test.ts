@@ -120,6 +120,18 @@ test("the custom support launcher exposes accessible loading and fallback states
   assert.match(error, /mailto:support@saferedact\.io/);
 });
 
+test("the Insights launcher cannot cover editorial controls on tablet or mobile", () => {
+  const stylesheet = readFileSync(
+    new URL("../src/app/globals.css", import.meta.url),
+    "utf8"
+  );
+
+  assert.match(
+    stylesheet,
+    /@media \(max-width: 991px\)[\s\S]*?body:has\(main\[data-insights-page\]\) \[data-support-launcher\][\s\S]*?position: static !important/
+  );
+});
+
 test("Chatwoot CSP allowances are exact, conditional, and never weaken core directives", () => {
   const previous = { ...process.env };
   Object.assign(process.env, validEnvironment, { NODE_ENV: "production" });

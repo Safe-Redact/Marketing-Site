@@ -21,16 +21,16 @@ export function CategoryNavigation({
   if (!categories.length) return null;
 
   return (
-    <nav aria-label="Article categories" className="flex flex-wrap gap-2">
+    <nav aria-label="Article categories" className="flex max-w-full gap-2 overflow-x-auto pb-1 xl:flex-wrap xl:justify-end xl:overflow-visible">
       {showAllLink ? (
         <Link
           href="/blog"
           aria-current={!activeSlug ? "page" : undefined}
           className={cn(
-            "inline-flex min-h-11 items-center rounded-full border px-4 text-body-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool",
+            "inline-flex min-h-[2.375rem] shrink-0 items-center rounded-full border px-4 text-body-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool",
             !activeSlug
-              ? "border-accent-cool/60 bg-accent-cool/10 text-accent-cool"
-              : "border-border-subtle text-ink-muted hover:border-accent-cool/40 hover:text-ink"
+              ? "border-white bg-white text-canvas"
+              : "border-border-subtle bg-surface-raised text-ink-muted hover:border-accent-cool/40 hover:text-white"
           )}
         >
           All insights
@@ -42,10 +42,10 @@ export function CategoryNavigation({
           href={`/blog/category/${category.slug}`}
           aria-current={activeSlug === category.slug ? "page" : undefined}
           className={cn(
-            "inline-flex min-h-11 items-center rounded-full border px-4 text-body-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool",
+            "inline-flex min-h-[2.375rem] shrink-0 items-center rounded-full border px-4 text-body-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool",
             activeSlug === category.slug
-              ? "border-accent-cool/60 bg-accent-cool/10 text-accent-cool"
-              : "border-border-subtle text-ink-muted hover:border-accent-cool/40 hover:text-ink"
+              ? "border-white bg-white text-canvas"
+              : "border-border-subtle bg-surface-raised text-ink-muted hover:border-accent-cool/40 hover:text-white"
           )}
         >
           {category.name}

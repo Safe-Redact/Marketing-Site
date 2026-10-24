@@ -5,7 +5,11 @@ export default function BlogLayout({ children }: { children: React.ReactNode }) 
   return (
     <>
       <Header />
-      <main id="main-content" className="min-h-screen bg-canvas text-ink">
+      <main
+        id="main-content"
+        data-insights-page
+        className="min-h-screen bg-canvas text-ink"
+      >
         {children}
       </main>
       <Footer />

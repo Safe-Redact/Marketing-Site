@@ -48,6 +48,20 @@ export interface PaginatedArticles {
   totalPages: number;
 }
 
+export interface ArticleMonthGroup {
+  key: `${number}-${string}`;
+  year: number;
+  month: number;
+  label: string;
+  articles: readonly BlogArticle[];
+}
+
+export interface ArticleHeading {
+  id: string;
+  depth: 2 | 3;
+  text: string;
+}
+
 export interface ContentOptions {
   directory?: string;
   mediaDirectory?: string;

@@ -91,6 +91,8 @@
 
   .article-prose {
     @apply text-[1rem] leading-8 text-ink-muted sm:text-[1.0625rem];
+    max-width: 70ch;
+    overflow-wrap: anywhere;
   }
 
   .article-prose > * + * {
@@ -100,16 +102,15 @@
   .article-prose h2,
   .article-prose h3,
   .article-prose h4 {
-    @apply font-heading font-semibold tracking-[-0.02em] text-ink;
-    scroll-margin-top: var(--anchor-offset);
+    @apply font-heading font-semibold tracking-[-0.025em] text-white;
   }
 
   .article-prose h2 {
-    @apply mt-12 text-[1.75rem] leading-tight sm:text-[2rem];
+    @apply mt-14 text-[1.75rem] leading-tight sm:text-[2rem];
   }
 
   .article-prose h3 {
-    @apply mt-9 text-[1.35rem] leading-snug sm:text-[1.5rem];
+    @apply mt-10 text-[1.35rem] leading-snug sm:text-[1.5rem];
   }
 
   .article-prose h4 {
@@ -117,11 +118,11 @@
   }
 
   .article-prose a {
-    @apply rounded-sm font-medium text-accent-cool underline decoration-accent-cool/40 underline-offset-4 transition-colors hover:text-accent-mint;
+    @apply rounded-sm font-medium text-accent-cool underline decoration-accent-cool/35 underline-offset-4 transition-colors hover:text-accent-warm;
   }
 
   .article-prose strong {
-    @apply font-semibold text-ink;
+    @apply font-semibold text-white;
   }
 
   .article-prose ul,
@@ -146,7 +147,7 @@
   }
 
   .article-prose code {
-    @apply rounded bg-surface-active px-1.5 py-0.5 font-mono text-[0.9em] text-accent-mint;
+    @apply rounded bg-surface-active px-1.5 py-0.5 font-mono text-[0.9em] text-accent-cool;
   }
 
   .article-prose pre {
@@ -171,7 +172,30 @@
   }
 
   .article-prose th {
-    @apply bg-surface-raised font-heading font-semibold text-ink;
+    @apply bg-surface-raised font-heading font-semibold text-white;
+  }
+
+  .article-toc-list {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .article-toc-list::-webkit-scrollbar {
+    display: none;
+    height: 0;
+    width: 0;
+  }
+}
+
+@media (max-width: 991px) {
+  body:has(main[data-insights-page]) [data-support-launcher] {
+    position: static !important;
+    margin: 1rem 1.25rem 1.25rem;
+  }
+
+  body:has(main[data-insights-page]) [data-support-launcher] button {
+    width: 100%;
+    justify-content: center;
   }
 }
 

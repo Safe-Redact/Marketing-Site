@@ -15,6 +15,16 @@ const config: Config = {
         "accent-warm-hover": "#F08A66",
         "accent-cool": "#33B7FF",
         "accent-mint": "#55E6D0",
+        editorial: {
+          canvas: "#F4F6FA",
+          paper: "#FFFFFF",
+          ink: "#151821",
+          muted: "#606878",
+          line: "#DDE2EA",
+          soft: "#E9EEF6",
+          blue: "#2758A5",
+          coral: "#C85F42",
+        },
         accent: {
           DEFAULT: "#D97757",
           dark: "#B85C3F",
