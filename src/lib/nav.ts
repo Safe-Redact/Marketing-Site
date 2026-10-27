@@ -15,3 +15,12 @@ export function isRouteActive(pathname: string, href: string): boolean {
   const target = href.replace(/\/$/, "") || "/";
   return path === target || (target !== "/" && path.startsWith(`${target}/`));
 }
+
+/**
+ * Exact-match variant for links inside a dropdown, where "All Features" must not claim
+ * `aria-current` while a child page such as `/features/audio-redaction` is open.
+ */
+export function isCurrentPage(pathname: string, href: string): boolean {
+  if (href.startsWith("#")) return false;
+  return (pathname.replace(/\/$/, "") || "/") === (href.replace(/\/$/, "") || "/");
+}

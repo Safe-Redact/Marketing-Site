@@ -43,7 +43,7 @@ export function ArticleBody({ content }: { content: string }) {
           img: ({ src = "", alt = "" }) => {
             if (typeof src !== "string" || !isSafeBlogImagePath(src)) return null;
             return (
-              <span className="relative my-10 block aspect-[16/10] overflow-hidden rounded-panel border border-border-subtle">
+              <span className="relative my-10 block aspect-[16/10] overflow-hidden rounded-[16px] border border-border-subtle">
                 <Image src={src} alt={alt} fill sizes="(max-width: 768px) 100vw, 740px" className="object-cover" />
               </span>
             );

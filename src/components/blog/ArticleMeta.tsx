@@ -12,7 +12,7 @@ export function ArticleMeta({ article }: { article: BlogArticle }) {
       <dl className="flex flex-wrap gap-x-5 gap-y-2 text-body-sm text-ink-muted">
         <div className="flex gap-1.5">
           <dt className="sr-only">Author</dt>
-          <dd className="font-medium text-white">By {article.author}</dd>
+          <dd className="font-medium text-ink">By {article.author}</dd>
         </div>
         <div className="flex gap-1.5">
           <dt className="sr-only">Published</dt>

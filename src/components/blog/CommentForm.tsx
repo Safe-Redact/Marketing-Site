@@ -15,7 +15,7 @@ interface CommentFormProps {
 type Outcome = { kind: "idle" } | { kind: "accepted"; message: string } | { kind: "error"; message: string };
 
 const fieldClass =
-  "w-full rounded-control border border-border-subtle bg-surface-active px-4 py-3 text-base text-ink placeholder:text-ink-muted/55 transition-colors focus:border-accent-cool focus:outline-none focus:ring-1 focus:ring-accent-cool";
+  "w-full rounded-[10px] border border-ink-muted/55 bg-canvas/70 px-4 py-3 text-base text-ink placeholder:text-ink-muted/60 transition-colors hover:border-ink-muted/75 focus:border-accent-cool focus:outline-none focus:ring-1 focus:ring-accent-cool";
 
 export function CommentForm({ articleSlug, parentId, replyingTo }: CommentFormProps) {
   const isReply = parentId !== null;
@@ -79,7 +79,7 @@ export function CommentForm({ articleSlug, parentId, replyingTo }: CommentFormPr
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="rounded-sm font-heading text-caption font-semibold uppercase tracking-[0.04em] text-accent-cool transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"
+        className="rounded-sm font-heading text-caption font-semibold uppercase tracking-[0.04em] text-accent-cool transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"
       >
         Reply{replyingTo ? <span className="sr-only"> to {replyingTo}</span> : null}
       </button>
@@ -91,7 +91,7 @@ export function CommentForm({ articleSlug, parentId, replyingTo }: CommentFormPr
       onSubmit={handleSubmit}
       aria-busy={isSubmitting}
       aria-describedby={statusId}
-      className={cn(isReply && "rounded-panel border border-border-subtle bg-surface-active/40 p-4")}
+      className={cn(isReply && "rounded-[16px] border border-border-subtle bg-surface-active/40 p-4")}
     >
       <h3 className={cn("font-heading text-body font-semibold text-ink", isReply && "text-body-sm")}>
         {isReply ? `Reply to ${replyingTo ?? "this comment"}` : "Join the discussion"}

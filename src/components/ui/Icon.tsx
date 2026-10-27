@@ -1,4 +1,4 @@
-import type { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { cn } from "@/lib/utils";
 
 interface IconProps {
@@ -438,6 +438,35 @@ const icons: Record<string, ReactElement> = {
         strokeLinejoin="round"
       />
       <path d="M8 12h.01M12 12h.01M16 12h.01" strokeWidth="2" strokeLinecap="round" />
+    </>
+  ),
+  "credit-card": (
+    <>
+      <rect x="2" y="5" width="20" height="14" rx="2" strokeWidth="1.5" />
+      <path d="M2 10h20M6 15h4" strokeWidth="1.5" strokeLinecap="round" />
+    </>
+  ),
+  graduation: (
+    <>
+      <path d="M22 10 12 5 2 10l10 5 10-5z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5M22 10v6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </>
+  ),
+  home: (
+    <>
+      <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1V10z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </>
+  ),
+  mic: (
+    <>
+      <rect x="9" y="2" width="6" height="12" rx="3" strokeWidth="1.5" />
+      <path d="M5 10v1a7 7 0 0 0 14 0v-1M12 18v4M8 22h8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </>
+  ),
+  database: (
+    <>
+      <ellipse cx="12" cy="5" rx="8" ry="3" strokeWidth="1.5" />
+      <path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3" strokeWidth="1.5" strokeLinecap="round" />
     </>
   ),
   info: (

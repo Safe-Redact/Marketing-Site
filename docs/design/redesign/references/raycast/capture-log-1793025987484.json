@@ -1,0 +1,104 @@
+[
+  {
+    "name": "home-390-menu-open",
+    "folder": "interactions",
+    "url": "https://www.raycast.com/",
+    "width": 390,
+    "height": 844,
+    "before": "none",
+    "frames": 1,
+    "measure": {
+      "visibleLinks": [
+        "Store",
+        "Pro",
+        "AI",
+        "iOS",
+        "Windows",
+        "Teams",
+        "Enterprise",
+        "Blog",
+        "Pricing",
+        "Log in",
+        "The Raycast Keyboard"
+      ],
+      "overlay": [
+        [
+          "H3BVAa_heroBackground",
+          "rgb(7, 8, 10)",
+          "none"
+        ],
+        [
+          "utU0aa_backdrop",
+          "rgba(0, 0, 0, 0)",
+          "none"
+        ],
+        [
+          "utU0aa_stars",
+          "rgba(0, 0, 0, 0)",
+          "none"
+        ],
+        [
+          "h8MSgW_keyboard",
+          "rgba(0, 0, 0, 0)",
+          "none"
+        ]
+      ],
+      "bodyOverflow": "visible"
+    },
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\interactions\\home-390-menu-open-frame1.jpg"
+    ],
+    "observedAt": "2026-10-26T14:46:20.177Z"
+  },
+  {
+    "name": "home-768-menu-open",
+    "folder": "interactions",
+    "url": "https://www.raycast.com/",
+    "width": 768,
+    "height": 1024,
+    "before": "none",
+    "frames": 1,
+    "measure": {
+      "visibleLinks": [
+        "Store",
+        "Pro",
+        "AI",
+        "iOS",
+        "Windows",
+        "Teams",
+        "Enterprise",
+        "Blog",
+        "Pricing",
+        "Log in",
+        "Download for Windows"
+      ],
+      "overlay": [
+        [
+          "H3BVAa_heroBackground",
+          "rgb(7, 8, 10)",
+          "none"
+        ],
+        [
+          "utU0aa_backdrop",
+          "rgba(0, 0, 0, 0)",
+          "none"
+        ],
+        [
+          "utU0aa_stars",
+          "rgba(0, 0, 0, 0)",
+          "none"
+        ],
+        [
+          "",
+          "rgba(0, 0, 0, 0)",
+          "none"
+        ]
+      ],
+      "bodyOverflow": "visible"
+    },
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\interactions\\home-768-menu-open-frame1.jpg"
+    ],
+    "observedAt": "2026-10-26T14:46:26.080Z"
+  }
+]

@@ -9,15 +9,15 @@ export function RelatedStories({ articles }: { articles: readonly BlogArticle[] 
 
   return (
     <section
-      className="border-t border-border-subtle bg-surface-raised/35 py-14 sm:py-16 lg:py-20"
+      className="section-y-sm border-t border-border-subtle/50 bg-canvas"
       aria-labelledby="related-articles-heading"
     >
       <Container>
         <div className="max-w-2xl">
-          <p className="font-heading text-caption font-semibold uppercase tracking-[0.1em] text-accent-warm">
+          <p className="type-eyebrow">
             Continue reading
           </p>
-          <h2 id="related-articles-heading" className="mt-3 font-heading text-heading-xl text-white">
+          <h2 id="related-articles-heading" className="type-h2 mt-4">
             Related insights
           </h2>
           <p className="mt-3 text-body text-ink-muted">
@@ -36,7 +36,7 @@ export function RelatedStories({ articles }: { articles: readonly BlogArticle[] 
                   {formatArticleDate(article.date)}
                 </time>
               </div>
-              <h3 className="mt-5 font-heading text-heading-lg leading-tight text-white">
+              <h3 className="mt-5 font-heading text-heading-lg leading-tight text-ink">
                 <Link
                   href={`/blog/${article.slug}`}
                   className="rounded-sm transition-colors hover:text-accent-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"

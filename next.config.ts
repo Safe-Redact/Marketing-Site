@@ -4,8 +4,16 @@ import type { NextConfig } from "next";
 
 const applicationRoot = path.dirname(fileURLToPath(import.meta.url));
 
+/**
+ * Design prototypes live in `page.dev.tsx` files. Only `next dev` recognises that
+ * extension, so production builds never compile those routes: they 404 in production
+ * rather than relying on noindex.
+ */
+const isDevelopment = process.env.NODE_ENV === "development";
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  pageExtensions: isDevelopment ? ["dev.tsx", "tsx", "ts", "jsx", "js"] : ["tsx", "ts", "jsx", "js"],
   output: "standalone",
   outputFileTracingRoot: applicationRoot,
   images: {

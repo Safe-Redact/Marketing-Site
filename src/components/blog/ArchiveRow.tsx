@@ -7,8 +7,8 @@ import { formatArticleDate } from "./ArticleCard";
 
 export function ArchiveRow({ article }: { article: BlogArticle }) {
   return (
-    <article className="group relative grid grid-cols-[3rem_minmax(0,1fr)] items-center gap-4 rounded-panel px-0 py-3 transition-colors duration-200 hover:bg-surface-raised sm:grid-cols-[3.5rem_minmax(0,1fr)] sm:gap-6 sm:px-2">
-      <div className="relative z-10 grid h-12 w-12 place-items-center rounded-[0.75rem] border border-accent-cool/20 bg-gradient-to-br from-surface-active to-[#173775] shadow-[0_8px_22px_rgba(0,0,0,0.24)] sm:h-14 sm:w-14">
+    <article className="group relative grid grid-cols-[3rem_minmax(0,1fr)] items-center gap-4 rounded-[16px] px-0 py-3 transition-colors duration-200 hover:bg-surface-raised sm:grid-cols-[3.5rem_minmax(0,1fr)] sm:gap-6 sm:px-2">
+      <div className="relative z-10 grid h-12 w-12 place-items-center rounded-[0.75rem] border border-accent-warm/25 bg-gradient-to-br from-surface-active to-surface-raised shadow-panel sm:h-14 sm:w-14">
         <Image src="/favicon.svg" alt="" width={27} height={27} className="brightness-0 invert" />
       </div>
 
@@ -18,10 +18,10 @@ export function ArchiveRow({ article }: { article: BlogArticle }) {
             <ArticleTypeBadge article={article} className="border-border-subtle bg-surface-raised text-ink-muted" />
             <span className="text-caption text-ink-muted">{article.category}</span>
           </div>
-          <h3 className="mt-2 font-heading text-[clamp(1.05rem,2.2vw,1.35rem)] font-medium leading-snug tracking-[-0.02em] text-white">
+          <h3 className="mt-2 font-heading text-[clamp(1.05rem,2.2vw,1.3rem)] font-semibold leading-snug tracking-[-0.02em] text-ink">
             <Link
               href={`/blog/${article.slug}`}
-              className="rounded-sm transition-colors duration-200 hover:text-accent-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"
+              className="rounded-sm transition-colors duration-200 hover:text-accent-warm-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"
             >
               {article.title}
             </Link>
@@ -33,7 +33,7 @@ export function ArchiveRow({ article }: { article: BlogArticle }) {
           </p>
         </div>
         <span
-          className="mt-3 hidden h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border-subtle text-lg text-ink-muted transition-all group-hover:border-accent-cool/40 group-hover:text-white motion-safe:group-hover:translate-x-1 sm:inline-flex"
+          className="mt-3 hidden h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border-subtle text-lg text-ink-muted transition-all group-hover:border-ink-muted/40 group-hover:text-ink motion-safe:group-hover:translate-x-1 sm:inline-flex"
           aria-hidden="true"
         >
           →

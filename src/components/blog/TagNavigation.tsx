@@ -22,7 +22,7 @@ export function TagNavigation({ tags, activeSlug, query, type }: TagNavigationPr
 
   return (
     <nav aria-label="Filter content by tag" className="flex max-w-full items-center gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible">
-      <span className="mr-1 shrink-0 font-heading text-caption font-semibold uppercase tracking-[0.05em] text-ink-muted">
+      <span className="type-meta mr-1 shrink-0 uppercase tracking-[0.12em]">
         Topics
       </span>
       {tags.map((tag) => {
@@ -33,10 +33,10 @@ export function TagNavigation({ tags, activeSlug, query, type }: TagNavigationPr
             href={tagHref(tag.slug, query, type)}
             aria-current={isActive ? "page" : undefined}
             className={cn(
-              "inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border px-3 text-caption font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool",
+              "inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-[10px] border px-3 text-caption font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool",
               isActive
-                ? "border-white bg-white text-canvas"
-                : "border-border-subtle bg-surface-raised text-ink-muted hover:border-accent-cool/40 hover:text-white"
+                ? "border-ink-muted/30 bg-surface-active text-ink"
+                : "border-border-subtle bg-surface-raised text-ink-muted hover:border-ink-muted/40 hover:text-ink"
             )}
           >
             {tag.name} <span className="text-[0.7rem] opacity-70">{tag.count}</span>

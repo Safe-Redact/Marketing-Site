@@ -18,7 +18,7 @@ export function ArticleArchive({
           <p className="font-heading text-caption font-semibold uppercase tracking-[0.14em] text-accent-warm">
             Archive
           </p>
-          <p className="mt-2 font-heading text-[clamp(1.5rem,2.8vw,2.15rem)] font-semibold tracking-[-0.025em] text-white">
+          <p className="mt-2 font-heading text-[clamp(1.5rem,2.8vw,2.15rem)] font-semibold tracking-[-0.025em] text-ink">
             {contextLabel}
           </p>
         </div>

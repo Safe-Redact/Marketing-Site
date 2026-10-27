@@ -57,22 +57,22 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         nonce={nonce}
         dangerouslySetInnerHTML={{ __html: jsonLd }}
       />
-      <header className="blog-hero border-b border-border-subtle pt-[7rem] sm:pt-[7.5rem] lg:pt-[8rem]">
+      <header className="blog-hero border-b border-border-subtle/50 pt-[7.5rem] sm:pt-[8.25rem]">
         <Container className="max-w-[76rem] pb-10 sm:pb-14 lg:pb-16">
           <nav
             aria-label="Breadcrumb"
-            className="mb-5 flex flex-wrap items-center gap-2 text-caption text-ink-muted"
+            className="type-meta mb-6 flex flex-wrap items-center gap-2"
           >
             <Link
               href="/blog"
-              className="rounded-sm transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"
+              className="rounded-sm transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"
             >
               Insights
             </Link>
             <span aria-hidden="true">/</span>
             <Link
               href={`/blog/category/${article.categorySlug}`}
-              className="rounded-sm transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"
+              className="rounded-sm transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"
             >
               {article.category}
             </Link>
@@ -81,20 +81,20 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             <div>
               <Link
                 href={`/blog/category/${article.categorySlug}`}
-                className="inline-flex rounded-sm font-heading text-caption font-semibold uppercase tracking-[0.1em] text-accent-warm transition-colors hover:text-white"
+                className="type-eyebrow inline-flex rounded-sm transition-colors hover:text-accent-warm-hover"
               >
                 {article.category}
               </Link>
-              <h1 className="mt-4 font-heading text-[clamp(2.15rem,3.25vw,2.7rem)] font-semibold leading-[1.08] tracking-[-0.035em] text-white text-balance">
+              <h1 className="type-h1 mt-4 text-balance">
                 {article.title}
               </h1>
-              <p className="mt-4 max-w-3xl text-body-lg leading-8 text-ink-muted">
+              <p className="type-lede mt-5 max-w-3xl">
                 {article.excerpt}
               </p>
               <ArticleMeta article={article} />
             </div>
           </div>
-          <div className="relative mt-8 aspect-[4/3] overflow-hidden rounded-[1.25rem] border border-border-subtle bg-surface-raised shadow-panel sm:mt-9 sm:aspect-[16/9] lg:aspect-[2/1] lg:rounded-[1.75rem]">
+          <div className="relative mt-10 aspect-[4/3] overflow-hidden rounded-[18px] border border-border-subtle/60 bg-surface-raised shadow-panel sm:aspect-[16/9] lg:aspect-[21/9]">
             <Image
               src={leadImage}
               alt={leadImageAlt}
@@ -115,14 +115,14 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 <ArticleTableOfContents headings={headings} compact />
               </div>
               <ArticleBody content={article.body} />
-              <div className="mt-14 border-t border-border-subtle pt-7">
+              <div className="mt-14 border-t border-border-subtle/60 pt-7">
                 {article.tags.length ? (
                   <nav aria-label="Article topics" className="mb-6 flex flex-wrap gap-2">
                     {article.tags.map((tag, index) => (
                       <Link
                         key={article.tagSlugs[index]}
                         href={`/blog?tag=${article.tagSlugs[index]}`}
-                        className="inline-flex min-h-10 items-center rounded-full border border-border-subtle bg-surface-raised px-3 text-caption text-ink-muted transition-colors hover:border-accent-cool/40 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"
+                        className="inline-flex min-h-10 items-center rounded-[10px] border border-border-subtle/70 bg-surface-raised/50 px-3 text-caption text-ink-muted transition-colors hover:border-ink-muted/40 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"
                       >
                         {tag}
                       </Link>
@@ -131,7 +131,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 ) : null}
                 <Link
                   href="/blog"
-                  className="font-heading text-body-sm font-semibold text-accent-warm transition-colors hover:text-white"
+                  className="text-sm font-semibold text-accent-warm transition-colors hover:text-accent-warm-hover"
                 >
                   ← Back to all insights
                 </Link>
@@ -155,25 +155,25 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       <CommentThread articleSlug={article.slug} />
 
       <section
-        className="border-t border-border-subtle bg-surface-raised/35 py-14 sm:py-16 lg:py-20"
+        className="section-y-sm relative isolate overflow-hidden border-t border-border-subtle/50 bg-canvas"
         aria-labelledby="article-closing-cta"
       >
         <Container className="max-w-[64rem] text-center">
-          <p className="font-heading text-caption font-semibold uppercase tracking-[0.1em] text-accent-warm">
+          <p className="type-eyebrow">
             From guidance to workflow
           </p>
           <h2
             id="article-closing-cta"
-            className="mx-auto mt-4 max-w-3xl font-heading text-[clamp(1.9rem,3.5vw,3rem)] font-semibold leading-[1.08] tracking-[-0.035em] text-white"
+            className="type-h2 mx-auto mt-4 max-w-3xl"
           >
             Review how OpenRedakt can support your redaction process.
           </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-body-lg leading-8 text-ink-muted">
+          <p className="type-lede mx-auto mt-5 max-w-2xl">
             Share the file formats, review steps, and disclosure risks your team needs to evaluate.
           </p>
           <Link
             href="/#demo-enquiry"
-            className="mt-7 inline-flex min-h-12 items-center justify-center rounded-full bg-accent-warm px-7 py-3 font-semibold text-canvas transition-all duration-200 hover:bg-accent-warm-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool focus-visible:ring-offset-2 focus-visible:ring-offset-canvas motion-safe:hover:-translate-y-0.5"
+            className="mt-8 inline-flex min-h-12 items-center justify-center rounded-[10px] bg-accent-warm px-6 py-3 font-semibold text-canvas shadow-action transition-all duration-200 hover:bg-accent-warm-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool focus-visible:ring-offset-2 focus-visible:ring-offset-canvas motion-safe:hover:-translate-y-0.5"
           >
             Request a tailored demo
           </Link>

@@ -1,0 +1,468 @@
+[
+  {
+    "name": "home-1440",
+    "folder": "desktop-1440",
+    "url": "https://www.raycast.com/",
+    "width": 1440,
+    "height": 900,
+    "sections": true,
+    "full": true,
+    "measure": {
+      "vw": 1440,
+      "docH": 15983,
+      "h1": [
+        "64px",
+        "70.4px",
+        [
+          450,
+          370,
+          540,
+          141
+        ]
+      ],
+      "nav": [
+        118,
+        16,
+        1204,
+        76
+      ],
+      "h2": [
+        [
+          "Take shortcuts, not detours.",
+          "20px",
+          [
+            545,
+            1415,
+            350,
+            24
+          ]
+        ],
+        [
+          "It’s not about saving time.",
+          "20px",
+          [
+            142,
+            2848,
+            272,
+            24
+          ]
+        ],
+        [
+          "There’s an extension for that.",
+          "20px",
+          [
+            118,
+            3510,
+            432,
+            24
+          ]
+        ]
+      ],
+      "canvas": [
+        [
+          120,
+          0,
+          1200,
+          967
+        ]
+      ],
+      "mobileMenuBtn": []
+    },
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\home-1440-s01.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\home-1440-s02.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\home-1440-s03.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\home-1440-s04.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\home-1440-s05.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\home-1440-s06.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\home-1440-s07.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\home-1440-s08.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\home-1440-s09.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\home-1440-s10.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\home-1440-s11.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\home-1440-s12.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\home-1440-s13.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\home-1440-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:32:23.155Z",
+    "pageHeight": 15983,
+    "offsets": [
+      0,
+      72,
+      1191,
+      2566,
+      3286,
+      4724,
+      6292,
+      7392,
+      8535,
+      9521,
+      10317,
+      13499,
+      14743
+    ]
+  },
+  {
+    "name": "home-1440-hero-motion",
+    "folder": "interactions",
+    "url": "https://www.raycast.com/",
+    "width": 1440,
+    "height": 900,
+    "frames": 6,
+    "frameInterval": 500,
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\interactions\\home-1440-hero-motion-frame1.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\interactions\\home-1440-hero-motion-frame2.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\interactions\\home-1440-hero-motion-frame3.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\interactions\\home-1440-hero-motion-frame4.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\interactions\\home-1440-hero-motion-frame5.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\interactions\\home-1440-hero-motion-frame6.jpg"
+    ],
+    "observedAt": "2026-10-26T14:32:55.915Z"
+  },
+  {
+    "name": "home-1440-hero-reduced-motion",
+    "folder": "interactions",
+    "url": "https://www.raycast.com/",
+    "width": 1440,
+    "height": 900,
+    "frames": 3,
+    "frameInterval": 600,
+    "reducedMotion": true,
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\interactions\\home-1440-hero-reduced-motion-frame1.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\interactions\\home-1440-hero-reduced-motion-frame2.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\interactions\\home-1440-hero-reduced-motion-frame3.jpg"
+    ],
+    "observedAt": "2026-10-26T14:33:03.303Z"
+  },
+  {
+    "name": "home-1440-nav",
+    "folder": "interactions",
+    "url": "https://www.raycast.com/",
+    "width": 1440,
+    "height": 900,
+    "hover": [
+      "Pro",
+      "Blog",
+      "Download"
+    ],
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\interactions\\home-1440-nav-hover-pro.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\interactions\\home-1440-nav-hover-blog.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\interactions\\home-1440-nav-hover-download.jpg"
+    ],
+    "observedAt": "2026-10-26T14:33:09.188Z"
+  },
+  {
+    "name": "home-1920",
+    "folder": "wide-1920",
+    "url": "https://www.raycast.com/",
+    "width": 1920,
+    "height": 1080,
+    "sections": true,
+    "full": true,
+    "fullScale": 0.4,
+    "measure": {
+      "vw": 1920,
+      "docH": 15983,
+      "h1": [
+        "64px",
+        "70.4px",
+        [
+          690,
+          370,
+          540,
+          141
+        ]
+      ],
+      "nav": [
+        358,
+        16,
+        1204,
+        76
+      ],
+      "h2": [
+        [
+          "Take shortcuts, not detours.",
+          "20px",
+          [
+            785,
+            1415,
+            350,
+            24
+          ]
+        ],
+        [
+          "It’s not about saving time.",
+          "20px",
+          [
+            382,
+            2848,
+            272,
+            24
+          ]
+        ],
+        [
+          "There’s an extension for that.",
+          "20px",
+          [
+            358,
+            3510,
+            432,
+            24
+          ]
+        ]
+      ],
+      "canvas": [
+        [
+          360,
+          0,
+          1200,
+          967
+        ]
+      ],
+      "mobileMenuBtn": []
+    },
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\wide-1920\\home-1920-s01.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\wide-1920\\home-1920-s02.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\wide-1920\\home-1920-s03.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\wide-1920\\home-1920-s04.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\wide-1920\\home-1920-s05.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\wide-1920\\home-1920-s06.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\wide-1920\\home-1920-s07.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\wide-1920\\home-1920-s08.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\wide-1920\\home-1920-s09.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\wide-1920\\home-1920-s10.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\wide-1920\\home-1920-s11.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\wide-1920\\home-1920-s12.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\wide-1920\\home-1920-s13.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\wide-1920\\home-1920-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:33:15.816Z",
+    "pageHeight": 15983,
+    "offsets": [
+      0,
+      72,
+      1191,
+      2566,
+      3286,
+      4724,
+      6292,
+      7392,
+      8535,
+      9521,
+      10317,
+      13499,
+      14743
+    ]
+  },
+  {
+    "name": "home-768",
+    "folder": "tablet-768",
+    "url": "https://www.raycast.com/",
+    "width": 768,
+    "height": 1024,
+    "sections": true,
+    "full": true,
+    "measure": {
+      "vw": 768,
+      "docH": 16661,
+      "h1": [
+        "64px",
+        "70.4px",
+        [
+          114,
+          370,
+          540,
+          141
+        ]
+      ],
+      "nav": [
+        16,
+        16,
+        736,
+        58
+      ],
+      "h2": [
+        [
+          "Take shortcuts, not detours.",
+          "20px",
+          [
+            209,
+            1415,
+            350,
+            24
+          ]
+        ],
+        [
+          "It’s not about saving time.",
+          "20px",
+          [
+            24,
+            2844,
+            272,
+            24
+          ]
+        ],
+        [
+          "There’s an extension for that.",
+          "20px",
+          [
+            24,
+            3506,
+            432,
+            24
+          ]
+        ]
+      ],
+      "canvas": [
+        [
+          0,
+          0,
+          768,
+          967
+        ]
+      ],
+      "mobileMenuBtn": []
+    },
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\tablet-768\\home-768-s01.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\tablet-768\\home-768-s02.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\tablet-768\\home-768-s03.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\tablet-768\\home-768-s04.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\tablet-768\\home-768-s05.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\tablet-768\\home-768-s06.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\tablet-768\\home-768-s07.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\tablet-768\\home-768-s08.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\tablet-768\\home-768-s09.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\tablet-768\\home-768-s10.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\tablet-768\\home-768-s11.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\tablet-768\\home-768-s12.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\tablet-768\\home-768-s13.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\tablet-768\\home-768-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:33:46.975Z",
+    "pageHeight": 16661,
+    "offsets": [
+      0,
+      72,
+      1191,
+      2562,
+      3282,
+      4822,
+      6294,
+      7538,
+      8618,
+      9681,
+      10476,
+      14355,
+      15373
+    ]
+  },
+  {
+    "name": "home-390",
+    "folder": "mobile-390",
+    "url": "https://www.raycast.com/",
+    "width": 390,
+    "height": 844,
+    "sections": true,
+    "full": true,
+    "fullScale": 0.6,
+    "measure": {
+      "vw": 390,
+      "docH": 15948,
+      "h1": [
+        "36px",
+        "39.6px",
+        [
+          16,
+          260,
+          358,
+          79
+        ]
+      ],
+      "nav": [
+        16,
+        16,
+        358,
+        58
+      ],
+      "h2": [
+        [
+          "Take shortcuts, not detours.",
+          "18px",
+          [
+            37,
+            879,
+            316,
+            29
+          ]
+        ],
+        [
+          "It’s not about saving time.",
+          "18px",
+          [
+            59,
+            2377,
+            272,
+            29
+          ]
+        ],
+        [
+          "There’s an extension for that.",
+          "18px",
+          [
+            24,
+            2655,
+            342,
+            29
+          ]
+        ]
+      ],
+      "canvas": [
+        [
+          0,
+          0,
+          390,
+          615
+        ]
+      ],
+      "mobileMenuBtn": []
+    },
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\home-390-s01.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\home-390-s02.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\home-390-s03.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\home-390-s04.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\home-390-s05.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\home-390-s06.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\home-390-s07.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\home-390-s08.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\home-390-s09.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\home-390-s10.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\home-390-s11.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\home-390-s12.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\home-390-s13.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\home-390-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:34:18.892Z",
+    "pageHeight": 15922,
+    "offsets": [
+      0,
+      72,
+      711,
+      1752,
+      2462,
+      3666,
+      5212,
+      6086,
+      7518,
+      8669,
+      9676,
+      12992,
+      13723
+    ]
+  }
+]

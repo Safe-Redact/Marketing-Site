@@ -28,7 +28,7 @@ test("coral action surfaces use dark high-contrast labels", async () => {
 test("mobile navigation provides an in-dialog close control", async () => {
   const [source, header] = await Promise.all([
     readSource("src/components/layout/MobileNav.tsx"),
-    readSource("src/components/layout/Header.tsx"),
+    readSource("src/components/layout/SiteHeader.tsx"),
   ]);
 
   assert.match(source, /aria-label="Close mobile menu"/);

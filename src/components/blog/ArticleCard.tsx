@@ -14,7 +14,7 @@ export function formatArticleDate(value: string): string {
 
 export function ArticleCard({ article }: { article: BlogArticle }) {
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-card border border-border-subtle bg-surface-raised transition-all duration-200 motion-safe:hover:-translate-y-0.5 hover:border-accent-cool/35">
+    <article className="group flex h-full flex-col overflow-hidden rounded-[14px] border border-border-subtle bg-surface-raised transition-all duration-200 motion-safe:hover:-translate-y-0.5 hover:border-ink-muted/35">
       {article.featuredImage ? (
         <div className="relative aspect-[16/10] overflow-hidden border-b border-border-subtle bg-surface-active">
           <Image

@@ -9,7 +9,7 @@ export function FeaturedArticle({ article }: { article: BlogArticle }) {
   return (
     <article
       aria-label="Featured insight"
-      className="group relative aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-white/10 bg-surface-raised shadow-[0_28px_75px_rgba(0,0,0,0.34)] sm:aspect-[16/10] lg:aspect-[2/1] lg:rounded-[2rem]"
+      className="group relative aspect-[4/3] overflow-hidden rounded-[18px] border border-border-subtle/60 bg-surface-raised shadow-panel sm:aspect-[16/10] lg:aspect-[21/10]"
     >
       <Image
         src={article.featuredImage ?? "/images/product/hero-document-review.png"}
@@ -19,14 +19,14 @@ export function FeaturedArticle({ article }: { article: BlogArticle }) {
         sizes="(max-width: 1023px) 100vw, 1024px"
         className="object-cover object-center transition-transform duration-700 motion-safe:group-hover:scale-[1.02]"
       />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,15,0.96)_0%,rgba(5,7,15,0.78)_43%,rgba(5,7,15,0.12)_78%),linear-gradient(0deg,rgba(5,7,15,0.8)_0%,transparent_55%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(var(--or-midnight)/0.96)_0%,rgb(var(--or-midnight)/0.8)_43%,rgb(var(--or-midnight)/0.12)_78%),linear-gradient(0deg,rgb(var(--or-midnight)/0.82)_0%,transparent_55%)]" />
       <div className="absolute inset-0 bg-black/10" />
       <div className="relative flex h-full max-w-[38rem] flex-col p-5 text-white sm:p-8 lg:p-10">
         <div className="flex flex-wrap items-center gap-2 text-caption">
-          <span className="rounded-full bg-white px-3 py-1.5 font-semibold text-canvas">
+          <span className="rounded-[8px] bg-accent-warm px-2.5 py-1 font-semibold text-canvas">
             {articleTypeLabel(article.type)}
           </span>
-          <span className="rounded-full border border-white/25 bg-black/25 px-3 py-1.5 text-white/90 backdrop-blur-sm">
+          <span className="rounded-[8px] border border-white/25 bg-black/25 px-2.5 py-1 text-white/90 backdrop-blur-sm">
             {article.category}
           </span>
           <time dateTime={article.date} className="ml-1 text-white/75">
@@ -35,10 +35,10 @@ export function FeaturedArticle({ article }: { article: BlogArticle }) {
           <span className="text-white/75">{article.readingMinutes} min read</span>
         </div>
         <div className="mt-auto lg:mt-14">
-          <h2 className="font-heading text-[clamp(1.8rem,3.4vw,2.6rem)] font-semibold leading-[1.08] tracking-[-0.04em] text-white">
+          <h2 className="font-heading text-[clamp(1.625rem,1.2rem+1.6vw,2.375rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-white">
           <Link
             href={`/blog/${article.slug}`}
-            className="rounded-sm transition-colors hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            className="rounded-sm transition-colors hover:text-ink/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
             {article.title}
           </Link>
@@ -49,7 +49,7 @@ export function FeaturedArticle({ article }: { article: BlogArticle }) {
           <div className="mt-6 flex flex-wrap items-center gap-4">
             <Link
               href={`/blog/${article.slug}`}
-              className="inline-flex min-h-10 items-center rounded-full bg-white px-5 text-body-sm font-semibold text-canvas transition-colors hover:bg-white/85 focus-visible:ring-2 focus-visible:ring-accent-cool"
+              className="inline-flex min-h-10 items-center rounded-[10px] bg-accent-warm px-5 text-body-sm font-semibold text-canvas shadow-action transition-colors hover:bg-accent-warm-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"
             >
               Read full article <span aria-hidden="true" className="ml-2">→</span>
             </Link>

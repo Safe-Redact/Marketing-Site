@@ -71,6 +71,11 @@ remove this class of confusion for good.
 
 ## Known limitations
 
+The current publication decision for each asset is recorded in
+`docs/marketing/product-screenshot-manifest.md`. That manifest governs new page use;
+an asset remaining in this directory does not by itself make it approved for a new
+marketing surface.
+
 - **Mobile legibility.** The full-window visuals render 200–350px wide at 320–390px
   viewports. They stay recognisable, but UI text is not readable there. That is the
   cost of full frames over tight crops. A mobile-specific crop through `<picture>`

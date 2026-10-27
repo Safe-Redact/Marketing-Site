@@ -54,10 +54,10 @@ export function ContentTypeFilter({ activeType, query, tag, availableTypes }: Co
             href={filterHref(type, query, tag)}
             aria-current={isActive ? "page" : undefined}
             className={cn(
-              "inline-flex min-h-[2.375rem] shrink-0 items-center gap-2 rounded-full border px-3.5 text-body-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool",
+              "inline-flex min-h-[2.375rem] shrink-0 items-center gap-2 rounded-[10px] border px-3.5 text-body-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool",
               isActive
-                ? "border-white bg-white text-canvas shadow-[0_6px_18px_rgba(0,0,0,0.16)]"
-                : "border-border-subtle bg-surface-raised/70 text-ink-muted hover:border-accent-cool/40 hover:bg-surface-active hover:text-white"
+                ? "border-ink-muted/30 bg-surface-active text-ink"
+                : "border-border-subtle bg-surface-raised/70 text-ink-muted hover:border-ink-muted/40 hover:text-ink"
             )}
           >
             <Icon name={icon} size={15} />

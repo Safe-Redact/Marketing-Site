@@ -27,10 +27,10 @@ export function CategoryNavigation({
           href="/blog"
           aria-current={!activeSlug ? "page" : undefined}
           className={cn(
-            "inline-flex min-h-[2.375rem] shrink-0 items-center rounded-full border px-4 text-body-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool",
+            "inline-flex min-h-[2.375rem] shrink-0 items-center rounded-[10px] border px-4 text-body-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool",
             !activeSlug
-              ? "border-white bg-white text-canvas"
-              : "border-border-subtle bg-surface-raised text-ink-muted hover:border-accent-cool/40 hover:text-white"
+              ? "border-ink-muted/30 bg-surface-active text-ink"
+              : "border-border-subtle bg-surface-raised text-ink-muted hover:border-ink-muted/40 hover:text-ink"
           )}
         >
           All insights
@@ -42,10 +42,10 @@ export function CategoryNavigation({
           href={`/blog/category/${category.slug}`}
           aria-current={activeSlug === category.slug ? "page" : undefined}
           className={cn(
-            "inline-flex min-h-[2.375rem] shrink-0 items-center rounded-full border px-4 text-body-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool",
+            "inline-flex min-h-[2.375rem] shrink-0 items-center rounded-[10px] border px-4 text-body-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool",
             activeSlug === category.slug
-              ? "border-white bg-white text-canvas"
-              : "border-border-subtle bg-surface-raised text-ink-muted hover:border-accent-cool/40 hover:text-white"
+              ? "border-ink-muted/30 bg-surface-active text-ink"
+              : "border-border-subtle bg-surface-raised text-ink-muted hover:border-ink-muted/40 hover:text-ink"
           )}
         >
           {category.name}

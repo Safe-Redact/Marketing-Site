@@ -9,7 +9,9 @@ test("homepage exposes the approved Phase 1 platform narrative", async () => {
 
   assert.equal(response.status, 200);
   assert.match(html, /AI-powered redaction/);
-  assert.match(html, /Detect sensitive information\. Redact with confidence\./);
+  // D3 sets the headline as a sequence of lines; its first and last lines are the
+  // approved headline.
+  assert.match(html, /<h1[^>]*>[\s\S]*?Detect sensitive information\.[\s\S]*?Redact with confidence\.[\s\S]*?<\/h1>/);
   // The hero carries an authentic screenshot of the editor rather than an
   // illustration, so the workbench is asserted through the figure and its
   // described image instead of text that used to sit in a drawn title bar.
@@ -35,7 +37,10 @@ test("homepage keeps the approved marketing navigation and conversion destinatio
   const html = await response.text();
 
   assert.match(html, /href="#services"/);
-  assert.match(html, /href="#how-it-works"/);
+  // Global navigation now leads to dedicated pages; the homepage sections keep their
+  // anchors for inbound links.
+  assert.match(html, /href="\/how-it-works"/);
+  assert.match(html, /id="how-it-works"/);
   assert.match(html, /href="#faq"/);
   assert.match(html, /href="#demo-enquiry"/);
   assert.match(html, /href="mailto:support@saferedact\.io"/);

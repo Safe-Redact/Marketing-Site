@@ -1,58 +1,71 @@
-import { platformCapabilities, platformOutcomes } from "@/content/platform";
+import Link from "next/link";
+import { platformOutcomes } from "@/content/platform";
+import { whyOpenRedaktPage } from "@/content/pages";
 import { AnimateOnScroll } from "@/components/ui/AnimateOnScroll";
 import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Icon } from "@/components/ui/Icon";
 
+/**
+ * Platform advantages. The outcome strip states the review sequence; the pillars are
+ * the register-backed positioning from /why-openredakt, so every advantage shown here
+ * maps to a capability recorded in the evidence register.
+ */
 export function Services() {
   return (
-    <section id="services" className="relative overflow-hidden bg-canvas py-section text-ink">
+    <section id="services" className="theme-light sheet section-y bg-canvas text-ink">
       <Container>
-        <div className="grid border-y border-border-subtle md:grid-cols-3">
-          {platformOutcomes.map((outcome, index) => (
-            <AnimateOnScroll
-              key={outcome.title}
-              delay={index * 90}
-              className="h-full border-b border-border-subtle py-7 last:border-b-0 md:border-b-0 md:border-r md:px-8 md:py-9 md:first:pl-0 md:last:border-r-0 md:last:pr-0"
-            >
-              <article className="flex h-full gap-5">
-                <span className="font-heading text-sm font-semibold text-accent-warm">{outcome.number}</span>
-                <div>
-                  <h2 className="font-heading text-xl font-semibold text-ink">{outcome.title}</h2>
-                  <p className="mt-2 text-[0.9375rem] leading-6 text-ink-muted">{outcome.description}</p>
-                </div>
-              </article>
-            </AnimateOnScroll>
-          ))}
-        </div>
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20">
+          <AnimateOnScroll className="lg:sticky lg:top-28 lg:self-start">
+            <p className="type-eyebrow">Platform</p>
+            <h2 className="type-h2 mt-4 max-w-[18ch]">
+              One review workspace for sensitive content. <span className="type-quiet">Built around decisions, not detections.</span>
+            </h2>
+            <p className="type-body mt-5 max-w-md">
+              Move from candidate detection to operator decisions without losing the context of the document, transcript, frame, or timeline.
+            </p>
+            <div className="mt-7 flex flex-col items-start gap-3">
+              <Link href="/features" className="inline-flex items-center gap-2 text-sm font-semibold text-accent-warm transition-colors hover:text-accent-warm-hover motion-reduce:transition-none">
+                Compare the document, audio, and video workflows
+                <Icon name="arrow" size={16} />
+              </Link>
+              <Link href="/why-openredakt" className="inline-flex items-center gap-2 text-sm font-semibold text-ink-muted transition-colors hover:text-ink motion-reduce:transition-none">
+                How OpenRedakt states its limits
+                <Icon name="arrow" size={16} />
+              </Link>
+            </div>
+          </AnimateOnScroll>
 
-        <AnimateOnScroll className="mt-16 max-w-4xl md:mt-20">
-          <Eyebrow>Platform capabilities</Eyebrow>
-          <h2 className="mt-4 max-w-[19ch] font-heading text-display font-bold text-ink text-balance">
-            One review workspace for <span className="text-accent-warm">sensitive content</span> across formats
-          </h2>
-          <p className="mt-5 max-w-2xl text-base leading-7 text-ink-muted sm:text-lg">
-            Move from candidate detection to operator decisions without losing the context of the document, transcript, frame, or timeline.
-          </p>
-        </AnimateOnScroll>
+          <div>
+            <div className="grid border-y border-border-subtle/60 md:grid-cols-3">
+              {platformOutcomes.map((outcome, index) => (
+                <AnimateOnScroll
+                  key={outcome.title}
+                  delay={index * 90}
+                  className="h-full border-b border-border-subtle/60 py-6 last:border-b-0 md:border-b-0 md:border-r md:px-6 md:py-7 md:first:pl-0 md:last:border-r-0 md:last:pr-0"
+                >
+                  <article className="h-full">
+                    <span className="type-meta text-accent-warm">{outcome.number}</span>
+                    <h3 className="type-h3 mt-3">{outcome.title}</h3>
+                    <p className="mt-2 text-[0.9375rem] leading-6 text-ink-muted">{outcome.description}</p>
+                  </article>
+                </AnimateOnScroll>
+              ))}
+            </div>
 
-        <div className="mt-12 grid gap-x-16 gap-y-10 md:grid-cols-2 lg:mt-14">
-          {platformCapabilities.map((capability, index) => (
-            <AnimateOnScroll key={capability.title} delay={index * 80}>
-              <article className="group border-t border-border-subtle pt-6">
-                <div className="flex items-start gap-4">
-                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-card border border-accent-cool/20 bg-accent-cool/10 text-accent-cool transition-colors duration-300 group-hover:border-accent-cool/45 group-hover:bg-accent-cool/15">
-                    <Icon name={capability.icon} size={22} />
-                  </span>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent-warm">{capability.accent}</p>
-                    <h3 className="mt-2 font-heading text-xl font-semibold text-ink">{capability.title}</h3>
-                    <p className="mt-3 max-w-[34rem] text-base leading-7 text-ink-muted">{capability.description}</p>
-                  </div>
-                </div>
-              </article>
-            </AnimateOnScroll>
-          ))}
+            <div className="mt-12 grid gap-px overflow-hidden rounded-[16px] border border-border-subtle/50 bg-border-subtle/50 sm:grid-cols-2">
+              {whyOpenRedaktPage.pillars.map((pillar, index) => (
+                <AnimateOnScroll key={pillar.title} delay={index * 70} className="bg-canvas">
+                  <article className="h-full p-6 sm:p-7">
+                    <span className="grid h-9 w-9 place-items-center rounded-[10px] border border-border-subtle/70 bg-surface-raised text-accent-warm">
+                      <Icon name={pillar.icon} size={17} />
+                    </span>
+                    <h3 className="type-h3 mt-5">{pillar.title}</h3>
+                    <p className="mt-2 text-[0.9375rem] leading-6 text-ink-muted">{pillar.description}</p>
+                  </article>
+                </AnimateOnScroll>
+              ))}
+            </div>
+          </div>
         </div>
       </Container>
     </section>

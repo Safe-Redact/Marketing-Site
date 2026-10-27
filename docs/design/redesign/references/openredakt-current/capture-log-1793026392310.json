@@ -1,0 +1,1466 @@
+[
+  {
+    "name": "home-1440",
+    "folder": "desktop-1440",
+    "url": "https://localhost:3000/",
+    "width": 1440,
+    "height": 900,
+    "full": true,
+    "measure": {
+      "title": "OpenRedakt | AI-Powered Redaction Software",
+      "docH": 7751,
+      "h1": [
+        "Detect sensitive information. Redact with confidence.",
+        "44px",
+        "400",
+        "57.64px",
+        [
+          104,
+          284,
+          608,
+          115
+        ]
+      ],
+      "sections": [
+        [
+          "SECTION",
+          "",
+          0,
+          636,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          636,
+          189,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "services",
+          825,
+          1155,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "how-it-works",
+          1980,
+          978,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "why-saferedact",
+          2958,
+          1019,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "industries",
+          3977,
+          886,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "faq",
+          4863,
+          882,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "contact",
+          5745,
+          1299,
+          "rgb(8, 9, 20)"
+        ]
+      ],
+      "imgs": [
+        [
+          "/_next/image?url=%2Fimages%2Fproduct%2Fhero-document-review.png&w=3840",
+          608,
+          608
+        ],
+        [
+          "/_next/image?url=%2Fimages%2Fproduct%2Fstep-open.png&w=3840&q=92",
+          640,
+          613
+        ],
+        [
+          "/_next/image?url=%2Fimages%2Fproduct%2Fformat-documents.png%3Fv%3D8873",
+          640,
+          618
+        ]
+      ]
+    },
+    "sections": true,
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\desktop-1440\\home-1440-s01.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\desktop-1440\\home-1440-s02.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\desktop-1440\\home-1440-s03.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\desktop-1440\\home-1440-s04.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\desktop-1440\\home-1440-s05.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\desktop-1440\\home-1440-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:49:08.884Z",
+    "pageHeight": 7751,
+    "offsets": [
+      0,
+      -900,
+      7044,
+      828,
+      7702
+    ]
+  },
+  {
+    "name": "features-1440",
+    "folder": "desktop-1440",
+    "url": "https://localhost:3000/features",
+    "width": 1440,
+    "height": 900,
+    "full": true,
+    "measure": {
+      "title": "Redaction Software for Documents, Audio & Video | OpenRedakt",
+      "docH": 5711,
+      "h1": [
+        "One review workflow for documents, audio, and video.",
+        "76.8px",
+        "600",
+        "78.336px",
+        [
+          104,
+          234,
+          502,
+          392
+        ]
+      ],
+      "sections": [
+        [
+          "SECTION",
+          "",
+          0,
+          926,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          926,
+          238,
+          "rgba(16, 21, 37, 0.55)"
+        ],
+        [
+          "SECTION",
+          "",
+          1164,
+          2235,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "DIV",
+          "feature-workflow",
+          3399,
+          651,
+          "rgba(0, 0, 0, 0)"
+        ],
+        [
+          "SECTION",
+          "",
+          4050,
+          494,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          4544,
+          460,
+          "rgb(8, 9, 20)"
+        ]
+      ],
+      "imgs": [
+        [
+          "/_next/image?url=%2Fimages%2Fproduct%2Fformat-documents.png%3Fv%3D8873",
+          662,
+          663
+        ],
+        [
+          "/_next/image?url=%2Fimages%2Fproduct%2Fformat-audio.png%3Fv%3D7cea80fa",
+          662,
+          453
+        ]
+      ]
+    },
+    "sections": false,
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\desktop-1440\\features-1440-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:49:36.762Z",
+    "pageHeight": 5711
+  },
+  {
+    "name": "feature-document-1440",
+    "folder": "desktop-1440",
+    "url": "https://localhost:3000/features/document-redaction",
+    "width": 1440,
+    "height": 900,
+    "full": true,
+    "measure": {
+      "title": "Document Redaction Software for Windows | OpenRedakt",
+      "docH": 6118,
+      "h1": [
+        "Review and redact sensitive information across documents and scans.",
+        "76.8px",
+        "600",
+        "78.336px",
+        [
+          104,
+          234,
+          502,
+          548
+        ]
+      ],
+      "sections": [
+        [
+          "SECTION",
+          "",
+          0,
+          1082,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          1082,
+          252,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          1334,
+          387,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          1721,
+          679,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          2400,
+          1048,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          3448,
+          478,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          3925,
+          494,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          4419,
+          370,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          4789,
+          162,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          4951,
+          460,
+          "rgb(8, 9, 20)"
+        ]
+      ],
+      "imgs": [
+        [
+          "/_next/image?url=%2Fimages%2Fproduct%2Fformat-documents.png%3Fv%3D8873",
+          806,
+          640
+        ]
+      ]
+    },
+    "sections": false,
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\desktop-1440\\feature-document-1440-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:49:48.541Z",
+    "pageHeight": 6118
+  },
+  {
+    "name": "feature-audio-1440",
+    "folder": "desktop-1440",
+    "url": "https://localhost:3000/features/audio-redaction",
+    "width": 1440,
+    "height": 900,
+    "full": true,
+    "measure": {
+      "title": "Audio and Transcript Redaction Software | OpenRedakt",
+      "docH": 6129,
+      "h1": [
+        "Redact sensitive moments in audio with precise timeline control.",
+        "76.8px",
+        "600",
+        "78.336px",
+        [
+          104,
+          234,
+          502,
+          548
+        ]
+      ],
+      "sections": [
+        [
+          "SECTION",
+          "",
+          0,
+          1114,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          1114,
+          252,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          1366,
+          335,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          1702,
+          679,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          2381,
+          1080,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          3461,
+          476,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          3937,
+          494,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          4431,
+          370,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          4801,
+          162,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          4963,
+          460,
+          "rgb(8, 9, 20)"
+        ]
+      ],
+      "imgs": [
+        [
+          "/_next/image?url=%2Fimages%2Fproduct%2Fformat-audio.png%3Fv%3D7cea80fa",
+          806,
+          640
+        ]
+      ]
+    },
+    "sections": false,
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\desktop-1440\\feature-audio-1440-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:50:00.889Z",
+    "pageHeight": 6129
+  },
+  {
+    "name": "feature-video-1440",
+    "folder": "desktop-1440",
+    "url": "https://localhost:3000/features/video-redaction",
+    "width": 1440,
+    "height": 900,
+    "full": true,
+    "measure": {
+      "title": "Video Redaction Software for Faces, Plates & Audio | OpenRedakt",
+      "docH": 6078,
+      "h1": [
+        "Review visual and spoken information across a video timeline.",
+        "76.8px",
+        "600",
+        "78.336px",
+        [
+          104,
+          234,
+          502,
+          470
+        ]
+      ],
+      "sections": [
+        [
+          "SECTION",
+          "",
+          0,
+          1036,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          1036,
+          252,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          1288,
+          387,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          1675,
+          679,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          2354,
+          1080,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          3434,
+          452,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          3886,
+          494,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          4380,
+          370,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          4750,
+          162,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          4912,
+          460,
+          "rgb(8, 9, 20)"
+        ]
+      ],
+      "imgs": []
+    },
+    "sections": false,
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\desktop-1440\\feature-video-1440-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:50:13.292Z",
+    "pageHeight": 6078
+  },
+  {
+    "name": "industries-1440",
+    "folder": "desktop-1440",
+    "url": "https://localhost:3000/industries",
+    "width": 1440,
+    "height": 900,
+    "full": true,
+    "measure": {
+      "title": "Redaction Software by Industry and Use Case | OpenRedakt",
+      "docH": 6235,
+      "h1": [
+        "Industry guides to document, audio, and video redaction.",
+        "57.6px",
+        "600",
+        "61.056px",
+        [
+          104,
+          234,
+          502,
+          244
+        ]
+      ],
+      "sections": [
+        [
+          "SECTION",
+          "",
+          0,
+          810,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          810,
+          729,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "industry-directory",
+          1539,
+          2329,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          3868,
+          785,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          4653,
+          416,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          5069,
+          460,
+          "rgb(8, 9, 20)"
+        ]
+      ],
+      "imgs": []
+    },
+    "sections": false,
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\desktop-1440\\industries-1440-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:50:25.787Z",
+    "pageHeight": 6235
+  },
+  {
+    "name": "industry-legal-1440",
+    "folder": "desktop-1440",
+    "url": "https://localhost:3000/industries/legal",
+    "width": 1440,
+    "height": 900,
+    "full": true,
+    "measure": {
+      "title": "Legal Redaction Software for Case Files & Evidence | OpenRedakt",
+      "docH": 6895,
+      "h1": [
+        "Redaction review for case files, discovery, and evidence.",
+        "57.6px",
+        "600",
+        "61.056px",
+        [
+          104,
+          234,
+          502,
+          244
+        ]
+      ],
+      "sections": [
+        [
+          "SECTION",
+          "",
+          0,
+          842,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          842,
+          403,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          1245,
+          561,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          1805,
+          686,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          2491,
+          1749,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          4240,
+          450,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          4690,
+          545,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          5235,
+          494,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          5729,
+          460,
+          "rgb(8, 9, 20)"
+        ]
+      ],
+      "imgs": []
+    },
+    "sections": false,
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\desktop-1440\\industry-legal-1440-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:50:38.305Z",
+    "pageHeight": 6895
+  },
+  {
+    "name": "industry-media-1440",
+    "folder": "desktop-1440",
+    "url": "https://localhost:3000/industries/media-journalism",
+    "width": 1440,
+    "height": 900,
+    "full": true,
+    "measure": {
+      "title": "Redaction for Journalists: Protect Source Identities | OpenRedakt",
+      "docH": 7117,
+      "h1": [
+        "Protect sources and bystanders in interviews, footage, and documents.",
+        "57.6px",
+        "600",
+        "61.056px",
+        [
+          104,
+          234,
+          502,
+          305
+        ]
+      ],
+      "sections": [
+        [
+          "SECTION",
+          "",
+          0,
+          935,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          935,
+          426,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          1361,
+          1857,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          3218,
+          658,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          3876,
+          565,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          4440,
+          422,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          4862,
+          545,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          5407,
+          543,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          5950,
+          460,
+          "rgb(8, 9, 20)"
+        ]
+      ],
+      "imgs": []
+    },
+    "sections": false,
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\desktop-1440\\industry-media-1440-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:50:51.647Z",
+    "pageHeight": 7117
+  },
+  {
+    "name": "how-it-works-1440",
+    "folder": "desktop-1440",
+    "url": "https://localhost:3000/how-it-works",
+    "width": 1440,
+    "height": 900,
+    "full": true,
+    "measure": {
+      "title": "How Redaction Review Works, Step by Step | OpenRedakt",
+      "docH": 5855,
+      "h1": [
+        "How OpenRedakt takes a file from source to reviewed output.",
+        "57.6px",
+        "600",
+        "61.056px",
+        [
+          104,
+          234,
+          502,
+          244
+        ]
+      ],
+      "sections": [
+        [
+          "SECTION",
+          "",
+          0,
+          810,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "review-lifecycle",
+          810,
+          2113,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          2923,
+          576,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          3499,
+          695,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          4194,
+          494,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          4688,
+          460,
+          "rgb(8, 9, 20)"
+        ]
+      ],
+      "imgs": []
+    },
+    "sections": false,
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\desktop-1440\\how-it-works-1440-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:51:05.594Z",
+    "pageHeight": 5855
+  },
+  {
+    "name": "why-1440",
+    "folder": "desktop-1440",
+    "url": "https://localhost:3000/why-openredakt",
+    "width": 1440,
+    "height": 900,
+    "full": true,
+    "measure": {
+      "title": "Why OpenRedakt for Multi-Format Redaction | OpenRedakt",
+      "docH": 4845,
+      "h1": [
+        "Why OpenRedakt: one review-led workflow for every format.",
+        "57.6px",
+        "600",
+        "61.056px",
+        [
+          104,
+          234,
+          819,
+          183
+        ]
+      ],
+      "sections": [
+        [
+          "SECTION",
+          "",
+          0,
+          717,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          717,
+          238,
+          "rgba(16, 21, 37, 0.55)"
+        ],
+        [
+          "SECTION",
+          "",
+          955,
+          903,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          1858,
+          687,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          2544,
+          619,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          3163,
+          515,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          3679,
+          460,
+          "rgb(8, 9, 20)"
+        ]
+      ],
+      "imgs": []
+    },
+    "sections": false,
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\desktop-1440\\why-1440-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:51:18.358Z",
+    "pageHeight": 4845
+  },
+  {
+    "name": "insights-1440",
+    "folder": "desktop-1440",
+    "url": "https://localhost:3000/blog",
+    "width": 1440,
+    "height": 900,
+    "full": true,
+    "measure": {
+      "title": "Insights | OpenRedakt",
+      "docH": 1928,
+      "h1": [
+        "Insights",
+        "96px",
+        "500",
+        "96px",
+        [
+          552,
+          172,
+          336,
+          96
+        ]
+      ],
+      "sections": [
+        [
+          "SECTION",
+          "",
+          0,
+          456,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          456,
+          576,
+          "rgba(0, 0, 0, 0)"
+        ],
+        [
+          "SECTION",
+          "",
+          1032,
+          189,
+          "rgba(0, 0, 0, 0)"
+        ]
+      ],
+      "imgs": [
+        [
+          "/_next/image?url=%2Fimages%2Fproduct%2Fhero-document-review.png&w=3840",
+          1024,
+          1022
+        ]
+      ]
+    },
+    "sections": false,
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\desktop-1440\\insights-1440-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:51:29.409Z",
+    "pageHeight": 1928
+  },
+  {
+    "name": "article-1440",
+    "folder": "desktop-1440",
+    "url": "https://localhost:3000/blog/understanding-document-redaction",
+    "width": 1440,
+    "height": 900,
+    "full": true,
+    "measure": {
+      "title": "Understanding Document Redaction and Why It Matters | OpenRedakt",
+      "docH": 7069,
+      "h1": [
+        "Understanding Document Redaction and Why It Matters",
+        "43.2px",
+        "600",
+        "46.656px",
+        [
+          104,
+          206,
+          928,
+          93
+        ]
+      ],
+      "sections": [
+        [
+          "ARTICLE",
+          "",
+          0,
+          6362,
+          "rgba(0, 0, 0, 0)"
+        ]
+      ],
+      "imgs": [
+        [
+          "/_next/image?url=%2Fimages%2Fproduct%2Fhero-document-review.png&w=3840",
+          910,
+          1230
+        ]
+      ]
+    },
+    "sections": false,
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\desktop-1440\\article-1440-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:51:37.128Z",
+    "pageHeight": 7069
+  },
+  {
+    "name": "contact-1440",
+    "folder": "desktop-1440",
+    "url": "https://localhost:3000/contact",
+    "width": 1440,
+    "height": 900,
+    "full": true,
+    "measure": {
+      "title": "Contact OpenRedakt or Request a Redaction Demo | OpenRedakt",
+      "docH": 2365,
+      "h1": [
+        "Contact OpenRedakt or request a demo.",
+        "57.6px",
+        "600",
+        "61.056px",
+        [
+          104,
+          234,
+          819,
+          122
+        ]
+      ],
+      "sections": [
+        [
+          "SECTION",
+          "",
+          0,
+          624,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          624,
+          306,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          930,
+          728,
+          "rgb(8, 9, 20)"
+        ]
+      ],
+      "imgs": []
+    },
+    "sections": false,
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\desktop-1440\\contact-1440-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:51:50.915Z",
+    "pageHeight": 2365
+  },
+  {
+    "name": "home-390",
+    "folder": "mobile-390",
+    "url": "https://localhost:3000/",
+    "width": 390,
+    "height": 844,
+    "full": true,
+    "fullScale": 0.6,
+    "measure": {
+      "title": "OpenRedakt | AI-Powered Redaction Software",
+      "docH": 12341,
+      "h1": [
+        "Detect sensitive information. Redact with confidence.",
+        "28px",
+        "500",
+        "36.96px",
+        [
+          20,
+          220,
+          305,
+          111
+        ]
+      ],
+      "sections": [
+        [
+          "SECTION",
+          "",
+          0,
+          905,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          905,
+          245,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "services",
+          1150,
+          2080,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "how-it-works",
+          3230,
+          1355,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "why-saferedact",
+          4585,
+          1284,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "industries",
+          5868,
+          1740,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "faq",
+          7609,
+          1199,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "contact",
+          8808,
+          1949,
+          "rgb(8, 9, 20)"
+        ]
+      ],
+      "imgs": [
+        [
+          "/_next/image?url=%2Fimages%2Fproduct%2Fhero-document-review.png&w=3840",
+          390,
+          350
+        ],
+        [
+          "/_next/image?url=%2Fimages%2Fproduct%2Fstep-open.png&w=3840&q=92",
+          390,
+          316
+        ],
+        [
+          "/_next/image?url=%2Fimages%2Fproduct%2Fformat-documents.png%3Fv%3D8873",
+          390,
+          290
+        ]
+      ]
+    },
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\mobile-390\\home-390-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:51:58.470Z",
+    "pageHeight": 12341
+  },
+  {
+    "name": "industry-legal-390",
+    "folder": "mobile-390",
+    "url": "https://localhost:3000/industries/legal",
+    "width": 390,
+    "height": 844,
+    "full": true,
+    "fullScale": 0.6,
+    "measure": {
+      "title": "Legal Redaction Software for Case Files & Evidence | OpenRedakt",
+      "docH": 12642,
+      "h1": [
+        "Redaction review for case files, discovery, and evidence.",
+        "35.2px",
+        "600",
+        "37.312px",
+        [
+          20,
+          210,
+          350,
+          112
+        ]
+      ],
+      "sections": [
+        [
+          "SECTION",
+          "",
+          0,
+          1311,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          1311,
+          855,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          2167,
+          1078,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          3245,
+          1172,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          4418,
+          3592,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          8010,
+          752,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          8762,
+          959,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          9721,
+          798,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          10518,
+          540,
+          "rgb(8, 9, 20)"
+        ]
+      ],
+      "imgs": []
+    },
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\mobile-390\\industry-legal-390-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:52:19.091Z",
+    "pageHeight": 12642
+  },
+  {
+    "name": "article-390",
+    "folder": "mobile-390",
+    "url": "https://localhost:3000/blog/understanding-document-redaction",
+    "width": 390,
+    "height": 844,
+    "full": true,
+    "fullScale": 0.6,
+    "measure": {
+      "title": "Understanding Document Redaction and Why It Matters | OpenRedakt",
+      "docH": 9587,
+      "h1": [
+        "Understanding Document Redaction and Why It Matters",
+        "34.4px",
+        "600",
+        "37.152px",
+        [
+          20,
+          190,
+          350,
+          111
+        ]
+      ],
+      "sections": [
+        [
+          "ARTICLE",
+          "",
+          0,
+          7918,
+          "rgba(0, 0, 0, 0)"
+        ]
+      ],
+      "imgs": [
+        [
+          "/_next/image?url=%2Fimages%2Fproduct%2Fhero-document-review.png&w=3840",
+          390,
+          348
+        ]
+      ]
+    },
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\mobile-390\\article-390-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:52:40.001Z",
+    "pageHeight": 9587
+  },
+  {
+    "name": "feature-audio-390",
+    "folder": "mobile-390",
+    "url": "https://localhost:3000/features/audio-redaction",
+    "width": 390,
+    "height": 844,
+    "full": true,
+    "fullScale": 0.6,
+    "measure": {
+      "title": "Audio and Transcript Redaction Software | OpenRedakt",
+      "docH": 9925,
+      "h1": [
+        "Redact sensitive moments in audio with precise timeline control.",
+        "40px",
+        "600",
+        "40.8px",
+        [
+          20,
+          210,
+          350,
+          163
+        ]
+      ],
+      "sections": [
+        [
+          "SECTION",
+          "",
+          0,
+          1055,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          1055,
+          556,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          1611,
+          448,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          2060,
+          1262,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          3322,
+          1740,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          5062,
+          959,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          6021,
+          782,
+          "rgba(16, 21, 37, 0.45)"
+        ],
+        [
+          "SECTION",
+          "",
+          6802,
+          577,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          7379,
+          390,
+          "rgb(8, 9, 20)"
+        ],
+        [
+          "SECTION",
+          "",
+          7769,
+          572,
+          "rgb(8, 9, 20)"
+        ]
+      ],
+      "imgs": [
+        [
+          "/_next/image?url=%2Fimages%2Fproduct%2Fformat-audio.png%3Fv%3D7cea80fa",
+          390,
+          332
+        ]
+      ]
+    },
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\openredakt-current\\mobile-390\\feature-audio-390-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:52:58.011Z",
+    "pageHeight": 9925
+  }
+]

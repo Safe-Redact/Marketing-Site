@@ -1,0 +1,30 @@
+[
+  {
+    "name": "home-390-menu-open",
+    "folder": "interactions",
+    "url": "https://www.raycast.com/",
+    "width": 390,
+    "height": 844,
+    "before": "clicked",
+    "beforeWait": 1200,
+    "frames": 1,
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\interactions\\home-390-menu-open-frame1.jpg"
+    ],
+    "observedAt": "2026-10-26T14:47:44.205Z"
+  },
+  {
+    "name": "home-768-menu-open",
+    "folder": "interactions",
+    "url": "https://www.raycast.com/",
+    "width": 768,
+    "height": 1024,
+    "before": "clicked",
+    "beforeWait": 1200,
+    "frames": 1,
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\interactions\\home-768-menu-open-frame1.jpg"
+    ],
+    "observedAt": "2026-10-26T14:47:49.898Z"
+  }
+]

@@ -4,7 +4,6 @@ import { faqItems } from "@/content/faq";
 import { Accordion } from "@/components/ui/Accordion";
 import { AnimateOnScroll } from "@/components/ui/AnimateOnScroll";
 import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Eyebrow";
 
 const items = faqItems.map((item, index) => ({
   id: `faq-${index + 1}`,
@@ -14,15 +13,15 @@ const items = faqItems.map((item, index) => ({
 
 export function Faq() {
   return (
-    <section id="faq" className="relative overflow-hidden bg-canvas py-section text-ink">
+    <section id="faq" className="section-y relative border-t border-border-subtle/50 bg-canvas text-ink">
       <Container>
-        <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
-          <AnimateOnScroll>
-            <Eyebrow>Common questions</Eyebrow>
-            <h2 className="mt-4 font-heading text-display font-bold text-ink text-balance">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20">
+          <AnimateOnScroll className="lg:sticky lg:top-28 lg:self-start">
+            <p className="type-eyebrow">Common questions</p>
+            <h2 className="type-h2 mt-4 max-w-[16ch]">
               What to know before you begin
             </h2>
-            <p className="mt-5 max-w-md text-base leading-7 text-ink-muted">
+            <p className="type-body mt-5 max-w-md">
               OpenRedakt is Windows desktop software. Availability of local models, conversion tools, and optional engines depends on setup and job configuration.
             </p>
           </AnimateOnScroll>

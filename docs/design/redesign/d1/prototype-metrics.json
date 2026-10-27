@@ -1,0 +1,436 @@
+[
+  {
+    "name": "A-1440",
+    "url": "http://localhost:4317/prototypes/hero-a",
+    "viewport": "1440x900",
+    "reducedMotion": false,
+    "screencastFrames": 1004,
+    "firstFrameDelayS": 0.06,
+    "perf": {
+      "frames": 840,
+      "meanMs": 13.462976190477963,
+      "p50": 13.300000000000182,
+      "p95": 13.5,
+      "over33": 3,
+      "cls": 0.00046947873799725647,
+      "shifts": [
+        140
+      ],
+      "lcp": {
+        "t": 196,
+        "el": "H1.cinematic_heading__5lFjU cinematic_headi",
+        "size": 121656
+      },
+      "longTasks": 1,
+      "longTaskMs": 50,
+      "heapMB": 5.2,
+      "motion": "ended",
+      "control": "Replay animation"
+    },
+    "idleTaskMs": 0,
+    "idleScriptMs": 0,
+    "stills": [
+      "A-1440-t1_2s.jpg",
+      "A-1440-t2_6s.jpg",
+      "A-1440-t3_8s.jpg",
+      "A-1440-t6_4s.jpg",
+      "A-1440-t8s.jpg",
+      "A-1440-t10_9s.jpg",
+      "A-1440-t12_6s.jpg",
+      "A-1440-t17s.jpg"
+    ]
+  },
+  {
+    "name": "B-1440",
+    "url": "http://localhost:4317/prototypes/hero-b",
+    "viewport": "1440x900",
+    "reducedMotion": false,
+    "screencastFrames": 389,
+    "firstFrameDelayS": 0.03,
+    "perf": {
+      "frames": 840,
+      "meanMs": 13.386785714285715,
+      "p50": 13.300000000000182,
+      "p95": 13.5,
+      "over33": 1,
+      "cls": 0,
+      "shifts": [],
+      "lcp": {
+        "t": 100,
+        "el": "IMG.prototypes_capture__Amjsk",
+        "size": 209569
+      },
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "heapMB": 5.1,
+      "motion": null,
+      "control": "Replay animation"
+    },
+    "idleTaskMs": 0,
+    "idleScriptMs": 0,
+    "stills": [
+      "B-1440-t0_8s.jpg",
+      "B-1440-t3s.jpg",
+      "B-1440-t6_5s.jpg",
+      "B-1440-t10_5s.jpg",
+      "B-1440-t15s.jpg"
+    ]
+  },
+  {
+    "name": "A-390",
+    "url": "http://localhost:4317/prototypes/hero-a",
+    "viewport": "390x844",
+    "reducedMotion": false,
+    "screencastFrames": 666,
+    "firstFrameDelayS": 0.03,
+    "perf": {
+      "frames": 840,
+      "meanMs": 13.320119047622596,
+      "p50": 13.300000000000182,
+      "p95": 13.5,
+      "over33": 0,
+      "cls": 0,
+      "shifts": [],
+      "lcp": {
+        "t": 64,
+        "el": "H1.cinematic_heading__5lFjU cinematic_headi",
+        "size": 37846
+      },
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "heapMB": 9.2,
+      "motion": "ended",
+      "control": "Replay animation"
+    },
+    "idleTaskMs": 0,
+    "idleScriptMs": 0,
+    "stills": [
+      "A-390-t1_2s.jpg",
+      "A-390-t2_6s.jpg",
+      "A-390-t3_8s.jpg",
+      "A-390-t6_4s.jpg",
+      "A-390-t8s.jpg",
+      "A-390-t10_9s.jpg",
+      "A-390-t12_6s.jpg",
+      "A-390-t17s.jpg"
+    ]
+  },
+  {
+    "name": "B-390",
+    "url": "http://localhost:4317/prototypes/hero-b",
+    "viewport": "390x844",
+    "reducedMotion": false,
+    "screencastFrames": 361,
+    "firstFrameDelayS": 0.02,
+    "perf": {
+      "frames": 840,
+      "meanMs": 13.422380952378292,
+      "p50": 13.300000000000182,
+      "p95": 13.599999999999909,
+      "over33": 0,
+      "cls": 0,
+      "shifts": [],
+      "lcp": {
+        "t": 56,
+        "el": "H1.cinematic_heading__5lFjU cinematic_headi",
+        "size": 37846
+      },
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "heapMB": 7.6,
+      "motion": null,
+      "control": "Replay animation"
+    },
+    "idleTaskMs": 1,
+    "idleScriptMs": 0,
+    "stills": [
+      "B-390-t0_8s.jpg",
+      "B-390-t3s.jpg",
+      "B-390-t6_5s.jpg",
+      "B-390-t10_5s.jpg",
+      "B-390-t15s.jpg"
+    ]
+  },
+  {
+    "name": "A-1920",
+    "url": "http://localhost:4317/prototypes/hero-a",
+    "viewport": "1920x1080",
+    "reducedMotion": false,
+    "screencastFrames": 952,
+    "firstFrameDelayS": 0.02,
+    "perf": {
+      "frames": 840,
+      "meanMs": 13.324285714282167,
+      "p50": 13.300000000000182,
+      "p95": 13.5,
+      "over33": 0,
+      "cls": 0,
+      "shifts": [],
+      "lcp": {
+        "t": 60,
+        "el": "H1.cinematic_heading__5lFjU cinematic_headi",
+        "size": 125504
+      },
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "heapMB": 11.6,
+      "motion": "ended",
+      "control": "Replay animation"
+    },
+    "idleTaskMs": 0,
+    "idleScriptMs": 0,
+    "stills": [
+      "A-1920-t1_2s.jpg",
+      "A-1920-t2_6s.jpg",
+      "A-1920-t3_8s.jpg",
+      "A-1920-t6_4s.jpg",
+      "A-1920-t8s.jpg",
+      "A-1920-t10_9s.jpg",
+      "A-1920-t12_6s.jpg",
+      "A-1920-t17s.jpg"
+    ]
+  },
+  {
+    "name": "B-1920",
+    "url": "http://localhost:4317/prototypes/hero-b",
+    "viewport": "1920x1080",
+    "reducedMotion": false,
+    "screencastFrames": 338,
+    "firstFrameDelayS": 0.03,
+    "perf": {
+      "frames": 840,
+      "meanMs": 13.367261904761017,
+      "p50": 13.300000000000182,
+      "p95": 13.5,
+      "over33": 0,
+      "cls": 0,
+      "shifts": [],
+      "lcp": {
+        "t": 64,
+        "el": "H1.cinematic_heading__5lFjU cinematic_headi",
+        "size": 125504
+      },
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "heapMB": 10.2,
+      "motion": null,
+      "control": "Replay animation"
+    },
+    "idleTaskMs": 0,
+    "idleScriptMs": 0,
+    "stills": [
+      "B-1920-t0_8s.jpg",
+      "B-1920-t3s.jpg",
+      "B-1920-t6_5s.jpg",
+      "B-1920-t10_5s.jpg",
+      "B-1920-t15s.jpg"
+    ]
+  },
+  {
+    "name": "A-768",
+    "url": "http://localhost:4317/prototypes/hero-a",
+    "viewport": "768x1024",
+    "reducedMotion": false,
+    "screencastFrames": 887,
+    "firstFrameDelayS": 0.04,
+    "perf": {
+      "frames": 840,
+      "meanMs": 13.704999999997339,
+      "p50": 13.300000000000182,
+      "p95": 13.5,
+      "over33": 3,
+      "cls": 0,
+      "shifts": [],
+      "lcp": {
+        "t": 100,
+        "el": "H1.cinematic_heading__5lFjU cinematic_headi",
+        "size": 76475
+      },
+      "longTasks": 1,
+      "longTaskMs": 53,
+      "heapMB": 13.1,
+      "motion": "ended",
+      "control": "Replay animation"
+    },
+    "idleTaskMs": 0,
+    "idleScriptMs": 0,
+    "stills": [
+      "A-768-t1_2s.jpg",
+      "A-768-t2_6s.jpg",
+      "A-768-t3_8s.jpg",
+      "A-768-t6_4s.jpg",
+      "A-768-t8s.jpg",
+      "A-768-t10_9s.jpg",
+      "A-768-t12_6s.jpg",
+      "A-768-t17s.jpg"
+    ]
+  },
+  {
+    "name": "B-768",
+    "url": "http://localhost:4317/prototypes/hero-b",
+    "viewport": "768x1024",
+    "reducedMotion": false,
+    "screencastFrames": 496,
+    "firstFrameDelayS": 0.02,
+    "perf": {
+      "frames": 840,
+      "meanMs": 13.445714285714285,
+      "p50": 13.300000000000182,
+      "p95": 13.5,
+      "over33": 0,
+      "cls": 0,
+      "shifts": [],
+      "lcp": {
+        "t": 48,
+        "el": "H1.cinematic_heading__5lFjU cinematic_headi",
+        "size": 76475
+      },
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "heapMB": 12.7,
+      "motion": null,
+      "control": "Replay animation"
+    },
+    "idleTaskMs": 0,
+    "idleScriptMs": 0,
+    "stills": [
+      "B-768-t0_8s.jpg",
+      "B-768-t3s.jpg",
+      "B-768-t6_5s.jpg",
+      "B-768-t10_5s.jpg",
+      "B-768-t15s.jpg"
+    ]
+  },
+  {
+    "name": "A-1440-reduced",
+    "url": "http://localhost:4317/prototypes/hero-a",
+    "viewport": "1440x900",
+    "reducedMotion": true,
+    "screencastFrames": 3,
+    "firstFrameDelayS": 0.02,
+    "perf": {
+      "frames": 749,
+      "meanMs": 13.368224299063431,
+      "p50": 13.300000000000182,
+      "p95": 13.5,
+      "over33": 0,
+      "cls": 0,
+      "shifts": [],
+      "lcp": {
+        "t": 52,
+        "el": "H1.cinematic_heading__5lFjU cinematic_headi",
+        "size": 125504
+      },
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "heapMB": 14.9,
+      "motion": "ended",
+      "control": "Replay animation"
+    },
+    "idleTaskMs": 31,
+    "idleScriptMs": 3,
+    "stills": [
+      "A-1440-reduced-t1_5s.jpg",
+      "A-1440-reduced-t6s.jpg"
+    ]
+  },
+  {
+    "name": "B-1440-reduced",
+    "url": "http://localhost:4317/prototypes/hero-b",
+    "viewport": "1440x900",
+    "reducedMotion": true,
+    "screencastFrames": 3,
+    "firstFrameDelayS": 0.03,
+    "perf": {
+      "frames": 743,
+      "meanMs": 13.45423956931259,
+      "p50": 13.300000000000182,
+      "p95": 13.5,
+      "over33": 1,
+      "cls": 0,
+      "shifts": [],
+      "lcp": {
+        "t": 112,
+        "el": "IMG.prototypes_capture__Amjsk",
+        "size": 237905
+      },
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "heapMB": 17.7,
+      "motion": null,
+      "control": "Replay animation"
+    },
+    "idleTaskMs": 32,
+    "idleScriptMs": 3,
+    "stills": [
+      "B-1440-reduced-t1_5s.jpg",
+      "B-1440-reduced-t6s.jpg"
+    ]
+  },
+  {
+    "name": "A-390-reduced",
+    "url": "http://localhost:4317/prototypes/hero-a",
+    "viewport": "390x844",
+    "reducedMotion": true,
+    "screencastFrames": 3,
+    "firstFrameDelayS": 0.02,
+    "perf": {
+      "frames": 734,
+      "meanMs": 13.622479564032696,
+      "p50": 13.300000000000182,
+      "p95": 13.599999999999909,
+      "over33": 0,
+      "cls": 0,
+      "shifts": [],
+      "lcp": {
+        "t": 60,
+        "el": "H1.cinematic_heading__5lFjU cinematic_headi",
+        "size": 37846
+      },
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "heapMB": 16.2,
+      "motion": "ended",
+      "control": "Replay animation"
+    },
+    "idleTaskMs": 47,
+    "idleScriptMs": 4,
+    "stills": [
+      "A-390-reduced-t1_5s.jpg",
+      "A-390-reduced-t6s.jpg"
+    ]
+  },
+  {
+    "name": "B-390-reduced",
+    "url": "http://localhost:4317/prototypes/hero-b",
+    "viewport": "390x844",
+    "reducedMotion": true,
+    "screencastFrames": 4,
+    "firstFrameDelayS": 0.02,
+    "perf": {
+      "frames": 739,
+      "meanMs": 13.525575101485472,
+      "p50": 13.300000000000182,
+      "p95": 13.600000000000364,
+      "over33": 0,
+      "cls": 0,
+      "shifts": [],
+      "lcp": {
+        "t": 68,
+        "el": "IMG.prototypes_capture__Amjsk",
+        "size": 50505
+      },
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "heapMB": 19.5,
+      "motion": null,
+      "control": "Replay animation"
+    },
+    "idleTaskMs": 35,
+    "idleScriptMs": 4,
+    "stills": [
+      "B-390-reduced-t1_5s.jpg",
+      "B-390-reduced-t6s.jpg"
+    ]
+  }
+]

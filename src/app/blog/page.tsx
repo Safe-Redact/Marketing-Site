@@ -176,11 +176,11 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
               />
             </>
           ) : featured && !query && !type && !activeTag ? null : (
-            <div className="mx-auto mt-14 max-w-2xl rounded-panel border border-border-subtle bg-surface-raised px-6 py-12 text-center sm:px-10">
+            <div className="mx-auto mt-14 max-w-2xl rounded-[16px] border border-border-subtle bg-surface-raised px-6 py-12 text-center sm:px-10">
               <p className="font-heading text-caption font-semibold uppercase tracking-[0.12em] text-accent-warm">
                 {query || type || activeTag ? "No matching results" : "Publication queue"}
               </p>
-              <h2 className="mt-4 font-heading text-heading-xl text-white">
+              <h2 className="mt-4 font-heading text-heading-xl text-ink">
                 {query
                   ? "No content matches your search"
                   : activeLabel

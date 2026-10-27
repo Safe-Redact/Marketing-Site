@@ -84,13 +84,15 @@ test("anchored sections clear the fixed header", async () => {
   assert.match(globals, /section\[id\][^{]*\{[^}]*scroll-margin-top:/s);
 });
 
-test("format tabs reference one stable tab panel", async () => {
+test("format storytelling gives each published format its own linked row", async () => {
+  // D3 replaced the format tabs with one split row per format, sourced from the
+  // evidence-checked feature pages rather than separate homepage copy.
   const section = await read("src/components/sections/WhySafeRedact.tsx");
 
-  assert.match(section, /aria-controls="format-panel"/);
-  assert.match(section, /id="format-panel"/);
-  assert.match(section, /role="tabpanel"[\s\S]*?tabIndex=\{0\}/);
-  assert.doesNotMatch(section, /aria-controls=\{`format-panel-/);
+  assert.match(section, /publishedFeaturePages\.map/);
+  assert.match(section, /href=\{featureHref\(page\.slug\)\}/);
+  assert.match(section, /aria-labelledby=\{`format-\$\{page\.slug\}`\}/);
+  assert.doesNotMatch(section, /role="tablist"/);
 });
 
 test("contact form states the delivery outcome instead of assuming one", async () => {

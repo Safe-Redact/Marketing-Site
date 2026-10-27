@@ -4,7 +4,33 @@
 
 @layer base {
   :root {
-    --anchor-offset: 6.75rem;
+    /* Floating header: 12px from the top, 60px tall on mobile, 64px on desktop. */
+    --anchor-offset: 5.5rem;
+
+    /*
+     * Cinematic Precision palette (D1). Space-separated RGB channels so Tailwind's
+     * opacity modifiers work, and so canvas code can read the same tokens. Existing
+     * pages keep the earlier canvas/accent tokens until their redesign checkpoint.
+     */
+    --or-midnight: 8 11 18; /* #080B12 */
+    --or-graphite: 17 23 35; /* #111723 */
+    --or-elevated: 26 35 50; /* #1A2332 */
+    --or-coral: 255 115 92; /* #FF735C */
+    --or-coral-soft: 255 157 137; /* #FF9D89 */
+    --or-signal: 70 199 220; /* #46C7DC */
+    --or-fg: 245 246 249; /* #F5F6F9 */
+    --or-fg-muted: 173 182 198; /* #ADB6C6 */
+    --or-line: 52 64 82; /* #344052 */
+
+    --or-ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --or-ease-spring: cubic-bezier(0.34, 1.3, 0.64, 1);
+  }
+
+  @supports (transition-timing-function: linear(0, 1)) {
+    :root {
+      /* A settled spring with about 3% overshoot, without JavaScript. */
+      --or-ease-spring: linear(0, 0.08 4%, 0.3 10%, 0.62 18%, 0.86 27%, 1.01 37%, 1.03 44%, 1.02 55%, 1 70%, 1);
+    }
   }
 
   html {
@@ -39,7 +65,7 @@
 
   @media (min-width: 992px) {
     :root {
-      --anchor-offset: 7.75rem;
+      --anchor-offset: 6rem;
     }
   }
 }
@@ -53,6 +79,232 @@
     @apply top-0;
   }
 
+  /* ---------- Cinematic Precision page system (D2) ---------- */
+
+  /* Type scale. Restrained sizes, tight tracking, balanced wraps. */
+  .type-display {
+    font-family: var(--font-poppins), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 600;
+    font-size: clamp(2.375rem, 1.55rem + 3.1vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.038em;
+    color: rgb(var(--or-fg));
+    text-wrap: balance;
+  }
+  .type-h1 {
+    font-family: var(--font-poppins), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 600;
+    font-size: clamp(2.125rem, 1.6rem + 2vw, 3.25rem);
+    line-height: 1.08;
+    letter-spacing: -0.034em;
+    color: rgb(var(--or-fg));
+    text-wrap: balance;
+  }
+  .type-h2 {
+    font-family: var(--font-poppins), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.625rem, 1.3rem + 1.25vw, 2.375rem);
+    line-height: 1.14;
+    letter-spacing: -0.028em;
+    color: rgb(var(--or-fg));
+    text-wrap: balance;
+  }
+  /* Second half of a two-tone heading, read as one sentence. */
+  .type-h2 > .type-quiet,
+  .type-h1 > .type-quiet,
+  .type-quiet {
+    color: rgb(var(--or-fg-muted));
+  }
+  .type-h3 {
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1.4;
+    letter-spacing: -0.012em;
+    color: rgb(var(--or-fg));
+  }
+  .type-lede {
+    font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+    line-height: 1.65;
+    color: rgb(var(--or-fg-muted));
+  }
+  .type-body {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgb(var(--or-fg-muted));
+  }
+  .type-eyebrow {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgb(var(--or-coral));
+  }
+  .type-meta {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    color: rgb(var(--or-fg-muted));
+  }
+
+  /* Section rhythm: space and light separate sections, not boxes. */
+  .section-y {
+    padding-block: clamp(4.5rem, 2.75rem + 5.5vw, 8rem);
+  }
+  .section-y-sm {
+    padding-block: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
+  }
+
+  /* Surfaces. One panel recipe; borders stay minimal and decorative. */
+  .surface-panel {
+    border-radius: 1rem;
+    border: 1px solid rgb(var(--or-line) / 0.55);
+    background: linear-gradient(180deg, rgb(var(--or-graphite) / 0.85), rgb(var(--or-graphite) / 0.55));
+    box-shadow: inset 0 1px 0 rgb(var(--or-fg) / 0.05);
+  }
+  .surface-panel-interactive {
+    transition: border-color 200ms var(--or-ease-standard), background-color 200ms var(--or-ease-standard);
+  }
+  .surface-panel-interactive:hover {
+    border-color: rgb(var(--or-fg-muted) / 0.35);
+  }
+  .hairline-divide > * + * {
+    border-top: 1px solid rgb(var(--or-line) / 0.55);
+  }
+
+  /* Product media frame: lit hairline edge, soft depth, optional content glow. */
+  /* Decorative glows extend past their frames; clip (not hidden) keeps sticky columns working. */
+  #main-content {
+    overflow-x: clip;
+  }
+  .media-frame {
+    position: relative;
+    isolation: isolate;
+    border-radius: 1rem;
+    padding: 5px;
+    background: linear-gradient(180deg, rgb(var(--or-elevated) / 0.9), rgb(var(--or-graphite) / 0.95));
+    border: 1px solid rgb(var(--or-fg) / 0.08);
+    box-shadow: inset 0 1px 0 rgb(var(--or-fg) / 0.1), 0 30px 80px rgb(0 0 0 / 0.45);
+  }
+  .media-frame-screen {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.7rem;
+    background: rgb(var(--or-midnight));
+  }
+  .media-glow::before {
+    content: "";
+    position: absolute;
+    inset: -14% -10%;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(50% 50% at 50% 45%, rgb(var(--media-glow, var(--or-coral)) / 0.15), transparent 72%);
+  }
+  .media-glow-signal { --media-glow: var(--or-signal); }
+
+  /* Edge fade: set --fade-top/right/bottom/left on the element. Presentation only. */
+  .edge-fade {
+    -webkit-mask-image:
+      linear-gradient(to right, transparent, #000 var(--fade-left, 0px), #000 calc(100% - var(--fade-right, 0px)), transparent),
+      linear-gradient(to bottom, transparent, #000 var(--fade-top, 0px), #000 calc(100% - var(--fade-bottom, 0px)), transparent);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to right, transparent, #000 var(--fade-left, 0px), #000 calc(100% - var(--fade-right, 0px)), transparent),
+      linear-gradient(to bottom, transparent, #000 var(--fade-top, 0px), #000 calc(100% - var(--fade-bottom, 0px)), transparent);
+    mask-composite: intersect;
+  }
+
+  /*
+   * D3 homepage. Light sections re-scope the palette channels, so every component that
+   * reads tokens renders on warm white unchanged. Coral darkens to #C44026 on light
+   * (4.6:1 against #F7F3EE) because #FF735C cannot carry text there.
+   */
+  .theme-light {
+    --or-midnight: 247 243 238; /* #F7F3EE warm white */
+    --or-graphite: 239 233 225;
+    --or-elevated: 229 221 211;
+    --or-coral: 196 64 38;
+    --or-coral-soft: 168 51 29;
+    --or-signal: 18 120 138;
+    --or-fg: 20 22 28;
+    --or-fg-muted: 84 89 101; /* 6.4:1 on warm white */
+    --or-line: 214 205 194;
+    color-scheme: light;
+  }
+  .theme-light .media-frame {
+    border-color: rgb(20 22 28 / 0.08);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.6), 0 24px 60px rgb(74 38 24 / 0.14);
+  }
+
+  /* A section that slides over the previous one: the rounded top reveals the colour behind. */
+  .sheet {
+    position: relative;
+    margin-top: -2.5rem;
+    border-top-left-radius: 2.5rem;
+    border-top-right-radius: 2.5rem;
+  }
+  @media (min-width: 1024px) {
+    .sheet {
+      margin-top: -3rem;
+      border-top-left-radius: 3rem;
+      border-top-right-radius: 3rem;
+    }
+  }
+
+  /* Hero: graphite into ember into coral, handing over to warm white behind the showcase. */
+  .hero-ember {
+    /* Ends on exactly the colour .showcase-stage starts with, so the hand-over has no seam. */
+    background: linear-gradient(180deg, #080b12 0%, #120b10 14%, #2a0b0a 34%, #5a150a 56%, #8e240e 78%, #b8381a 100%);
+  }
+  .showcase-stage {
+    /* The brightest coral sits here, behind the card, where no text crosses it. */
+    background: linear-gradient(180deg, #b8381a 0%, #e85a32 10%, #fb9a74 22%, #f8c7ae 34%, #f6e2d6 46%, #f7f3ee 58%);
+  }
+  .hero-annotation {
+    animation: hero-annotation-in 900ms var(--or-ease-standard) both;
+  }
+  @keyframes hero-annotation-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+
+  /*
+   * Showcase growth: a CSS scroll-driven animation on the compositor (transform only, so
+   * no layout shift). The track is the timeline subject and never transforms itself.
+   * Browsers without scroll timelines, reduced motion, and phones get the static frame.
+   */
+  @keyframes showcase-grow {
+    from {
+      transform: scale(0.86);
+    }
+    to {
+      transform: none;
+    }
+  }
+  @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .showcase-track {
+        view-timeline: --showcase block;
+      }
+      .showcase-scale {
+        transform-origin: 50% 0;
+        animation: showcase-grow linear both;
+        animation-timeline: --showcase;
+        animation-range: cover 0% cover 45%;
+      }
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-annotation {
+      animation: none;
+    }
+  }
+
   .dot-pattern {
     background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
     background-size: 24px 24px;
@@ -60,29 +312,27 @@
 
   .hero-gradient {
     background:
-      radial-gradient(circle at 76% 33%, rgba(51, 183, 255, 0.08), transparent 30%),
-      radial-gradient(circle at 12% 72%, rgba(228, 119, 85, 0.06), transparent 26%),
-      #080914;
+      radial-gradient(60% 45% at 50% 0%, rgb(var(--or-coral) / 0.12), transparent 70%),
+      radial-gradient(40% 35% at 85% 40%, rgb(var(--or-signal) / 0.04), transparent 70%),
+      rgb(var(--or-midnight));
   }
 
   .cta-gradient {
-    background: linear-gradient(160deg, #1A1A2E 0%, #0E0E1F 50%, #1A1A2E 100%);
+    background: linear-gradient(160deg, rgb(var(--or-elevated)) 0%, rgb(var(--or-graphite)) 50%, rgb(var(--or-elevated)) 100%);
   }
 
   .blog-hero {
     background:
-      radial-gradient(circle at 82% 20%, rgba(51, 183, 255, 0.09), transparent 30%),
-      radial-gradient(circle at 14% 88%, rgba(228, 119, 85, 0.07), transparent 25%),
-      #080914;
+      radial-gradient(60% 55% at 50% 0%, rgb(var(--or-coral) / 0.1), transparent 70%),
+      rgb(var(--or-midnight));
   }
 
   .blog-card-visual,
   .blog-feature-visual {
-    background-color: #101525;
+    background-color: rgb(var(--or-graphite));
     background-image:
-      linear-gradient(135deg, rgba(51, 183, 255, 0.12), transparent 42%),
-      radial-gradient(circle at 72% 32%, rgba(85, 230, 208, 0.16), transparent 18%),
-      radial-gradient(circle at 32% 70%, rgba(228, 119, 85, 0.13), transparent 22%);
+      radial-gradient(55% 60% at 30% 20%, rgb(var(--or-coral) / 0.16), transparent 70%),
+      radial-gradient(45% 50% at 80% 80%, rgb(var(--or-signal) / 0.07), transparent 70%);
   }
 
   .blog-page-link {
@@ -199,6 +449,23 @@
   }
 }
 
+/* Homepage phones: the launcher shrinks to its icon (it keeps its aria-label), so it
+   cannot cover the CTAs, the showcase caption, or form fields. */
+@media (max-width: 639px) {
+  body:has(main[data-home-page]) [data-support-launcher] button {
+    padding: 0.75rem;
+  }
+
+  body:has(main[data-home-page]) [data-support-launcher] button span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -206,7 +473,7 @@
 
   .gradient-text {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #55E6D0, #33B7FF);
+    background-image: linear-gradient(135deg, rgb(var(--or-coral-soft)), rgb(var(--or-coral)));
   }
 
   .reveal-on-scroll {
@@ -306,7 +573,7 @@
   .product-visual {
     position: relative;
     border-radius: 12px;
-    background-color: #0b1020;
+    background-color: rgb(var(--or-graphite));
     box-shadow:
       0 0 0 1px rgba(255, 255, 255, 0.08),
       0 24px 56px -22px rgba(0, 0, 0, 0.75),

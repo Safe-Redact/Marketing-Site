@@ -5,16 +5,34 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        canvas: "#080914",
-        "surface-raised": "#101525",
-        "surface-active": "#151B2F",
-        "border-subtle": "#222B44",
-        ink: "#F7F8FC",
-        "ink-muted": "#A7B0C9",
-        "accent-warm": "#E47755",
-        "accent-warm-hover": "#F08A66",
-        "accent-cool": "#33B7FF",
-        "accent-mint": "#55E6D0",
+        // Cinematic Precision semantic palette (D1). Values live in globals.css as
+        // --or-* channels; use these names, never the hex values, in components.
+        midnight: "rgb(var(--or-midnight) / <alpha-value>)",
+        graphite: "rgb(var(--or-graphite) / <alpha-value>)",
+        elevated: "rgb(var(--or-elevated) / <alpha-value>)",
+        coral: {
+          DEFAULT: "rgb(var(--or-coral) / <alpha-value>)",
+          soft: "rgb(var(--or-coral-soft) / <alpha-value>)",
+        },
+        signal: "rgb(var(--or-signal) / <alpha-value>)",
+        fg: {
+          DEFAULT: "rgb(var(--or-fg) / <alpha-value>)",
+          muted: "rgb(var(--or-fg-muted) / <alpha-value>)",
+        },
+        line: "rgb(var(--or-line) / <alpha-value>)",
+        // The original semantic names now resolve to the locked palette, so every
+        // existing route adopts Cinematic Precision without renaming classes.
+        canvas: "rgb(var(--or-midnight) / <alpha-value>)",
+        "surface-raised": "rgb(var(--or-graphite) / <alpha-value>)",
+        "surface-active": "rgb(var(--or-elevated) / <alpha-value>)",
+        "border-subtle": "rgb(var(--or-line) / <alpha-value>)",
+        ink: "rgb(var(--or-fg) / <alpha-value>)",
+        "ink-muted": "rgb(var(--or-fg-muted) / <alpha-value>)",
+        "accent-warm": "rgb(var(--or-coral) / <alpha-value>)",
+        "accent-warm-hover": "rgb(var(--or-coral-soft) / <alpha-value>)",
+        "accent-cool": "rgb(var(--or-signal) / <alpha-value>)",
+        // No third hue in the locked palette: confirmations use Soft Coral.
+        "accent-mint": "rgb(var(--or-coral-soft) / <alpha-value>)",
         editorial: {
           canvas: "#F4F6FA",
           paper: "#FFFFFF",
@@ -149,6 +167,10 @@ const config: Config = {
           { lineHeight: "1.5", fontWeight: "500" },
         ],
       },
+      transitionTimingFunction: {
+        standard: "var(--or-ease-standard)",
+        spring: "var(--or-ease-spring)",
+      },
       spacing: {
         section: "6rem",
         "section-sm": "4rem",
@@ -164,9 +186,10 @@ const config: Config = {
         prose: "65ch",
       },
       boxShadow: {
-        action: "0 2px 14px rgba(228, 119, 85, 0.46)",
-        "action-hover": "0 4px 20px rgba(228, 119, 85, 0.58)",
-        panel: "0 18px 70px rgba(0, 0, 0, 0.32)",
+        action: "inset 0 1px 0 rgb(var(--or-fg) / 0.32), 0 6px 22px rgb(var(--or-coral) / 0.24)",
+        "action-hover": "inset 0 1px 0 rgb(var(--or-fg) / 0.38), 0 8px 30px rgb(var(--or-coral) / 0.34)",
+        panel: "0 24px 64px rgb(0 0 0 / 0.42)",
+        frame: "inset 0 1px 0 rgb(var(--or-fg) / 0.08), 0 30px 80px rgb(0 0 0 / 0.45)",
       },
       keyframes: {
         "fade-in-up": {

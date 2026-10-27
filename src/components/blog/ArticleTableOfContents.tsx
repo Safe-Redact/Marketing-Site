@@ -180,7 +180,7 @@ export function ArticleTableOfContents({
               "-ml-px block border-l px-3 py-1.5 text-[0.8125rem] leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool motion-reduce:transition-none",
               activeId === heading.id
                 ? "border-accent-warm font-medium text-white"
-                : "border-transparent font-normal text-ink-muted hover:border-accent-warm/55 hover:text-white"
+                : "border-transparent font-normal text-ink-muted hover:border-accent-warm/55 hover:text-ink"
             )}
           >
             {heading.text}
@@ -195,11 +195,11 @@ export function ArticleTableOfContents({
     return (
       <details
         data-toc-mode="compact"
-        className="group rounded-panel border border-border-subtle bg-surface-raised/55 p-4 lg:hidden"
+        className="group rounded-[16px] border border-border-subtle bg-surface-raised/55 p-4 lg:hidden"
       >
         <summary className="flex min-h-8 cursor-pointer list-none items-center justify-between gap-4 rounded-sm font-heading text-caption font-semibold uppercase tracking-[0.12em] text-ink-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool [&::-webkit-details-marker]:hidden">
           <span>On this page</span>
-          <span className="min-w-0 truncate normal-case tracking-normal text-white">
+          <span className="min-w-0 truncate normal-case tracking-normal text-ink">
             {activeHeading?.text}
           </span>
           <span aria-hidden="true" className="text-accent-cool transition-transform group-open:rotate-180">⌄</span>
