@@ -181,6 +181,57 @@ test("both enquiry kinds are accepted and the kind reaches the transport", async
   assert.equal(rejected.status, 400);
 });
 
+test("package interest and a bounded license count reach the existing lead transport", async () => {
+  const enquiries: Array<Record<string, unknown>> = [];
+  const handle = createContactHandler({
+    transport: stubTransport({
+      deliver: (async (enquiry: Record<string, unknown>) => {
+        enquiries.push(enquiry);
+        return { delivered: true };
+      }) as never,
+    }),
+    rateLimit: allowAll,
+  });
+
+  const response = await handle(
+    enquiryRequest({
+      ...validEnquiry,
+      packageInterest: "advanced",
+      licenseCount: 24,
+    })
+  );
+
+  assert.equal(response.status, 200);
+  assert.equal(enquiries.length, 1);
+  assert.equal(enquiries[0].packageInterest, "advanced");
+  assert.equal(enquiries[0].licenseCount, 24);
+});
+
+test("invalid package and license-count values are refused before delivery", async () => {
+  let deliveries = 0;
+  const handle = createContactHandler({
+    transport: stubTransport({
+      deliver: async () => {
+        deliveries += 1;
+        return { delivered: true };
+      },
+    }),
+    rateLimit: allowAll,
+  });
+
+  for (const override of [
+    { packageInterest: "starter" },
+    { licenseCount: 0 },
+    { licenseCount: 1001 },
+    { licenseCount: 1.5 },
+  ]) {
+    const response = await handle(enquiryRequest({ ...validEnquiry, ...override }));
+    assert.equal(response.status, 400, JSON.stringify(override));
+  }
+
+  assert.equal(deliveries, 0);
+});
+
 test("rate-limited enquiries are refused with a retry hint and never delivered", async () => {
   let deliveries = 0;
   const handle = createContactHandler({

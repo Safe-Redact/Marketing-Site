@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { pricingPackageSlugs } from "@/content/pricing";
 import { clientKey, createRateLimiter, looksAutomated } from "./abuse";
 import { leadTransport } from "./delivery";
 import { LEAD_KINDS, LeadDeliveryError } from "./types";
@@ -7,12 +8,10 @@ import type { LeadEnquiry, LeadTransport } from "./types";
 
 const MAX_REQUEST_BYTES = 16 * 1024;
 const supportedFileTypes = [
-  "Video files",
   "Audio files",
   "PDF documents",
   "Word documents",
-  "Scanned images",
-  "Multiple formats",
+  "Documents and audio",
   "Not sure",
 ] as const;
 
@@ -26,6 +25,8 @@ const contactSchema = z
     name: z.string().trim().min(2).max(100),
     email: z.string().trim().email().max(254),
     organization: z.string().trim().max(120).optional().default(""),
+    packageInterest: z.enum(pricingPackageSlugs).optional(),
+    licenseCount: z.number().int().min(1).max(1_000).optional(),
     fileType: z.enum(supportedFileTypes),
     message: z.string().trim().min(10).max(2_000),
   })

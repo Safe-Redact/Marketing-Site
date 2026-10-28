@@ -1,5 +1,6 @@
 import { LeadDeliveryError } from "../types";
 import type { DeliveryContext, DeliveryReceipt, LeadEnquiry, LeadTransport } from "../types";
+import { pricingPackages } from "@/content/pricing";
 
 export interface HttpsEmailSettings {
   endpoint: string;
@@ -76,12 +77,18 @@ function subjectFor(enquiry: LeadEnquiry): string {
 }
 
 function bodyFor(enquiry: LeadEnquiry, referenceId: string): string {
+  const packageName = enquiry.packageInterest
+    ? pricingPackages.find((plan) => plan.slug === enquiry.packageInterest)?.name
+    : undefined;
+
   return [
     `Reference: ${referenceId}`,
     `Kind: ${enquiry.kind}`,
     `Name: ${enquiry.name}`,
     `Email: ${enquiry.email}`,
     `Organization: ${enquiry.organization || "(not provided)"}`,
+    ...(packageName ? [`Package interest: ${packageName}`] : []),
+    ...(enquiry.licenseCount ? [`Requested licenses: ${enquiry.licenseCount}`] : []),
     `Source formats: ${enquiry.fileType}`,
     "",
     enquiry.message,

@@ -11,15 +11,15 @@ const footerGroups = [
       { label: "Capabilities", href: "#services" },
       { label: "Product workflow", href: "#how-it-works" },
       { label: "Why OpenRedakt", href: "#why-saferedact" },
+      { label: "Pricing", href: "/pricing" },
       { label: "Insights", href: "/blog" },
     ],
   },
   {
     title: "Workflows",
     links: [
-      { label: "Documents & images", href: "#why-saferedact" },
+      { label: "Documents", href: "#why-saferedact" },
       { label: "Audio & transcripts", href: "#why-saferedact" },
-      { label: "Video", href: "#why-saferedact" },
       { label: "Use cases", href: "#industries" },
     ],
   },
@@ -38,7 +38,7 @@ export function Footer({ homePage = false }: { homePage?: boolean }) {
               <span><span className="text-accent-warm">Open</span>Redakt</span>
             </Link>
             <p className="mt-5 max-w-xs text-sm leading-6 text-ink-muted">
-              AI-assisted redaction workflows for documents, images, audio, and video in a native Windows application.
+              AI-assisted redaction workflows for documents and audio in a native Windows application.
             </p>
           </div>
 

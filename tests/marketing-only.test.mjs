@@ -104,4 +104,5 @@ test("every rendered internal navigation target exists and sitemap stays marketi
   const sitemap = await sitemapResponse.text();
   assert.doesNotMatch(sitemap, /download|installer|login|portal|dashboard/i);
   assert.match(sitemap, /https:\/\/saferedact\.io<\/loc>/);
+  assert.match(sitemap, /https:\/\/saferedact\.io\/pricing<\/loc>/);
 });

@@ -9,12 +9,12 @@ export const faqItems: FaqItem[] = [
   {
     question: "What types of files can you redact?",
     answer:
-      "OpenRedakt has workflows for PDFs and supported converted documents, common image formats, audio, and video. Some document conversions and local AI features require optional components, so confirm a specific format before planning a production workflow around it.",
+      "OpenRedakt has workflows for PDFs and supported converted documents, plus supported audio recordings. Some document conversions and local AI features require optional components, so confirm a specific format before planning a production workflow around it.",
   },
   {
     question: "What information can be redacted?",
     answer:
-      "Implemented visual detection targets include faces, license plates, and text. Document and transcript workflows can identify configured sensitive-information categories and patterns. Detection coverage varies, so reviewers should confirm every proposed redaction.",
+      "Document and transcript workflows can identify configured sensitive-information categories and patterns. Detection coverage varies, so reviewers should confirm every proposed redaction before export.",
   },
   {
     question: "How does OpenRedakt work?",
@@ -29,7 +29,7 @@ export const faqItems: FaqItem[] = [
   {
     question: "Can I review detected information?",
     answer:
-      "Yes. OpenRedakt lets reviewers approve, reject, adjust, add, or remove findings before export, with page, timeline, and transcript views suited to the content.",
+      "Yes. OpenRedakt lets reviewers approve, reject, adjust, add, or remove findings before export, with page and transcript views suited to the content.",
   },
   {
     question: "What should I check before sharing an output?",

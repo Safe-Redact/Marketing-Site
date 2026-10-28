@@ -5,7 +5,7 @@ export const differentiators: Differentiator[] = [
     icon: "layers",
     title: "Multi-Format Workflows",
     description:
-      "Work with documents, images, audio, and video in one Windows desktop application.",
+      "Work with documents and audio in one Windows desktop application.",
   },
   {
     icon: "brain",

@@ -4,7 +4,7 @@ export const siteConfig = {
   name: "OpenRedakt",
   tagline: "AI-powered redaction software",
   description:
-    "Windows redaction software with AI-assisted workflows for documents, images, audio, and video.",
+    "Windows redaction software with AI-assisted workflows for documents and audio.",
   // Official OpenRedakt coordinates have not been approved yet. Keep the existing
   // working destinations explicit rather than presenting them as new-brand URLs.
   externalCoordinates: {
@@ -22,6 +22,7 @@ export const navLinks: NavLink[] = [
   { label: "How It Works", href: "#how-it-works" },
   { label: "Industries", href: "#industries" },
   { label: "Why OpenRedakt", href: "#why-saferedact" },
+  { label: "Pricing", href: "/pricing" },
   { label: "Insights", href: "/blog" },
   { label: "FAQ", href: "#faq" },
 ];

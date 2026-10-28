@@ -16,7 +16,7 @@ export const qualityContent = {
     {
       title: "Format-Specific Review",
       description:
-      "Document, image, audio, and video workflows present content in ways suited to each format.",
+      "Document and audio workflows present content in ways suited to each supported format.",
     },
     {
       title: "Output Check",

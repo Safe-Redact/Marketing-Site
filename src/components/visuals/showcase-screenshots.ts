@@ -27,10 +27,11 @@ export const showcaseScreenshots = {
   },
   "workflow-open": {
     dark: {
-      src: "/images/product/step-open.png",
-      alt: "Screenshot of the current project workspace listing recent redaction projects with their type, status and progress",
-      width: 1467,
-      height: 844,
+      src: "/images/product/format-documents.png",
+      revision: "88730f63e860",
+      alt: "Screenshot of the current document editor after a supported document has been opened, with redaction tools and review findings visible",
+      width: 1451,
+      height: 853,
     },
     light: null,
   },
