@@ -42,6 +42,7 @@ function runTests(baseUrl) {
     "tests/openredakt-routes.test.mjs",
     "tests/phase1-homepage.test.mjs",
     "tests/phase4a-routes.test.mjs",
+    "tests/pricing-product-scope.test.mjs",
   ];
   return new Promise((resolve, reject) => {
     const child = spawn(process.execPath, ["--test", ...testFiles], {

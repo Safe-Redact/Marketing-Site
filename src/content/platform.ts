@@ -22,21 +22,14 @@ export const platformOutcomes = [
 export const platformCapabilities = [
   {
     icon: "document",
-    title: "Document and image review",
+    title: "Document redaction",
     description:
-      "Review detected text, manual text selections, and area redactions across PDFs, supported converted documents, and still images.",
-    accent: "Text and visual regions",
-  },
-  {
-    icon: "video",
-    title: "Video review controls",
-    description:
-      "Detect implemented visual targets—faces, license plates, and text—then adjust regions and time ranges on the timeline.",
-    accent: "Frames and time ranges",
+      "Review detected text, manual text selections, and area redactions across PDFs and supported converted documents.",
+    accent: "Page-based review",
   },
   {
     icon: "audio",
-    title: "Audio and transcript workflow",
+    title: "Audio redaction",
     description:
       "Use local or configured transcription, navigate the transcript, and review sensitive time ranges before rendering audio.",
     accent: "Transcript-led review",
@@ -48,6 +41,13 @@ export const platformCapabilities = [
       "Keep pending, approved, and rejected findings visible while refining redactions and preparing the output file.",
     accent: "Approve, reject, adjust",
   },
+  {
+    icon: "settings",
+    title: "Format-aware Windows workspace",
+    description:
+      "Move between document pages, audio transcripts, review decisions, and export checks in the desktop application.",
+    accent: "Documents and audio",
+  },
 ] as const;
 
 export const workflowSteps = [
@@ -57,7 +57,7 @@ export const workflowSteps = [
     label: "Open a supported file",
     title: "Start in a project workspace",
     description:
-      "Add a supported document, still image, audio recording, or video and choose the available workflow for that source.",
+      "Add a supported document or audio recording and choose the available workflow for that source.",
     previewLabel: "Source ready",
   },
   {
@@ -99,16 +99,16 @@ export const workflowPreviewLabels = {
 export const formatTabs = [
   {
     id: "documents",
-    label: "Documents & images",
+    label: "Documents",
     icon: "document",
     eyebrow: "Page and region review",
     title: "Work through findings in document context",
     description:
-      "OpenRedakt combines detected findings with manual text and area controls so reviewers can inspect each page or still image before export.",
+      "OpenRedakt combines detected findings with manual text and area controls so reviewers can inspect each page before export.",
     bullets: [
       "PDF and supported converted document intake",
       "Manual text and area selection",
-      "PNG output for still-image workflows",
+      "Page and project-scope review",
     ],
     visual: "document",
     fileLabel: "case-records.pdf",
@@ -128,22 +128,6 @@ export const formatTabs = [
     ],
     visual: "audio",
     fileLabel: "interview-audio.wav",
-  },
-  {
-    id: "video",
-    label: "Video",
-    icon: "video",
-    eyebrow: "Frame and timeline controls",
-    title: "Review visual regions across time",
-    description:
-      "Detect implemented visual targets or add regions manually, preview their effects, and adjust ranges on the timeline.",
-    bullets: [
-      "Face, license-plate, and text detection",
-      "Manual visual regions",
-      "Preview and timeline range controls",
-    ],
-    visual: "video",
-    fileLabel: "street-footage.mp4",
   },
 ] as const;
 

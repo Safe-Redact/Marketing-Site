@@ -68,7 +68,7 @@ export function SoftwareAlternative() {
                     <div className="flex h-5 w-5 items-center justify-center rounded bg-accent/20">
                       <Icon name="shield-check" size={12} className="text-accent" />
                     </div>
-                    <span className="text-xs font-medium text-white/60">SafeRedact</span>
+                    <span className="text-xs font-medium text-white/60">OpenRedakt</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <div className="h-3 w-3 rounded-sm bg-white/10 hover:bg-white/20 transition-colors" />
@@ -81,7 +81,7 @@ export function SoftwareAlternative() {
                 <div className="p-5 space-y-3">
                   <div className="flex items-center gap-3 rounded-lg bg-white/[0.04] p-3 ring-1 ring-white/[0.05]">
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/20">
-                      <Icon name="video" size={18} className="text-accent" />
+                      <Icon name="audio" size={18} className="text-accent" />
                     </div>
                     <div className="flex-1">
                       <div className="h-2 w-3/4 rounded-full bg-white/20" />

@@ -1,11 +1,11 @@
 export const softwareContent = {
   headline: "Redact on Windows",
   description:
-    "SafeRedact is native Windows redaction software with AI-assisted document, image, audio, and video workflows.",
+    "OpenRedakt is native Windows redaction software with AI-assisted document and audio workflows.",
   features: [
     "On-device processing options",
     "AI-assisted sensitive-information detection",
-    "Document, image, audio, and video support",
+    "Document and audio support",
   ],
   cta: {
     label: "Download SafeRedact",

@@ -86,6 +86,30 @@ test("a configured transport delivers over plain HTTPS and reports the provider 
   assert.match(payload.text, /review workflow/);
 });
 
+test("delivery includes selected package and license count as operator context", async () => {
+  let body = "";
+  const transport = resolveLeadTransport(configured, (async (_url: string, init: RequestInit) => {
+    body = String(init.body);
+    return new Response(JSON.stringify({ id: "provider-message-id" }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  }) as unknown as typeof fetch);
+
+  await transport.deliver(
+    {
+      ...enquiry,
+      packageInterest: "complete-suite",
+      licenseCount: 18,
+    } as LeadEnquiry,
+    { referenceId: "pricing-reference" }
+  );
+
+  const payload = JSON.parse(body);
+  assert.match(payload.text, /Package interest: OpenRedakt Complete Suite/);
+  assert.match(payload.text, /Requested licenses: 18/);
+});
+
 test("a refused or unreachable provider raises a delivery error rather than claiming success", async () => {
   const rejecting = resolveLeadTransport(configured, (async () =>
     new Response("nope", { status: 422 })) as unknown as typeof fetch);

@@ -35,7 +35,7 @@ export function Footer({
               <span><span className="text-accent-warm">Open</span>Redakt</span>
             </Link>
             <p className={cn("mt-5 max-w-xs text-sm leading-6", editorial ? "text-editorial-muted" : "text-ink-muted")}>
-              AI-assisted redaction workflows for documents, images, audio, and video in a native Windows application.
+              AI-assisted redaction workflows for documents and audio in a native Windows application.
             </p>
           </div>
 

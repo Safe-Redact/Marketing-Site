@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     template: "%s | OpenRedakt",
   },
   description:
-    "Windows redaction software with AI-assisted workflows for documents, images, audio, and video.",
+    "Windows redaction software with AI-assisted workflows for documents and audio.",
   alternates: {
     canonical: "/",
   },
@@ -48,13 +48,13 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title: "OpenRedakt | AI-Powered Redaction Software",
     description:
-      "Windows redaction software with AI-assisted workflows for documents, images, audio, and video.",
+      "Windows redaction software with AI-assisted workflows for documents and audio.",
   },
   twitter: {
     card: "summary_large_image",
     title: "OpenRedakt | AI-Powered Redaction Software",
     description:
-      "Windows redaction software with AI-assisted workflows for documents, images, audio, and video.",
+      "Windows redaction software with AI-assisted workflows for documents and audio.",
   },
   robots: {
     index: true,
@@ -92,7 +92,7 @@ export default async function RootLayout({
               "@type": "SoftwareApplication",
               name: siteConfig.name,
               description:
-                "Windows redaction software with AI-assisted workflows for documents, images, audio, and video.",
+                "Windows redaction software with AI-assisted workflows for documents and audio.",
               url: publicSiteUrl,
               applicationCategory: "BusinessApplication",
               operatingSystem: "Windows",

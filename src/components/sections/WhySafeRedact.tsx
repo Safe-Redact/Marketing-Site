@@ -28,7 +28,7 @@ export function WhySafeRedact() {
             Review content in the right context. <span className="type-quiet sm:block">One surface for each format.</span>
           </h2>
           <p className="type-lede mx-auto mt-5 max-w-2xl">
-            Pages, transcripts, frames, and timelines each need a different review surface. OpenRedakt brings them into one Windows desktop application.
+            Document pages and audio transcripts need different review surfaces. OpenRedakt brings both supported workflows into one Windows desktop application.
           </p>
         </AnimateOnScroll>
 
