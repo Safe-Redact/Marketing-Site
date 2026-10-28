@@ -6,13 +6,8 @@ export const capabilityStripHeading =
 export const trustPillars: TrustPillar[] = [
   {
     icon: "document",
-    title: "Documents & images",
-    description: "Review text and visual regions in documents and still images.",
-  },
-  {
-    icon: "video",
-    title: "Video",
-    description: "Detect faces, license plates, and text, or add regions manually.",
+    title: "Documents",
+    description: "Review detected text and manual selections in document context.",
   },
   {
     icon: "audio",
@@ -20,8 +15,13 @@ export const trustPillars: TrustPillar[] = [
     description: "Use transcription and time-range controls for spoken information.",
   },
   {
-    icon: "download",
-    title: "Offline on Windows",
-    description: "Use on-device processing after the required models and tools are set up.",
+    icon: "check-circle",
+    title: "Review before export",
+    description: "Approve, reject, or adjust candidate findings before output.",
+  },
+  {
+    icon: "settings",
+    title: "Windows desktop",
+    description: "Use supported local workflows after required components are configured.",
   },
 ];

@@ -1,3 +1,5 @@
+import type { PricingPackageSlug } from "@/content/pricing";
+
 /** The two enquiry kinds the marketing site collects. */
 export const LEAD_KINDS = ["demo", "contact"] as const;
 export type LeadKind = (typeof LEAD_KINDS)[number];
@@ -7,6 +9,8 @@ export interface LeadEnquiry {
   name: string;
   email: string;
   organization: string;
+  packageInterest?: PricingPackageSlug;
+  licenseCount?: number;
   fileType: string;
   message: string;
 }

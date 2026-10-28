@@ -16,11 +16,10 @@ test("homepage exposes the approved Phase 1 platform narrative", async () => {
   assert.match(html, /data-hero-workbench/);
   assert.match(html, /hero-document-review/);
   assert.match(html, /Screenshot of the current redaction editor/);
-  assert.match(html, /Documents &amp; images/);
-  assert.match(html, /Video/);
+  assert.match(html, /Documents/);
   assert.match(html, /Audio/);
-  assert.match(html, /Offline on Windows/);
-  assert.match(html, /faces, license plates, and text/i);
+  assert.match(html, /Windows desktop/);
+  assert.doesNotMatch(html, /Documents &amp; images|Video review controls|Video files|Scanned images/);
   assert.match(html, /review or adjust/i);
   assert.doesNotMatch(html, /99\.8%|24h|100% Confidential|Accuracy Guaranteed/);
   assert.doesNotMatch(

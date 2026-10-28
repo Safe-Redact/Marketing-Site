@@ -34,7 +34,7 @@ export function WhySafeRedact() {
             Review content in the <span className="gradient-text">right context</span>
           </h2>
           <p className="mt-5 max-w-2xl text-base leading-7 text-ink-muted sm:text-lg">
-            Pages, transcripts, frames, and timelines each need a different review surface. OpenRedakt brings them into one Windows desktop application.
+            Document pages and audio transcripts need different review surfaces. OpenRedakt brings both supported workflows into one Windows desktop application.
           </p>
         </AnimateOnScroll>
 

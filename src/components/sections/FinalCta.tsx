@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { finalCtaContent } from "@/content/final-cta";
+import { pricingPackages, type PricingPackageSlug } from "@/content/pricing";
 import { publicSupportEmail } from "@/content/site";
 import { AnimateOnScroll } from "@/components/ui/AnimateOnScroll";
 import { Button } from "@/components/ui/Button";
@@ -9,7 +10,7 @@ import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/utils";
 
-export function FinalCta() {
+export function FinalCta({ initialPackage = "" }: { initialPackage?: PricingPackageSlug | "" }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
@@ -19,6 +20,8 @@ export function FinalCta() {
     name: "",
     email: "",
     organization: "",
+    packageInterest: initialPackage,
+    licenseCount: "",
     fileType: "",
     message: "",
   });
@@ -40,7 +43,13 @@ export function FinalCta() {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, kind: "demo", website }),
+        body: JSON.stringify({
+          ...formData,
+          packageInterest: formData.packageInterest || undefined,
+          licenseCount: formData.licenseCount ? Number(formData.licenseCount) : undefined,
+          kind: "demo",
+          website,
+        }),
       });
       const result = (await response.json().catch(() => ({}))) as {
         delivered?: boolean;
@@ -165,6 +174,15 @@ export function FinalCta() {
                     </Field>
                     <Field label={form.orgLabel} htmlFor="organization">
                       <input id="organization" name="organization" type="text" autoComplete="organization" maxLength={120} value={formData.organization} onChange={(event) => setFormData((current) => ({ ...current, organization: event.target.value }))} placeholder={form.orgPlaceholder} className={fieldClass} />
+                    </Field>
+                    <Field label={form.packageLabel} htmlFor="packageInterest">
+                      <select id="packageInterest" name="packageInterest" value={formData.packageInterest} onChange={(event) => setFormData((current) => ({ ...current, packageInterest: event.target.value as PricingPackageSlug | "" }))} className={cn(fieldClass, !formData.packageInterest && "text-ink-muted")}>
+                        <option value="">{form.packagePlaceholder}</option>
+                        {pricingPackages.map((plan) => <option key={plan.slug} value={plan.slug} className="bg-surface-active text-ink">{plan.name}</option>)}
+                      </select>
+                    </Field>
+                    <Field label={form.licenseCountLabel} htmlFor="licenseCount">
+                      <input id="licenseCount" name="licenseCount" type="number" inputMode="numeric" min={1} max={1000} step={1} value={formData.licenseCount} onChange={(event) => setFormData((current) => ({ ...current, licenseCount: event.target.value }))} placeholder={form.licenseCountPlaceholder} className={fieldClass} />
                     </Field>
                     <Field label={form.fileTypeLabel} htmlFor="fileType">
                       <select id="fileType" name="fileType" required value={formData.fileType} onChange={(event) => setFormData((current) => ({ ...current, fileType: event.target.value }))} className={cn(fieldClass, !formData.fileType && "text-ink-muted")}>

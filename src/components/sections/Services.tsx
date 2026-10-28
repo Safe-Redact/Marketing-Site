@@ -29,10 +29,10 @@ export function Services() {
         <AnimateOnScroll className="mt-16 max-w-4xl md:mt-20">
           <Eyebrow>Platform capabilities</Eyebrow>
           <h2 className="mt-4 max-w-[19ch] font-heading text-display font-bold text-ink text-balance">
-            One review workspace for <span className="text-accent-warm">sensitive content</span> across formats
+            One review workspace for <span className="text-accent-warm">documents and audio</span>
           </h2>
           <p className="mt-5 max-w-2xl text-base leading-7 text-ink-muted sm:text-lg">
-            Move from candidate detection to operator decisions without losing the context of the document, transcript, frame, or timeline.
+            Move from candidate detection to operator decisions without losing the context of the document page, transcript, or audio time range.
           </p>
         </AnimateOnScroll>
 
