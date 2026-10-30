@@ -14,13 +14,6 @@ export type ClaimId =
   | "AUD-PREVIEW"
   | "AUD-TRANSCRIPT-CONTEXT"
   | "AUD-EXPORT"
-  | "VID-INPUT"
-  | "VID-DETECTION"
-  | "VID-MANUAL"
-  | "VID-TIMELINE"
-  | "VID-EFFECTS"
-  | "VID-AUDIO"
-  | "VID-OUTPUT-CHECK"
   | "BLOCK-AUDIO-AUTO"
   | "BLOCK-TRACKING"
   | "BLOCK-COMPLIANCE"
@@ -51,21 +44,18 @@ export type WorkflowStep = {
   description: string;
 };
 
-export type FeatureSlug =
-  | "document-redaction"
-  | "audio-redaction"
-  | "video-redaction";
+export type FeatureSlug = "document-redaction" | "audio-redaction";
 
 export type FeatureMedia =
   | {
       kind: "screenshot";
-      screenshotId: "format-document";
+      screenshotId: "document-workspace" | "audio-workspace";
       caption: string;
     }
   | {
       // Labelled illustration standing in for a capture that is not yet approved.
       kind: "workflow-diagram";
-      format: "audio" | "video";
+      format: "audio";
       caption: string;
     };
 

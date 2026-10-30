@@ -18,7 +18,7 @@ export function ArticleTypeBadge({ article, className }: { article: BlogArticle;
       className={cn(
         "inline-flex items-center rounded-sm border px-2 py-0.5 font-heading text-caption font-semibold uppercase tracking-[0.04em]",
         announcement
-          ? "border-accent-warm/40 bg-accent-warm/10 text-accent-warm"
+          ? "border-accent-warm/40 bg-accent-warm/10 text-accent-ink"
           : "border-border-subtle text-ink-muted",
         className
       )}

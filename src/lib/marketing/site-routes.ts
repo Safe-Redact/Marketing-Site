@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { featureOverview, publishedFeaturePages } from "@/content/features";
 import { industryPages, liveIndustryPages } from "@/content/industries";
-import { contactPage, howItWorksPage, industriesHub, whyOpenRedaktPage } from "@/content/pages";
+import { bookDemoPage, contactPage, howItWorksPage, industriesHub, whyOpenRedaktPage } from "@/content/pages";
 import type { CapabilityClaims, SeoFields } from "@/lib/marketing/content";
 import { blockedIndustryCopy } from "@/lib/marketing/industries";
 
@@ -49,6 +49,7 @@ export function marketingRoutes(): MarketingRoute[] {
     })),
     { path: "/how-it-works", seo: howItWorksPage.seo, h1: howItWorksPage.h1, lastModified: howItWorksPage.lastReviewed, changeFrequency: "monthly", priority: 0.8 },
     { path: "/why-openredakt", seo: whyOpenRedaktPage.seo, h1: whyOpenRedaktPage.h1, lastModified: whyOpenRedaktPage.lastReviewed, changeFrequency: "monthly", priority: 0.7 },
+    { path: "/book-a-demo", seo: bookDemoPage.seo, h1: bookDemoPage.h1, lastModified: bookDemoPage.lastReviewed, changeFrequency: "yearly", priority: 0.7 },
     { path: "/contact", seo: contactPage.seo, h1: contactPage.h1, lastModified: contactPage.lastReviewed, changeFrequency: "yearly", priority: 0.6 },
   ];
 }
@@ -87,7 +88,7 @@ export function validateMarketingRoutes(routes: readonly MarketingRoute[]): stri
  */
 export function validateSupportingContent(claims: CapabilityClaims): string[] {
   const errors: string[] = [];
-  const pages = { industriesHub, howItWorksPage, whyOpenRedaktPage, contactPage };
+  const pages = { industriesHub, howItWorksPage, whyOpenRedaktPage, contactPage, bookDemoPage };
 
   for (const [name, page] of Object.entries(pages)) {
     const copy = JSON.stringify(page);

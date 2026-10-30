@@ -8,13 +8,13 @@ import {
 } from "../src/content/features";
 import { validateFeatureContent } from "../src/lib/marketing/content";
 
+// Product scope: document and audio redaction are the marketed workflows.
 const approvedSlugs = [
   "document-redaction",
   "audio-redaction",
-  "video-redaction",
 ] as const;
 
-test("the feature registry exposes only the three approved, uniquely targeted routes", () => {
+test("the feature registry exposes only the approved, uniquely targeted routes", () => {
   assert.deepEqual(featurePages.map((page) => page.slug), approvedSlugs);
   assert.ok(featurePages.every((page) => page.publicationStatus === "published"));
   assert.deepEqual(
@@ -39,12 +39,12 @@ test("feature metadata and cross-links satisfy the public content contract", () 
     );
     assert.ok(page.faq.length >= 4);
     assert.ok(page.workflow.length >= 3);
-    assert.ok(page.relatedFeatures.length === 2);
+    assert.ok(page.relatedFeatures.length === 1);
     if (page.insightsHref) assert.equal(page.insightsHref, "/blog/understanding-document-redaction");
   }
   assert.equal(getFeaturePage("document-redaction")?.insightsHref, "/blog/understanding-document-redaction");
   assert.equal(getFeaturePage("audio-redaction")?.insightsHref, undefined);
-  assert.equal(getFeaturePage("video-redaction")?.insightsHref, undefined);
+  assert.equal(getFeaturePage("video-redaction"), undefined);
 });
 
 test("public feature claims are evidence-linked and never use blocked proof", () => {
@@ -63,10 +63,9 @@ test("public feature claims are evidence-linked and never use blocked proof", ()
   }
 });
 
-test("audio and video marketing stay inside the verified capability envelope", () => {
+test("audio marketing stays inside the verified capability envelope and video is not marketed", () => {
   const audio = getFeaturePage("audio-redaction");
-  const video = getFeaturePage("video-redaction");
-  assert.ok(audio && video);
+  assert.ok(audio);
 
   assert.equal(audio.availabilityNote?.status, "manual-first");
   assert.match(JSON.stringify(audio), /manual-first/i);
@@ -74,8 +73,8 @@ test("audio and video marketing stay inside the verified capability envelope", (
   assert.doesNotMatch(JSON.stringify(audio), /perfect synchronization/i);
   assert.match(JSON.stringify(audio), /manual timeline/i);
 
-  assert.equal(video.media.kind, "workflow-diagram");
-  assert.doesNotMatch(JSON.stringify(video), /format-video\.png|automatic face detection/i);
-  assert.match(JSON.stringify(video), /Generic object tracking is not presented/i);
+  // Video and standalone image redaction are not marketed (pricing and product scope).
+  assert.equal(getFeaturePage("video-redaction"), undefined);
+  assert.doesNotMatch(JSON.stringify({ featureOverview, featurePages }), /\bvideo\b|format-video\.png|PNG \/ JPG/i);
 });
 

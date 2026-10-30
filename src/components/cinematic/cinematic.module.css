@@ -115,21 +115,21 @@
 .heading { color: rgb(var(--or-fg)); text-wrap: balance; }
 .headingContinuation { color: rgb(var(--or-fg-muted)); }
 .headingHero {
-  font-family: var(--font-poppins), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   font-weight: 600;
   font-size: clamp(2.35rem, 1.6rem + 3.4vw, 4rem);
   line-height: 1.06;
   letter-spacing: -0.035em;
 }
 .headingDisplay {
-  font-family: var(--font-poppins), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   font-weight: 600;
   font-size: clamp(1.875rem, 1.4rem + 2vw, 2.75rem);
   line-height: 1.12;
   letter-spacing: -0.03em;
 }
 .headingSection {
-  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   font-weight: 600;
   font-size: clamp(1.1875rem, 1.05rem + 0.5vw, 1.375rem);
   line-height: 1.36;

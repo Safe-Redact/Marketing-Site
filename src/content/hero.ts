@@ -1,31 +1,22 @@
 export const heroContent = {
-  eyebrow: "AI-powered redaction",
-  headline: "Detect sensitive information. Redact with confidence.",
-  /**
-   * The hero sets the headline as a sequence: muted steps leading to the final line.
-   * The first and last lines are the headline itself; the middle steps appear from
-   * the small-tablet width up, where each fits on one line.
-   */
-  headlineSequence: [
-    "Detect sensitive information.",
-    "Review every decision.",
-    "Inspect the output.",
-    "Redact with confidence.",
-  ],
+  chip: {
+    label: "Windows desktop app · Documents and audio",
+    href: "/features",
+  },
+  eyebrow: "Review-led redaction",
+  headline: "Redact with confidence.",
+  headlineSecond: "Every decision stays yours.",
   subheadline:
-    "OpenRedakt is a Windows desktop application for AI-assisted document and audio redaction, with review controls before export.",
+    "Find and review sensitive information in documents and audio, with control over what gets shared.",
   primaryCta: {
     label: "Request a Demo",
-    href: "#demo-enquiry",
+    href: "/book-a-demo",
   },
   secondaryCta: {
     label: "How It Works",
     href: "/how-it-works",
   },
   showcase: {
-    title: "Review in context",
-    description:
-      "Detected items wait in the findings list. Accept, adjust, or add marks on the page before anything is exported.",
-    note: "Current release · synthetic statement",
+    alt: "The OpenRedakt project library: recent projects with their file counts and review status, library views such as Needs review and Exported, and a project to continue. Project names, folder paths and file names are blurred.",
   },
 };

@@ -30,9 +30,14 @@ const config: Config = {
         "ink-muted": "rgb(var(--or-fg-muted) / <alpha-value>)",
         "accent-warm": "rgb(var(--or-coral) / <alpha-value>)",
         "accent-warm-hover": "rgb(var(--or-coral-soft) / <alpha-value>)",
+        // Orange text: darker on light, brand orange on black (see globals.css).
+        // Label colour on brand-orange fills: 6.5:1 on #FF735C in either theme.
+        "on-accent": "#1C1917",
+        "accent-ink": "rgb(var(--or-coral-ink) / <alpha-value>)",
+        "accent-ink-hover": "rgb(var(--or-coral-ink-hover) / <alpha-value>)",
         "accent-cool": "rgb(var(--or-signal) / <alpha-value>)",
-        // No third hue in the locked palette: confirmations use Soft Coral.
-        "accent-mint": "rgb(var(--or-coral-soft) / <alpha-value>)",
+        // No third hue: confirmations use the same text-safe orange.
+        "accent-mint": "rgb(var(--or-coral-ink) / <alpha-value>)",
         editorial: {
           canvas: "#F4F6FA",
           paper: "#FFFFFF",
@@ -90,7 +95,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: [
-          "var(--font-inter)",
+          "var(--font-geist)",
           "ui-sans-serif",
           "system-ui",
           "sans-serif",
@@ -98,12 +103,12 @@ const config: Config = {
           "Segoe UI Emoji",
         ],
         heading: [
-          "var(--font-poppins)",
-          "var(--font-inter)",
+          "var(--font-geist)",
           "ui-sans-serif",
           "system-ui",
           "sans-serif",
         ],
+        mono: ["var(--font-geist-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
       },
       fontSize: {
         "display-lg": [
@@ -182,14 +187,15 @@ const config: Config = {
         chip: "0.25rem",
       },
       maxWidth: {
-        content: "77rem",
+        // 1160px content width, as on the reference; prose stays narrower.
+        content: "72.5rem",
         prose: "65ch",
       },
       boxShadow: {
-        action: "inset 0 1px 0 rgb(var(--or-fg) / 0.32), 0 6px 22px rgb(var(--or-coral) / 0.24)",
-        "action-hover": "inset 0 1px 0 rgb(var(--or-fg) / 0.38), 0 8px 30px rgb(var(--or-coral) / 0.34)",
-        panel: "0 24px 64px rgb(0 0 0 / 0.42)",
-        frame: "inset 0 1px 0 rgb(var(--or-fg) / 0.08), 0 30px 80px rgb(0 0 0 / 0.45)",
+        action: "inset 0 1px 0 rgb(255 255 255 / 0.28), 0 6px 18px -6px rgb(var(--or-coral) / 0.55)",
+        "action-hover": "inset 0 1px 0 rgb(255 255 255 / 0.32), 0 10px 26px -8px rgb(var(--or-coral) / 0.65)",
+        panel: "0 1px 2px rgb(var(--or-shadow) / 0.04), 0 18px 48px -12px rgb(var(--or-shadow) / 0.16)",
+        frame: "inset 0 1px 0 rgb(255 255 255 / 0.08), 0 30px 80px -20px rgb(var(--or-shadow) / 0.35)",
       },
       keyframes: {
         "fade-in-up": {

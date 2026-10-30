@@ -169,7 +169,7 @@ export function CommentForm({ articleSlug, parentId, replyingTo }: CommentFormPr
         aria-live={outcome.kind === "error" ? "assertive" : "polite"}
         className={cn(
           "mt-4 text-body-sm leading-6 focus-visible:outline-none",
-          outcome.kind === "error" ? "text-accent-warm" : "text-ink-muted"
+          outcome.kind === "error" ? "text-accent-ink" : "text-ink-muted"
         )}
       >
         {outcome.kind === "idle"

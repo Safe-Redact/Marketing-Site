@@ -1,87 +1,88 @@
-import Image from "next/image";
 import Link from "next/link";
 import { demoHref, footerGroups } from "@/content/navigation";
 import { publicSupportEmail, siteConfig } from "@/content/site";
 import { Container } from "@/components/ui/Container";
-import { Icon } from "@/components/ui/Icon";
-import { cn } from "@/lib/utils";
 
-export function Footer({
-  homePage = false,
-  variant = "default",
-}: {
-  homePage?: boolean;
-  variant?: "default" | "editorial";
-}) {
-  const editorial = variant === "editorial";
+const linkClass =
+  "inline-flex min-h-9 items-center rounded-sm text-[0.9375rem] text-ink transition-colors hover:text-accent-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool motion-reduce:transition-none";
 
+/**
+ * Site footer, the same on every page. One continuous pale surface carries a centered
+ * demo invitation, the link groups, the legal line, and a quiet wordmark. Pages that
+ * already contain the enquiry form (/book-a-demo, /contact) pass invitation={false}.
+ */
+export function Footer({ homePage = false, invitation = true }: { homePage?: boolean; invitation?: boolean }) {
   return (
-    <footer className={cn(
-      "relative isolate overflow-hidden border-t",
-      editorial
-        ? "border-editorial-line bg-editorial-soft text-editorial-ink"
-        : "border-border-subtle/60 bg-canvas text-ink"
-    )}>
-      {editorial ? null : (
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-72 bg-[radial-gradient(45%_100%_at_50%_0%,rgb(var(--or-coral)/0.12),transparent_75%)]" />
-      )}
-      <Container className="py-16 sm:py-20">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_0.85fr_0.85fr_0.85fr_0.95fr] lg:gap-10">
-          <div>
-            <Link href="/" className={cn("inline-flex items-center gap-2.5 font-heading text-xl font-semibold tracking-[-0.03em]", editorial ? "text-editorial-ink" : "text-ink")} aria-label={`${siteConfig.name} home`}>
-              <span className={cn("grid h-7 w-7 place-items-center rounded-[8px] border", editorial ? "border-editorial-line bg-white" : "border-accent-warm/30 bg-accent-warm/10")}>
-                <Image src="/favicon.svg" alt="" width={18} height={18} />
-              </span>
-              <span><span className="text-accent-warm">Open</span>Redakt</span>
-            </Link>
-            <p className={cn("mt-5 max-w-xs text-sm leading-6", editorial ? "text-editorial-muted" : "text-ink-muted")}>
-              AI-assisted redaction workflows for documents and audio in a native Windows application.
+    <footer className="footer-canvas text-ink">
+      <Container>
+        {invitation ? (
+          // id="demo-enquiry" keeps older in-page and inbound demo links landing here.
+          <section
+            id="demo-enquiry"
+            aria-labelledby="footer-invitation-heading"
+            className="mx-auto max-w-[46rem] pb-24 pt-24 text-center sm:pb-32 sm:pt-32"
+          >
+            <h2
+              id="footer-invitation-heading"
+              className="font-heading text-[clamp(2rem,1.45rem+2vw,3.25rem)] font-medium leading-[1.12] tracking-[-0.035em] text-ink text-balance"
+            >
+              <span className="block">Protect what matters.</span>
+              <span className="block">Share with confidence.</span>
+            </h2>
+            <p className="mx-auto mt-6 max-w-[33rem] text-[1.0625rem] leading-7 text-ink-muted">
+              See how OpenRedakt helps your team review and redact sensitive information in documents and audio.
             </p>
-          </div>
+            <Link
+              href={demoHref}
+              className="mt-9 inline-flex min-h-12 items-center justify-center rounded-full bg-accent-warm px-7 text-[0.9375rem] font-semibold text-on-accent shadow-action transition-colors hover:bg-accent-warm-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool focus-visible:ring-offset-2 motion-reduce:transition-none"
+            >
+              Request a Demo
+            </Link>
+          </section>
+        ) : (
+          <div aria-hidden="true" className="h-20 sm:h-24" />
+        )}
 
+        <nav aria-label="Footer" className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4 md:gap-8">
           {footerGroups.map((group) => (
             <div key={group.title}>
-              <h2 className={cn("type-meta uppercase tracking-[0.12em]", editorial ? "text-editorial-ink" : "text-ink")}>{group.title}</h2>
-              <ul className="mt-4 space-y-1">
+              <h2 className="text-[0.8125rem] font-medium text-ink-muted">{group.title}</h2>
+              <ul className="mt-4 space-y-0.5">
                 {group.links.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href.startsWith("#") && !homePage ? `/${link.href}` : link.href} className={cn("inline-flex min-h-9 items-center text-sm transition-colors", editorial ? "text-editorial-muted hover:text-editorial-ink" : "text-ink-muted hover:text-ink")}>{link.label}</Link>
+                    <Link href={link.href.startsWith("#") && !homePage ? `/${link.href}` : link.href} className={linkClass}>
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
+                {group.title === "Company" ? (
+                  <li>
+                    <a href={`mailto:${publicSupportEmail}`} className={linkClass}>
+                      Email us
+                    </a>
+                  </li>
+                ) : null}
               </ul>
             </div>
           ))}
+        </nav>
 
-          <div>
-            <h2 className={cn("type-meta uppercase tracking-[0.12em]", editorial ? "text-editorial-ink" : "text-ink")}>Connect</h2>
-            <div className="mt-4 space-y-3">
-              {homePage ? (
-                <a href="#demo-enquiry" className="inline-flex items-center gap-2 text-sm font-semibold text-accent-warm transition-colors hover:text-accent-warm-hover">
-                  <Icon name="arrow" size={16} />
-                  Request a Demo
-                </a>
-              ) : (
-                <Link href={demoHref} className="inline-flex items-center gap-2 text-sm font-semibold text-accent-warm transition-colors hover:text-accent-warm-hover">
-                  <Icon name="arrow" size={16} />
-                  Request a Demo
-                </Link>
-              )}
-              <a href={`mailto:${publicSupportEmail}`} className={cn("flex items-center gap-2 text-sm transition-colors", editorial ? "text-editorial-muted hover:text-editorial-ink" : "text-ink-muted hover:text-ink")}>
-                <Icon name="send" size={16} />
-                Direct contact
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div className={cn(
-          "type-meta mt-14 flex flex-col gap-3 border-t pt-7 sm:flex-row sm:items-center sm:justify-between",
-          editorial ? "border-editorial-line text-editorial-muted" : "border-border-subtle/60 text-ink-muted"
-        )}>
-          <p>{siteConfig.name} &copy; {new Date().getFullYear()} All rights reserved.</p>
-          <p>Windows desktop software · Verify exported results before use.</p>
+        <div className="mt-16 flex flex-col gap-2 text-[0.8125rem] text-ink-muted sm:mt-20 sm:flex-row sm:items-center sm:justify-between">
+          <p>&copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
+          <p>Windows desktop software. Review exported files before you share them.</p>
         </div>
       </Container>
+
+      {/*
+        Decorative: the brand is already named in the header and the legal line. The line
+        box leaves room for the descender of "p", so nothing is clipped, and the bottom
+        padding keeps the chat launcher over this empty band rather than links or text.
+      */}
+      <div aria-hidden="true" className="select-none px-5 pb-10 pt-12 sm:px-6 sm:pb-12 sm:pt-16">
+        <p className="footer-wordmark mx-auto w-fit whitespace-nowrap font-heading font-semibold leading-[1.12] tracking-[-0.065em]">
+          {siteConfig.name}
+        </p>
+      </div>
     </footer>
   );
 }

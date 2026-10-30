@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 // Coral leads; cyan stays restrained, so "cool" eyebrows read as neutral metadata.
 const tones = {
-  warm: "text-accent-warm",
+  warm: "text-accent-ink",
   cool: "text-ink-muted",
   mint: "text-accent-mint",
 } as const;

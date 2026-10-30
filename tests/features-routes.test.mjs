@@ -5,10 +5,9 @@ const baseUrl = process.env.TEST_BASE_URL || "http://127.0.0.1:3000";
 const get = (pathname) => fetch(`${baseUrl}${pathname}`, { redirect: "manual" });
 
 const routes = [
-  ["/features", "One review workflow for documents, audio, and video."],
+  ["/features", "One review workflow for documents and audio."],
   ["/features/document-redaction", "Review and redact sensitive information across documents and scans."],
   ["/features/audio-redaction", "Redact sensitive moments in audio with precise timeline control."],
-  ["/features/video-redaction", "Review visual and spoken information across a video timeline."],
 ];
 
 test("the features overview and three allowlisted detail pages render distinct search intent", async () => {
@@ -27,10 +26,10 @@ test("the features overview and three allowlisted detail pages render distinct s
     assert.doesNotMatch(html, /download|sign in|log in|free trial/i);
   }
 
-  assert.equal(new Set(pages.map((html) => /<meta name="description" content="([^"]+)"/.exec(html)?.[1])).size, 4);
+  assert.equal(new Set(pages.map((html) => /<meta name="description" content="([^"]+)"/.exec(html)?.[1])).size, 3);
   assert.match(pages[0], /href="\/features\/document-redaction"/);
   assert.match(pages[0], /href="\/features\/audio-redaction"/);
-  assert.match(pages[0], /href="\/features\/video-redaction"/);
+  assert.doesNotMatch(pages[0], /href="\/features\/video-redaction"/);
 });
 
 test("unknown feature slugs fail closed and approved routes appear in the sitemap", async () => {

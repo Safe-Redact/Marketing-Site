@@ -33,7 +33,7 @@ export function CategoryNavigation({
               : "border-border-subtle bg-surface-raised text-ink-muted hover:border-ink-muted/40 hover:text-ink"
           )}
         >
-          All insights
+          All posts
         </Link>
       ) : null}
       {categories.map((category) => (

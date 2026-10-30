@@ -9,6 +9,7 @@ import { ArticleTableOfContents } from "@/components/blog/ArticleTableOfContents
 import { CommentThread } from "@/components/blog/CommentThread";
 import { RelatedStories } from "@/components/blog/RelatedStories";
 import { Container } from "@/components/ui/Container";
+import { captureUrl } from "@/content/media";
 import {
   getPublishedArticleBySlug,
   getRelatedArticles,
@@ -44,7 +45,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const related = getRelatedArticles(allArticles, article, 3);
   const headings = extractArticleHeadings(article.body);
   const jsonLd = JSON.stringify(buildArticleJsonLd(article)).replace(/</g, "\\u003c");
-  const leadImage = article.featuredImage ?? "/images/product/hero-document-review.png";
+  const leadImage = article.featuredImage ?? captureUrl("editorial-document-cover");
   const leadImageAlt = article.featuredImage
     ? (article.imageAlt ?? "")
     : "OpenRedakt document review workspace";
@@ -57,7 +58,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         nonce={nonce}
         dangerouslySetInnerHTML={{ __html: jsonLd }}
       />
-      <header className="blog-hero border-b border-border-subtle/50 pt-[7.5rem] sm:pt-[8.25rem]">
+      <header className="blog-hero pt-[7.5rem] sm:pt-[8.25rem]">
         <Container className="max-w-[76rem] pb-10 sm:pb-14 lg:pb-16">
           <nav
             aria-label="Breadcrumb"
@@ -67,7 +68,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               href="/blog"
               className="rounded-sm transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"
             >
-              Insights
+              Blog
             </Link>
             <span aria-hidden="true">/</span>
             <Link
@@ -81,7 +82,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             <div>
               <Link
                 href={`/blog/category/${article.categorySlug}`}
-                className="type-eyebrow inline-flex rounded-sm transition-colors hover:text-accent-warm-hover"
+                className="type-eyebrow inline-flex rounded-sm transition-colors hover:text-accent-ink-hover"
               >
                 {article.category}
               </Link>
@@ -131,9 +132,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 ) : null}
                 <Link
                   href="/blog"
-                  className="text-sm font-semibold text-accent-warm transition-colors hover:text-accent-warm-hover"
+                  className="text-sm font-semibold text-accent-ink transition-colors hover:text-accent-ink-hover"
                 >
-                  ← Back to all insights
+                  ← Back to the blog
                 </Link>
               </div>
             </div>
@@ -153,32 +154,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       {/* Absent entirely when comments are switched off for the deployment: a form
           that refused every submission would be worse than no form. */}
       <CommentThread articleSlug={article.slug} />
-
-      <section
-        className="section-y-sm relative isolate overflow-hidden border-t border-border-subtle/50 bg-canvas"
-        aria-labelledby="article-closing-cta"
-      >
-        <Container className="max-w-[64rem] text-center">
-          <p className="type-eyebrow">
-            From guidance to workflow
-          </p>
-          <h2
-            id="article-closing-cta"
-            className="type-h2 mx-auto mt-4 max-w-3xl"
-          >
-            Review how OpenRedakt can support your redaction process.
-          </h2>
-          <p className="type-lede mx-auto mt-5 max-w-2xl">
-            Share the file formats, review steps, and disclosure risks your team needs to evaluate.
-          </p>
-          <Link
-            href="/#demo-enquiry"
-            className="mt-8 inline-flex min-h-12 items-center justify-center rounded-[10px] bg-accent-warm px-6 py-3 font-semibold text-canvas shadow-action transition-all duration-200 hover:bg-accent-warm-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool focus-visible:ring-offset-2 focus-visible:ring-offset-canvas motion-safe:hover:-translate-y-0.5"
-          >
-            Request a tailored demo
-          </Link>
-        </Container>
-      </section>
     </article>
   );
 }

@@ -6,19 +6,20 @@ const get = (pathname) => fetch(`${baseUrl}${pathname}`, { redirect: "manual" })
 const escape = (value) => value.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&");
 
 const routes = [
-  ["/industries", "Industry guides to document, audio, and video redaction."],
+  ["/industries", "Industry guides to document and audio redaction."],
   ["/industries/legal", "Redaction review for case files, discovery, and evidence."],
   ["/industries/government", "Redaction for agency records, disclosures, and public release."],
   ["/industries/local-government", "Redaction for council and municipal records that residents can see."],
   ["/industries/healthcare", "Redaction review for patient records and clinical documents."],
   ["/industries/finance", "Redaction for statements, client files, and financial communications."],
-  ["/industries/insurance", "Redaction for claims files, recorded statements, and supporting media."],
-  ["/industries/education", "Redaction for student records, school correspondence, and campus footage."],
+  ["/industries/insurance", "Redaction for claims files, recorded statements, and supporting reports."],
+  ["/industries/education", "Redaction for student records, school correspondence, and recorded meetings."],
   ["/industries/human-resources", "Redaction for personnel files, workplace investigations, and interview recordings."],
-  ["/industries/media-journalism", "Protect sources and bystanders in interviews, footage, and documents."],
+  ["/industries/media-journalism", "Protect sources in recorded interviews and obtained documents."],
   ["/how-it-works", "How OpenRedakt takes a file from source to reviewed output."],
-  ["/why-openredakt", "Why OpenRedakt: one review-led workflow for every format."],
+  ["/why-openredakt", "Why OpenRedakt: one review-led workflow for documents and audio."],
   ["/contact", "Contact OpenRedakt or request a demo."],
+  ["/book-a-demo", "See OpenRedakt on your own redaction workflow."],
 ];
 const drafts = ["/industries/real-estate", "/industries/ai-data-teams"];
 
@@ -62,7 +63,8 @@ test("draft industries fail closed and stay out of the sitemap", async () => {
     assert.doesNotMatch(sitemap, new RegExp(`${escape(path)}</loc>`));
   }
   for (const [path] of routes) assert.match(sitemap, new RegExp(`https://saferedact\\.io${escape(path)}</loc>`), path);
-  assert.match(sitemap, /https:\/\/saferedact\.io\/features\/video-redaction<\/loc>/);
+  // Video is not marketed: its feature route is gone from the sitemap.
+  assert.doesNotMatch(sitemap, /features\/video-redaction/);
   assert.equal((sitemap.match(/<loc>/g) ?? []).length, new Set(sitemap.match(/<loc>[^<]+<\/loc>/g)).size, "no duplicate sitemap URLs");
 });
 
@@ -84,7 +86,8 @@ test("the header renders Features and Industries disclosure menus with crawlable
 
 test("industry pages link into features, related industries, the lifecycle page, and contact", async () => {
   const { html } = await page("/industries/media-journalism");
-  assert.match(html, /href="\/features\/video-redaction"/);
+  assert.match(html, /href="\/features\/audio-redaction"/);
+  assert.doesNotMatch(html, /href="\/features\/video-redaction"/);
   assert.match(html, /href="\/industries\/legal"/);
   assert.match(html, /href="\/how-it-works"/);
   assert.match(html, /href="\/contact"/);
@@ -103,12 +106,33 @@ test("the contact page reuses the single demo enquiry form", async () => {
   assert.match(html, /href="mailto:support@saferedact\.io"/);
 });
 
+test("book a demo reuses the single enquiry form without claiming a meeting is booked", async () => {
+  const { status, html } = await page("/book-a-demo");
+  assert.equal(status, 200);
+  assert.equal((html.match(/id="demo-enquiry"/g) ?? []).length, 1);
+  assert.match(html, /<h1[^>]*id="demo-enquiry-heading"/);
+  assert.match(html, /<form[^>]+aria-labelledby="demo-enquiry-heading"/);
+  assert.match(html, /id="website"[^>]*tabindex="-1"/i);
+  for (const field of ["name", "email", "organization", "packageInterest", "licenseCount", "fileType", "message"]) {
+    assert.match(html, new RegExp(`name="${field}"`), field);
+  }
+  assert.match(html, /does not schedule a meeting/);
+  // The page already is the invitation, so the footer does not repeat it.
+  assert.doesNotMatch(html, /id="footer-invitation-heading"/);
+  assert.doesNotMatch(html, /(?:meeting|demo) (?:is|has been) (?:booked|scheduled)/i);
+
+  const preselected = (await page("/book-a-demo?package=advanced")).html;
+  assert.match(preselected, /<option value="advanced"[^>]*selected=""/);
+  const unknown = (await page("/book-a-demo?package=enterprise")).html;
+  assert.doesNotMatch(unknown, /<option value="[a-z-]+"[^>]*selected=""/);
+});
+
 test("the homepage keeps its section anchors and links to the dedicated pages", async () => {
   const { html } = await page("/");
   for (const id of ["services", "how-it-works", "why-saferedact", "industries", "faq", "demo-enquiry"]) {
     assert.match(html, new RegExp(`id="${id}"`), id);
   }
-  for (const href of ["/features", "/industries", "/how-it-works", "/why-openredakt", "/contact", "/blog"]) {
+  for (const href of ["/features", "/industries", "/how-it-works", "/why-openredakt", "/contact", "/book-a-demo", "/blog"]) {
     assert.match(html, new RegExp(`href="${escape(href)}"`), href);
   }
 });

@@ -31,7 +31,7 @@ export type IndustryGroupId =
   | "financial-transactional"
   | "media-data";
 
-export type MediaFormat = "document" | "audio" | "video";
+export type MediaFormat = "document" | "audio";
 
 /** Controlled layout variation so industry pages do not read as one template. */
 export type IndustryLayout = "records-led" | "media-led" | "mixed";
@@ -89,13 +89,11 @@ export type IndustryGroup = {
 export const formatFeature: Record<MediaFormat, FeatureSlug> = {
   document: "document-redaction",
   audio: "audio-redaction",
-  video: "video-redaction",
 };
 
 const claimPrefix: Record<MediaFormat, string> = {
   document: "DOC-",
   audio: "AUD-",
-  video: "VID-",
 };
 
 export function isIndustryLive(page: Pick<IndustryPageContent, "publicationStatus">) {

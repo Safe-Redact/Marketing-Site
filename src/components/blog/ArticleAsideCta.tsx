@@ -16,8 +16,8 @@ export function ArticleAsideCta() {
         Tell us which formats and review steps your team needs to evaluate.
       </p>
       <Link
-        href="/#demo-enquiry"
-      className="mt-5 inline-flex min-h-10 items-center justify-center rounded-[10px] bg-accent-warm px-5 py-2 text-body-sm font-semibold text-canvas shadow-action transition-colors hover:bg-accent-warm-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool focus-visible:ring-offset-2 focus-visible:ring-offset-surface-raised"
+        href="/book-a-demo"
+      className="mt-5 inline-flex min-h-10 items-center justify-center rounded-full bg-accent-warm px-5 py-2 text-body-sm font-semibold text-on-accent shadow-action transition-colors hover:bg-accent-warm-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool focus-visible:ring-offset-2 focus-visible:ring-offset-surface-raised"
       >
         Discuss your workflow <span aria-hidden="true" className="ml-2">→</span>
       </Link>

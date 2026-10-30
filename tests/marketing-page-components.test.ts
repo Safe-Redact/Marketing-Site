@@ -3,9 +3,9 @@ import test from "node:test";
 import React, { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { Breadcrumbs } from "../src/components/marketing/Breadcrumbs";
-import { ContextualCta } from "../src/components/marketing/ContextualCta";
 import { PageHero } from "../src/components/marketing/PageHero";
 import { WorkflowSteps } from "../src/components/marketing/WorkflowSteps";
+import { demoHref, footerGroups } from "../src/content/navigation";
 
 (globalThis as typeof globalThis & { React: typeof React }).React = React;
 
@@ -26,29 +26,24 @@ test("the marketing hero owns one H1 and keeps media optional", () => {
   assert.doesNotMatch(markup, /<img\b/);
 });
 
-test("breadcrumbs and contextual CTA expose marketing-only destinations", () => {
+test("breadcrumbs and the footer expose marketing-only destinations", () => {
+  // The footer closes every page (the standalone pre-footer CTA was retired), so the
+  // demo and contact destinations are asserted on its link registry.
   const markup = renderToStaticMarkup(
-    createElement(
-      "div",
-      null,
-      createElement(Breadcrumbs, {
-        items: [
-          { name: "Home", path: "/" },
-          { name: "Features", path: "/features" },
-        ],
-      }),
-      createElement(ContextualCta, {
-        eyebrow: "Your workflow",
-        title: "See the review path in context.",
-        description: "Bring representative source formats to a guided conversation.",
-      })
-    )
+    createElement(Breadcrumbs, {
+      items: [
+        { name: "Home", path: "/" },
+        { name: "Features", path: "/features" },
+      ],
+    })
   );
+  const footerHrefs = footerGroups.flatMap((group) => group.links.map((link) => link.href));
 
   assert.match(markup, /aria-label="Breadcrumb"/);
-  assert.match(markup, /href="\/contact"/);
-  assert.doesNotMatch(markup, /download|sign in|log in|free trial/i);
-  assert.match(markup, /motion-reduce:transition-none/);
+  assert.equal(demoHref, "/book-a-demo");
+  assert.ok(footerHrefs.includes("/book-a-demo"));
+  assert.ok(footerHrefs.includes("/contact"));
+  assert.doesNotMatch(JSON.stringify(footerGroups), /download|sign in|log in|free trial/i);
 });
 
 test("workflow steps form an ordered, screen-reader-readable sequence", () => {

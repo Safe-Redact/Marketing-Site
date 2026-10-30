@@ -16,7 +16,7 @@ export function ArticleSearch({
       {type ? <input type="hidden" name="type" value={type} /> : null}
       {tag ? <input type="hidden" name="tag" value={tag} /> : null}
       <label className="relative flex h-11 items-center overflow-hidden rounded-[10px] border border-ink-muted/40 bg-surface-raised/60 transition-colors focus-within:border-accent-cool focus-within:ring-2 focus-within:ring-accent-cool/20">
-        <span className="sr-only">Search insights</span>
+        <span className="sr-only">Search the blog</span>
         <Icon name="search" size={17} className="ml-4 text-ink-muted" />
         <input
           type="search"

@@ -13,7 +13,7 @@ const items = faqItems.map((item, index) => ({
 
 export function Faq() {
   return (
-    <section id="faq" className="section-y relative border-t border-border-subtle/50 bg-canvas text-ink">
+    <section id="faq" className="section-y relative bg-canvas text-ink">
       <Container>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20">
           <AnimateOnScroll className="lg:sticky lg:top-28 lg:self-start">

@@ -109,7 +109,7 @@ export async function CommentThread({ articleSlug }: { articleSlug: string }) {
     <section
       id="comments"
       aria-labelledby="comments-heading"
-      className="border-t border-border-subtle bg-canvas py-14 sm:py-16"
+      className="bg-canvas py-14 sm:py-16"
     >
       <Container className="max-w-[58rem]">
         <Eyebrow>Discussion</Eyebrow>

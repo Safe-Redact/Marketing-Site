@@ -1,21 +1,32 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { demoHref, footerGroups, primaryNav } from "../src/content/navigation";
+import { demoHref, documentationLink, footerGroups, primaryNav } from "../src/content/navigation";
 import { isCurrentPage, isRouteActive } from "../src/lib/nav";
 import { marketingRoutes } from "../src/lib/marketing/site-routes";
 
-const knownPaths = new Set<string>([...marketingRoutes().map((route) => route.path), "/blog"]);
+// /pricing is listed in the sitemap directly rather than through the marketing registry.
+const knownPaths = new Set<string>([...marketingRoutes().map((route) => route.path), "/blog", "/pricing"]);
 const homepageAnchors = new Set(["services", "how-it-works", "why-saferedact", "industries", "faq", "demo-enquiry", "contact"]);
 
 test("primary navigation follows the approved multipage model", () => {
   assert.deepEqual(
     primaryNav.map((item) => `${item.label}${item.kind === "menu" ? " ▾" : ""}`),
-    ["Home", "Features ▾", "Industries ▾", "How It Works", "Insights", "Contact"]
+    ["Features ▾", "Industries ▾", "Resources ▾", "Pricing", "Blog"]
   );
-  const features = primaryNav.find((item) => item.kind === "menu" && item.id === "features");
-  assert.ok(features && features.kind === "menu");
-  assert.deepEqual(features.links.map((link) => link.label), ["All Features", "Document redaction", "Audio redaction", "Video redaction"]);
-  assert.equal(demoHref, "/contact");
+  const menu = (id: string) => {
+    const item = primaryNav.find((entry) => entry.kind === "menu" && entry.id === id);
+    assert.ok(item && item.kind === "menu", id);
+    return item;
+  };
+  // Only the marketed formats: no video or image redaction.
+  assert.deepEqual(menu("features").links.map((link) => link.label), ["Features Overview", "Document Redaction", "Audio Redaction"]);
+  // Documentation stays out until a published address is configured; no dead links.
+  assert.equal(documentationLink, null);
+  assert.deepEqual(menu("resources").links.map((link) => link.href), ["/how-it-works", "/why-openredakt"]);
+  // Contact leaves the header but stays reachable from the footer; demo CTAs lead to /book-a-demo.
+  assert.ok(!primaryNav.some((item) => item.href === "/contact"));
+  assert.ok(footerGroups.some((group) => group.links.some((link) => link.href === "/contact")));
+  assert.equal(demoHref, "/book-a-demo");
 });
 
 test("every navigation and footer destination resolves to a published route or homepage anchor", () => {

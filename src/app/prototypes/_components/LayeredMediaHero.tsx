@@ -10,7 +10,7 @@ import styles from "./prototypes.module.css";
 
 /**
  * Prototype B: a layered media treatment. The front plate is a real, approved product
- * capture (format-documents.png, synthetic statement) shown as-is: only cropping,
+ * capture (document-workspace.png, the masked light-theme workspace) shown as-is: only cropping,
  * framing and lighting are applied, and no marks are added to it. The audio and video
  * plates are clearly diagrammatic SVG because no approved captures exist for them yet.
  * All motion is a finite 13-second CSS sequence; JavaScript only pauses it.
@@ -58,10 +58,10 @@ export function LayeredMediaHero() {
           <div className={cn(styles.plate, styles["pos-C"], styles.plateDocument)}>
             <ProductFrame aspectRatio="4 / 3">
               <Image
-                src="/images/product/format-documents.png"
-                alt="OpenRedakt document review: a synthetic financial statement with reviewed redaction marks beside the findings list"
-                width={1451}
-                height={853}
+                src="/images/product/document-workspace.png"
+                alt="The OpenRedakt document workspace with no document open: manual redaction tools beside the page"
+                width={1437}
+                height={824}
                 sizes="(min-width: 1120px) 1250px, 160vw"
                 priority
                 className={styles.capture}

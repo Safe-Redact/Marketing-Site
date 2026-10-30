@@ -13,7 +13,7 @@ import { FeatureVisual, featureVisuals } from "./FeatureVisual";
 export function CapabilitySections({ page }: { page: FeaturePageContent }) {
   const visuals = featureVisuals[page.slug].sections;
   return (
-    <section aria-label={`${page.eyebrow} capabilities`} className="border-t border-border-subtle/50 bg-canvas text-ink">
+    <section aria-label={`${page.eyebrow} capabilities`} className="bg-canvas text-ink">
       <Container>
         {page.sections.map((section, index) => {
           const visual = visuals[index] ?? null;
@@ -22,7 +22,7 @@ export function CapabilitySections({ page }: { page: FeaturePageContent }) {
             <AnimateOnScroll key={section.title}>
               <article
                 className={cn(
-                  "grid gap-10 border-b border-border-subtle/50 py-16 last:border-b-0 sm:py-20 lg:items-center lg:gap-16 lg:py-24",
+                  "grid gap-10 py-16 sm:py-20 lg:items-center lg:gap-16 lg:py-24",
                   visual ? "lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]" : "lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-start"
                 )}
               >
@@ -53,7 +53,7 @@ function CapabilityBullets({ bullets, className }: { bullets: readonly string[];
     <ul className={cn("mt-7 border-t border-border-subtle/60", className)}>
       {bullets.map((bullet) => (
         <li key={bullet} className="flex items-start gap-3 border-b border-border-subtle/60 py-3.5 text-[0.9375rem] leading-6 text-ink-muted">
-          <Icon name="check-circle" size={17} className="mt-0.5 shrink-0 text-accent-warm" />
+          <Icon name="check-circle" size={17} className="mt-0.5 shrink-0 text-accent-ink" />
           <span>{bullet}</span>
         </li>
       ))}

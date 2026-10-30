@@ -36,7 +36,8 @@ export function NavDropdown({
   const openedByHover = useRef(false);
   const pendingFocus = useRef<"first" | "last" | null>(null);
   const panelId = `nav-menu-${item.id}`;
-  const sectionActive = isRouteActive(pathname, item.href);
+  // A menu without its own index page (Resources) is active when any of its links is.
+  const sectionActive = isRouteActive(pathname, item.href) || item.links.some((link) => isRouteActive(pathname, link.href));
 
   const setOpen = useCallback((open: boolean) => onMenuChange(item.id, open), [item.id, onMenuChange]);
   const clearCloseTimer = () => window.clearTimeout(closeTimer.current);
@@ -145,8 +146,8 @@ export function NavDropdown({
         onClick={handleClick}
         onKeyDown={handleButtonKeyDown}
         className={cn(
-          "relative inline-flex items-center gap-1 rounded-[8px] px-3 py-1.5 text-body-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool motion-reduce:transition-none",
-          sectionActive || isOpen ? "bg-surface-active/70 text-ink" : "text-ink-muted hover:bg-surface-active/50 hover:text-ink"
+          "relative inline-flex items-center gap-1 rounded-full px-3.5 py-2 text-[0.9375rem] font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool motion-reduce:transition-none",
+          isOpen ? "bg-surface-active text-ink" : sectionActive ? "text-ink" : "text-ink-muted hover:bg-surface-active hover:text-ink"
         )}
       >
         {item.label}
@@ -159,10 +160,10 @@ export function NavDropdown({
         ref={panelRef}
         hidden={!isOpen}
         onKeyDown={handlePanelKeyDown}
-        className="absolute left-0 top-full z-10 pt-3 motion-safe:animate-fade-in"
+        className="absolute left-1/2 top-full z-10 -translate-x-1/2 pt-3.5 motion-safe:animate-fade-in"
       >
-        <div className={cn("rounded-[14px] border border-border-subtle/70 bg-surface-raised/95 p-1.5 shadow-[inset_0_1px_0_rgb(var(--or-fg)/0.06),0_24px_60px_rgb(0_0_0/0.5)] backdrop-blur-xl", item.id === "industries" ? "w-[25rem]" : "w-[21rem]")}>
-          <ul>
+        <div className={cn("rounded-[24px] border border-[rgb(28_25_23/0.06)] bg-white p-3 shadow-[0_24px_60px_-20px_rgb(28_25_23/0.28),0_2px_6px_rgb(28_25_23/0.04)]", item.id === "industries" ? "w-[38rem]" : "w-[26rem]")}>
+          <ul className={cn(item.id === "industries" && "grid grid-cols-2 gap-x-1")}>
             {item.links.map((link) => {
               const current = isCurrentPage(pathname, link.href);
               return (
@@ -172,17 +173,17 @@ export function NavDropdown({
                     aria-current={current ? "page" : undefined}
                     onClick={() => setOpen(false)}
                     className={cn(
-                      "flex items-start gap-3 rounded-[10px] px-3 py-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-cool motion-reduce:transition-none",
-                      current ? "bg-surface-active" : "hover:bg-surface-active focus-visible:bg-surface-active"
+                      "flex items-start gap-3.5 rounded-[14px] px-3.5 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-cool motion-reduce:transition-none",
+                      current ? "bg-surface-raised" : "hover:bg-surface-raised focus-visible:bg-surface-raised"
                     )}
                   >
                     {link.icon ? (
-                      <span className={cn("mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-control border", current ? "border-accent-warm/50 bg-accent-warm/10 text-accent-warm" : "border-border-subtle/70 text-ink-muted")}>
+                      <span className={cn("mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-[10px]", current ? "bg-accent-warm/15 text-accent-ink" : "bg-surface-active text-ink-muted")}>
                         <Icon name={link.icon} size={16} />
                       </span>
                     ) : null}
                     <span className="min-w-0">
-                      <span className={cn("block text-body-sm font-semibold", current ? "text-white" : "text-ink")}>{link.label}</span>
+                      <span className="block text-body-sm font-semibold text-ink">{link.label}</span>
                       {link.description ? <span className="mt-0.5 block text-caption leading-5 text-ink-muted">{link.description}</span> : null}
                     </span>
                   </Link>
@@ -191,12 +192,12 @@ export function NavDropdown({
             })}
           </ul>
           {item.footerLink ? (
-            <div className="mt-1 border-t border-border-subtle/60 px-1 pt-1">
+            <div className="mt-1 border-t border-border-subtle px-1 pt-1">
               <Link
                 href={item.footerLink.href}
                 aria-current={isCurrentPage(pathname, item.footerLink.href) ? "page" : undefined}
                 onClick={() => setOpen(false)}
-                className="flex items-center justify-between rounded-control px-3 py-2.5 text-body-sm font-semibold text-accent-warm transition-colors hover:bg-surface-active focus-visible:bg-surface-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-cool motion-reduce:transition-none"
+                className="flex items-center justify-between rounded-[12px] px-3 py-2.5 text-body-sm font-semibold text-accent-ink transition-colors hover:bg-surface-raised focus-visible:bg-surface-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-cool motion-reduce:transition-none"
               >
                 {item.footerLink.label}
                 <Icon name="arrow" size={16} />

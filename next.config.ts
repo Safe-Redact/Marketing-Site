@@ -33,6 +33,9 @@ const nextConfig: NextConfig = {
     ];
   },
   async headers() {
+    // Review deployments (staging) set SITE_NOINDEX=true so no page is indexed. Unset,
+    // as in production, nothing changes. Next calls this at build time.
+    const siteNoIndex = process.env.SITE_NOINDEX === "true";
     return [
       {
         source: "/admin/:path*",
@@ -45,6 +48,9 @@ const nextConfig: NextConfig = {
           { key: "Referrer-Policy", value: "no-referrer" },
         ],
       },
+      ...(siteNoIndex
+        ? [{ source: "/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] }]
+        : []),
     ];
   },
 };

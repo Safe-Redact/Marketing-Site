@@ -68,3 +68,8 @@ coverage/
 # Screenshot masters. assets/product-screenshots/raw/ holds the approved source art
 # for every product visual; it is tracked, because losing it would mean the served
 # images could not be regenerated. It sits outside public/ so it is never served.
+#
+# assets/product-screenshots/source/ holds unmasked originals supplied by the team
+# (local paths, file names). It is never tracked: only the masked masters in derived/
+# are committed. Point PRODUCT_SCREENSHOTS_SOURCE elsewhere to read them in place.
+assets/product-screenshots/source/

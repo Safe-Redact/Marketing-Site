@@ -8,16 +8,17 @@ test("homepage exposes the approved Phase 1 platform narrative", async () => {
   const html = await response.text();
 
   assert.equal(response.status, 200);
-  assert.match(html, /AI-powered redaction/);
-  // D3 sets the headline as a sequence of lines; its first and last lines are the
-  // approved headline.
-  assert.match(html, /<h1[^>]*>[\s\S]*?Detect sensitive information\.[\s\S]*?Redact with confidence\.[\s\S]*?<\/h1>/);
-  // The hero carries an authentic screenshot of the editor rather than an
-  // illustration, so the workbench is asserted through the figure and its
-  // described image instead of text that used to sit in a drawn title bar.
+  // A context chip and an eyebrow sit above a two-line headline (2026-10-30 revision).
+  assert.match(html, /Windows desktop app · Documents and audio/);
+  assert.match(html, /Review-led redaction/);
+  assert.match(html, /<h1[^>]*>\s*<span[^>]*>Redact with confidence\.<\/span>\s*<span[^>]*>Every decision stays yours\.<\/span>\s*<\/h1>/);
+  assert.match(html, /Find and review sensitive information in documents and audio/);
+  // The hero shows the current light-theme application (the masked project library)
+  // in an application window; no dark capture of an earlier build is published.
   assert.match(html, /data-hero-workbench/);
-  assert.match(html, /hero-document-review/);
-  assert.match(html, /Screenshot of the current redaction editor/);
+  assert.match(html, /project-workspace\.png/);
+  assert.match(html, /The OpenRedakt project library/);
+  assert.doesNotMatch(html, /hero-document-review|format-documents/);
   assert.match(html, /Documents/);
   assert.match(html, /Audio/);
   assert.match(html, /Windows desktop/);
@@ -41,7 +42,7 @@ test("homepage keeps the approved marketing navigation and conversion destinatio
   assert.match(html, /href="\/how-it-works"/);
   assert.match(html, /id="how-it-works"/);
   assert.match(html, /href="#faq"/);
-  assert.match(html, /href="#demo-enquiry"/);
+  assert.match(html, /href="\/book-a-demo"/);
   assert.match(html, /href="mailto:support@saferedact\.io"/);
   assert.doesNotMatch(html, /https:\/\/saferedact\.io\/download/);
   assert.match(html, /aria-controls="mobile-navigation"/);

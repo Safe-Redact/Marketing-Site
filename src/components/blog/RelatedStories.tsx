@@ -18,7 +18,7 @@ export function RelatedStories({ articles }: { articles: readonly BlogArticle[] 
             Continue reading
           </p>
           <h2 id="related-articles-heading" className="type-h2 mt-4">
-            Related insights
+            Related posts
           </h2>
           <p className="mt-3 text-body text-ink-muted">
             More practical guidance selected from published OpenRedakt topics.
@@ -39,7 +39,7 @@ export function RelatedStories({ articles }: { articles: readonly BlogArticle[] 
               <h3 className="mt-5 font-heading text-heading-lg leading-tight text-ink">
                 <Link
                   href={`/blog/${article.slug}`}
-                  className="rounded-sm transition-colors hover:text-accent-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"
+                  className="rounded-sm transition-colors hover:text-accent-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"
                 >
                   {article.title}
                 </Link>

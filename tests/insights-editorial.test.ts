@@ -192,7 +192,10 @@ test("the featured story uses the approved OpenRedakt product visual when no ima
 
   assert.match(html, /aria-label="Featured insight"/);
   assert.match(html, /A review-led redaction workflow/);
-  assert.match(html, /%2Fimages%2Fproduct%2Fhero-document-review\.png/);
+  // Without its own image, the featured article uses the processed editorial cover,
+  // not a raw product screenshot.
+  assert.match(html, /%2Fimages%2Fproduct%2Feditorial-document-cover\.png/);
+  assert.doesNotMatch(html, /hero-document-review/);
   assert.match(html, /alt="OpenRedakt document review workspace"/);
   assert.doesNotMatch(html, /placeholder|coming soon/i);
 });
@@ -293,7 +296,7 @@ test("table of contents uses a quiet coral marker without a filled active row", 
 
   assert.match(
     html,
-    /aria-current="location"[^>]*class="[^"]*border-accent-warm[^"]*font-medium[^"]*text-white/
+    /aria-current="location"[^>]*class="[^"]*border-accent-warm[^"]*font-medium[^"]*text-ink/
   );
   assert.doesNotMatch(html, /aria-current="location"[^>]*class="[^"]*bg-/);
   assert.match(html, /class="pl-3"/);

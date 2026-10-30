@@ -12,9 +12,9 @@ export type SupportingPageContent = {
 
 export const industriesHub = {
   eyebrow: "Industries",
-  h1: "Industry guides to document, audio, and video redaction.",
+  h1: "Industry guides to document and audio redaction.",
   summary:
-    "Every sector protects different people and answers to different recipients. Find the records, recordings, and footage your team handles, then see which reviewer-controlled OpenRedakt workflows apply.",
+    "Every sector protects different people and answers to different recipients. Find the records and recordings your team handles, then see which reviewer-controlled OpenRedakt workflows apply.",
   seo: {
     title: "Redaction Software by Industry and Use Case",
     description:
@@ -25,16 +25,16 @@ export const industriesHub = {
   },
   lastReviewed: "2026-10-26",
   dimensions: [
-    { title: "What counts as sensitive", description: "An account number in a statement, a witness in an investigation report, a bystander's face in a news clip. The category changes with the sector." },
+    { title: "What counts as sensitive", description: "An account number in a statement, a witness in an investigation report, a source named in an interview. The category changes with the sector." },
     { title: "Who receives the record", description: "The public, a court, a regulator, a researcher, or the person the record is about. Each recipient changes what must be removed." },
-    { title: "Which media carry it", description: "Some teams work almost entirely in documents. Others depend on recorded statements, meetings, dashcam, or interview footage." },
+    { title: "Which media carry it", description: "Some teams work almost entirely in documents. Others depend on recorded statements, meetings, calls, or interviews." },
     { title: "What must be explained later", description: "Disclosures get challenged. Where that happens, the reason behind each mark matters as much as the mark itself." },
   ],
   faq: [
     {
       question: "Are the industry guides different products?",
       answer:
-        "No. Every guide uses the same Windows desktop application and the same document, audio, and video workflows. The guides differ in which records, risks, and checks matter to each sector.",
+        "No. Every guide uses the same Windows desktop application and the same document and audio workflows. The guides differ in which records, risks, and checks matter to each sector.",
     },
     {
       question: "Does OpenRedakt hold industry-specific certifications?",
@@ -65,32 +65,30 @@ export const howItWorksPage = {
   seo: {
     title: "How Redaction Review Works, Step by Step",
     description:
-      "Follow the OpenRedakt lifecycle from opening a document, recording, or video through candidate review, manual marks, export, output inspection, and reporting.",
+      "Follow the OpenRedakt lifecycle from opening a document or recording through candidate review, manual marks, export, output inspection, and reporting.",
     canonicalPath: "/how-it-works",
     primaryIntent: "how redaction software works",
-    secondaryThemes: ["redaction workflow", "redaction process steps", "how to redact audio and video", "redaction review process"],
+    secondaryThemes: ["redaction workflow", "redaction process steps", "how to redact audio recordings", "redaction review process"],
   },
   lastReviewed: "2026-10-26",
   stages: [
     {
       id: "import",
       title: "Open a supported source",
-      summary: "Bring a document, image, recording, or video into the workflow suited to its format.",
+      summary: "Bring a document or recording into the workflow suited to its format.",
       formats: {
-        document: "PDFs open natively. Images and supported office formats are converted for document review; several formats need LibreOffice installed.",
+        document: "PDFs open natively. Supported office formats are converted for document review; several need LibreOffice installed.",
         audio: "Common audio formats open on a waveform and timeline once FFmpeg tooling is configured.",
-        video: "MP4, MOV, AVI, MKV, and WebM containers open for frame and timeline review, subject to the codecs in the file.",
       },
-      claimIds: ["DOC-INPUT", "AUD-INPUT", "VID-INPUT"],
+      claimIds: ["DOC-INPUT", "AUD-INPUT"],
     },
     {
       id: "prepare",
       title: "Make the content reviewable",
-      summary: "Give the reviewer something to read, hear, or see in context before any mark is made.",
+      summary: "Give the reviewer something to read or hear in context before any mark is made.",
       formats: {
         document: "Native text is used where it exists; configured OCR recognises text on scans and image-only pages.",
         audio: "An available transcript can sit beside the waveform as context. It is not treated as an exact timing source.",
-        video: "Frames, timing, and the audio track are presented together so visual and spoken content can be reviewed in one project.",
       },
       claimIds: ["DOC-OCR", "AUD-TRANSCRIPT-CONTEXT"],
     },
@@ -101,9 +99,8 @@ export const howItWorksPage = {
       formats: {
         document: "Configured engines surface candidate findings; reviewers also select text or draw areas on the page.",
         audio: "Reviewers drag or enter the start and end of each sensitive span on the manual timeline.",
-        video: "Configured engines surface face, licence-plate, and visible-text candidates; reviewers draw manual regions for anything else.",
       },
-      claimIds: ["DOC-CANDIDATES", "DOC-MANUAL", "AUD-TIMELINE", "VID-DETECTION", "VID-MANUAL"],
+      claimIds: ["DOC-CANDIDATES", "DOC-MANUAL", "AUD-TIMELINE"],
     },
     {
       id: "review",
@@ -112,9 +109,8 @@ export const howItWorksPage = {
       formats: {
         document: "Approve, reject, or edit each mark, adjust its appearance, and record the reason for it.",
         audio: "Choose mute, tone, silence, or a supported noise mask and preview the effect where the source decodes.",
-        video: "Set when each region applies, choose blur, pixelate, or a solid block, and add audio ranges in the same project.",
       },
-      claimIds: ["DOC-REVIEW", "AUD-EFFECTS", "AUD-PREVIEW", "VID-TIMELINE", "VID-EFFECTS", "VID-AUDIO"],
+      claimIds: ["DOC-REVIEW", "AUD-EFFECTS", "AUD-PREVIEW"],
     },
     {
       id: "export",
@@ -123,7 +119,6 @@ export const howItWorksPage = {
       formats: {
         document: "Render a reviewed copy of the document from the approved marks.",
         audio: "Render reviewed ranges to a supported output format; output choices are narrower than accepted inputs.",
-        video: "Render picture and sound together with the reviewed visual regions and audio effects applied.",
       },
       claimIds: ["AUD-EXPORT"],
     },
@@ -134,35 +129,34 @@ export const howItWorksPage = {
       formats: {
         document: "Re-open supported output, check for readable marked content, and create a report of the recorded decisions.",
         audio: "Listen to the exported recording, paying particular attention to the boundaries of each masked span.",
-        video: "Watch and listen to the rendered file, checking that each region covers its subject for the full time range.",
       },
-      claimIds: ["DOC-OUTPUT-CHECK", "DOC-REPORT", "VID-OUTPUT-CHECK"],
+      claimIds: ["DOC-OUTPUT-CHECK", "DOC-REPORT", "AUD-EXPORT"],
     },
   ] satisfies LifecycleStage[],
   responsibilities: [
     "Deciding what is sensitive for the intended recipient and purpose",
     "Confirming or rejecting every candidate the software surfaces",
     "Finding what detection does not cover, such as indirect identifiers",
-    "Checking that each visual region covers its subject for its whole time range",
+    "Listening to every masked span in the rendered recording",
     "Inspecting the exported file before it is shared",
   ],
   boundaries: [
     "Detection does not make final redaction decisions.",
     "Automated transcript analysis is not presented as a complete workflow.",
-    "Generic object tracking is not a packaged capability.",
+    "Transcript timing is context, not an exact boundary for audio ranges.",
     "Output checks do not prove that every sensitive item was found.",
-    "Format support and rendering depend on configured OCR, LibreOffice, and FFmpeg tooling.",
+    "Format support and rendering depend on the OCR, office conversion, and audio tooling that is set up.",
   ],
   faq: [
     {
       question: "Is the workflow the same for every format?",
       answer:
-        "The stages are the same; the tools change. Documents use pages, text, and areas. Audio uses a waveform and time ranges. Video uses frame regions, time ranges, and an audio lane.",
+        "The stages are the same; the tools change. Documents use pages, text, and areas. Audio uses a waveform and time ranges.",
     },
     {
       question: "Can I skip detection and mark everything manually?",
       answer:
-        "Yes. Manual text and area marks, audio ranges, and video regions are all available without relying on detection candidates.",
+        "Yes. Manual text and area marks and audio ranges are available without relying on detection candidates.",
     },
     {
       question: "Why inspect the output if the project looked correct?",
@@ -172,31 +166,31 @@ export const howItWorksPage = {
     {
       question: "Does every installation have the same capabilities?",
       answer:
-        "No. OCR, office conversion, media handling, and detection depend on the tooling and engines configured. A demo with representative files confirms what your setup supports.",
+        "No. OCR, office conversion, audio handling, and detection depend on the tooling and engines configured. A demo with representative files confirms what your setup supports.",
     },
   ] satisfies MarketingFaq[],
 } satisfies SupportingPageContent & Record<string, unknown>;
 
 export const whyOpenRedaktPage = {
   eyebrow: "Why OpenRedakt",
-  h1: "Why OpenRedakt: one review-led workflow for every format.",
+  h1: "Why OpenRedakt: one review-led workflow for documents and audio.",
   summary:
-    "OpenRedakt is built for teams whose disclosures mix documents, recordings, and footage, and who need a person to make, and be able to explain, each redaction decision.",
+    "OpenRedakt is built for teams whose disclosures mix documents and recordings, and who need a person to make, and be able to explain, each redaction decision.",
   seo: {
-    title: "Why OpenRedakt for Multi-Format Redaction",
+    title: "Why OpenRedakt for Document and Audio Redaction",
     description:
-      "Why teams evaluate OpenRedakt: one review workflow for documents, audio, and video, reviewer control over every mark, output inspection, and clearly stated limits.",
+      "Why teams evaluate OpenRedakt: one review workflow for documents and audio, reviewer control over every mark, output inspection, and clearly stated limits.",
     canonicalPath: "/why-openredakt",
-    primaryIntent: "multi-format redaction software",
-    secondaryThemes: ["document audio and video redaction in one tool", "review-led redaction", "redaction software comparison criteria", "desktop redaction software for Windows"],
+    primaryIntent: "document and audio redaction software",
+    secondaryThemes: ["document and audio redaction in one tool", "review-led redaction", "redaction software comparison criteria", "desktop redaction software for Windows"],
   },
   lastReviewed: "2026-10-26",
   pillars: [
     {
       icon: "layers",
-      title: "Three media, one review discipline",
+      title: "Two formats, one review discipline",
       description:
-        "Documents, images, audio, and video are handled in one Windows desktop application, with views suited to each format and the same prepare-mark-review-export-inspect sequence throughout.",
+        "Documents and audio recordings are handled in one Windows desktop application, with views suited to each format and the same prepare, mark, review, export, and inspect sequence throughout.",
     },
     {
       icon: "users",
@@ -214,11 +208,11 @@ export const whyOpenRedaktPage = {
       icon: "settings",
       title: "Honest about configuration",
       description:
-        "OCR, office conversion, media tooling, and detection engines vary by installation. We say which capabilities depend on them instead of promising universal support.",
+        "OCR, office conversion, audio tooling, and detection engines vary by installation. We say which capabilities depend on them instead of promising universal support.",
     },
   ],
   fit: [
-    "Disclosures that combine documents, recorded statements, and video",
+    "Disclosures that combine documents and recorded statements",
     "Teams that need a person to make and explain each decision",
     "Organisations evaluating a Windows desktop application",
     "Reviewers who want manual control alongside configured detection",
@@ -227,15 +221,15 @@ export const whyOpenRedaktPage = {
     "Unattended bulk redaction without review",
     "Cloud collaboration, role-based access, or storage integrations",
     "A certification-backed compliance tool for a named regulation",
-    "Continuous automatic object tracking or live redaction",
+    "Live-stream or real-time redaction",
   ],
   evidence:
-    "Every capability described on this site is mapped to source code and automated tests in an internal capability evidence register. Capabilities that depend on configuration say so, and claims the register blocks, such as certifications, accuracy figures, or promises of error-free output, are not published.",
+    "Every capability described on this site is checked against the shipped product. Capabilities that depend on configuration say so, and we do not publish certifications, accuracy figures, or promises of error-free output.",
   faq: [
     {
       question: "How is OpenRedakt different from a PDF redaction tool?",
       answer:
-        "A PDF tool covers documents. OpenRedakt applies the same review discipline to documents, images, audio, and video, so a mixed disclosure can be prepared in one application.",
+        "A PDF tool covers documents. OpenRedakt applies the same review discipline to documents and audio recordings, so a mixed disclosure can be prepared in one application.",
     },
     {
       question: "Does OpenRedakt work offline?",
@@ -263,15 +257,41 @@ export const contactPage = {
   seo: {
     title: "Contact OpenRedakt or Request a Redaction Demo",
     description:
-      "Request an OpenRedakt demo or contact the team about document, audio, and video redaction workflows, supported formats, and evaluation with representative files.",
+      "Request an OpenRedakt demo or contact the team about document and audio redaction workflows, supported formats, pricing, and evaluation with representative files.",
     canonicalPath: "/contact",
     primaryIntent: "redaction software demo",
     secondaryThemes: ["contact OpenRedakt", "redaction software evaluation", "book a redaction demo"],
   },
   lastReviewed: "2026-10-26",
   include: [
-    { title: "Source formats", description: "PDFs, scans, office files, audio recordings, or video, and roughly how much of each." },
+    { title: "Source formats", description: "PDFs, scans, office files, or audio recordings, and roughly how much of each." },
     { title: "Review steps", description: "Who reviews, who approves, and what record of decisions you need to keep." },
     { title: "Destination", description: "Who receives the output: a court, the public, a regulator, a researcher, or an internal team." },
   ],
+} satisfies SupportingPageContent & Record<string, unknown>;
+
+/**
+ * /book-a-demo: the destination of every primary demo call to action. Submitting the
+ * form sends an enquiry; the copy never implies that a meeting has been scheduled.
+ */
+export const bookDemoPage = {
+  eyebrow: "Book a demo",
+  h1: "See OpenRedakt on your own redaction workflow.",
+  summary:
+    "Tell us about the documents or recordings you need to redact. We reply by email to arrange a demo around your formats, your review steps, and the package you are considering.",
+  seo: {
+    title: "Book an OpenRedakt Demo for Document and Audio Redaction",
+    description:
+      "Request a guided OpenRedakt demo. Describe your document or audio workflow, the package you are considering, and how many licenses you need, and we will reply by email.",
+    canonicalPath: "/book-a-demo",
+    primaryIntent: "book a redaction software demo",
+    secondaryThemes: ["redaction software demo", "document redaction demo", "audio redaction demo"],
+  },
+  lastReviewed: "2026-10-29",
+  points: [
+    "A walkthrough of document or audio redaction, matched to the package you are considering",
+    "Time for licensing questions: packages, license counts, and administration in the Control Center",
+    "No sensitive files needed. Describe your records in general terms",
+  ],
+  nextStep: "We reply by email to agree a time. Sending the form does not schedule a meeting on its own.",
 } satisfies SupportingPageContent & Record<string, unknown>;

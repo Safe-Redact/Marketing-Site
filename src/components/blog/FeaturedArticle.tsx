@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { captureUrl } from "@/content/media";
 import { articleTypeLabel } from "@/lib/blog/content";
 import type { BlogArticle } from "@/lib/blog/types";
 import { formatArticleDate } from "./ArticleCard";
@@ -12,18 +13,19 @@ export function FeaturedArticle({ article }: { article: BlogArticle }) {
       className="group relative aspect-[4/3] overflow-hidden rounded-[18px] border border-border-subtle/60 bg-surface-raised shadow-panel sm:aspect-[16/10] lg:aspect-[21/10]"
     >
       <Image
-        src={article.featuredImage ?? "/images/product/hero-document-review.png"}
+        // Articles without their own image use the processed editorial cover.
+        src={article.featuredImage ?? captureUrl("editorial-document-cover")}
         alt={article.featuredImage ? article.imageAlt ?? "" : "OpenRedakt document review workspace"}
         fill
         priority
         sizes="(max-width: 1023px) 100vw, 1024px"
         className="object-cover object-center transition-transform duration-700 motion-safe:group-hover:scale-[1.02]"
       />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(var(--or-midnight)/0.96)_0%,rgb(var(--or-midnight)/0.8)_43%,rgb(var(--or-midnight)/0.12)_78%),linear-gradient(0deg,rgb(var(--or-midnight)/0.82)_0%,transparent_55%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(12_10_9/0.96)_0%,rgb(12_10_9/0.8)_43%,rgb(12_10_9/0.12)_78%),linear-gradient(0deg,rgb(12_10_9/0.82)_0%,transparent_55%)]" />
       <div className="absolute inset-0 bg-black/10" />
       <div className="relative flex h-full max-w-[38rem] flex-col p-5 text-white sm:p-8 lg:p-10">
         <div className="flex flex-wrap items-center gap-2 text-caption">
-          <span className="rounded-[8px] bg-accent-warm px-2.5 py-1 font-semibold text-canvas">
+          <span className="rounded-[8px] bg-accent-warm px-2.5 py-1 font-semibold text-on-accent">
             {articleTypeLabel(article.type)}
           </span>
           <span className="rounded-[8px] border border-white/25 bg-black/25 px-2.5 py-1 text-white/90 backdrop-blur-sm">
@@ -49,7 +51,7 @@ export function FeaturedArticle({ article }: { article: BlogArticle }) {
           <div className="mt-6 flex flex-wrap items-center gap-4">
             <Link
               href={`/blog/${article.slug}`}
-              className="inline-flex min-h-10 items-center rounded-[10px] bg-accent-warm px-5 text-body-sm font-semibold text-canvas shadow-action transition-colors hover:bg-accent-warm-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"
+              className="inline-flex min-h-10 items-center rounded-full bg-accent-warm px-5 text-body-sm font-semibold text-on-accent shadow-action transition-colors hover:bg-accent-warm-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"
             >
               Read full article <span aria-hidden="true" className="ml-2">→</span>
             </Link>

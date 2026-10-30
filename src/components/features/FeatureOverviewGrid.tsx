@@ -9,16 +9,16 @@ import { FeatureMedia } from "./FeatureMedia";
 
 export function FeatureOverviewGrid() {
   return (
-    <section aria-label="Format workflows" className="border-t border-border-subtle/50 bg-canvas text-ink">
+    <section aria-label="Format workflows" className="bg-canvas text-ink">
       <Container>
         {publishedFeaturePages.map((page, index) => {
           const flip = index % 2 === 1;
           return (
             <AnimateOnScroll key={page.slug}>
-              <article className="grid gap-10 border-b border-border-subtle/50 py-16 last:border-b-0 sm:py-20 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-center lg:gap-16 lg:py-24">
+              <article className="grid gap-10 py-16 sm:py-20 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-center lg:gap-16 lg:py-24">
                 <div className={cn("min-w-0", flip && "lg:order-2")}>
                   <p className="type-meta flex items-center gap-3">
-                    <span className="text-accent-warm">0{index + 1}</span>
+                    <span className="text-accent-ink">0{index + 1}</span>
                     <span aria-hidden="true" className="h-px w-8 bg-border-subtle" />
                     {page.eyebrow}
                   </p>
@@ -27,12 +27,12 @@ export function FeatureOverviewGrid() {
                   <ul className="mt-7 border-t border-border-subtle/60">
                     {page.atGlance.map((item) => (
                       <li key={item} className="flex items-start gap-3 border-b border-border-subtle/60 py-3.5 text-[0.9375rem] leading-6 text-ink-muted">
-                        <Icon name="check-circle" size={17} className="mt-0.5 shrink-0 text-accent-warm" />
+                        <Icon name="check-circle" size={17} className="mt-0.5 shrink-0 text-accent-ink" />
                         <span>{item}</span>
                       </li>
                     ))}
                   </ul>
-                  <Link href={featureHref(page.slug)} className="mt-7 inline-flex items-center gap-2 rounded-sm text-sm font-semibold text-accent-warm transition-colors hover:text-accent-warm-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool motion-reduce:transition-none">
+                  <Link href={featureHref(page.slug)} className="mt-7 inline-flex items-center gap-2 rounded-sm text-sm font-semibold text-accent-ink transition-colors hover:text-accent-ink-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool motion-reduce:transition-none">
                     Explore {page.eyebrow.toLowerCase()}
                     <Icon name="arrow" size={16} />
                   </Link>

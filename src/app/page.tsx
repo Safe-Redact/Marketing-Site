@@ -1,20 +1,19 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
-import { TrustBar } from "@/components/sections/TrustBar";
-import { ReviewStatement } from "@/components/sections/ReviewStatement";
+import { ProblemStatement } from "@/components/sections/ProblemStatement";
 import { WhySafeRedact } from "@/components/sections/WhySafeRedact";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { Services } from "@/components/sections/Services";
 import { Industries } from "@/components/sections/Industries";
 import { InsightsPreview } from "@/components/sections/InsightsPreview";
 import { Faq } from "@/components/sections/Faq";
-import { FinalCta } from "@/components/sections/FinalCta";
 
 /**
- * Section rhythm: ember hero handing over to warm white (showcase, capabilities,
- * statement), dark product storytelling, light advantages and sectors, dark editorial
- * and questions, then the closing enquiry. Each light/dark change is a rounded sheet.
+ * The homepage story (docs/design/homepage-storytelling-revision.md): the promise with
+ * the product in the first screen, the problem, document and audio evidence on a warm
+ * band, the shared workflow, why OpenRedakt, who it is for, questions, the blog, then
+ * the footer's closing invitation.
  */
 export default function HomePage() {
   return (
@@ -22,15 +21,13 @@ export default function HomePage() {
       <Header />
       <main id="main-content" data-home-page>
         <Hero />
-        <TrustBar />
-        <ReviewStatement />
+        <ProblemStatement />
         <WhySafeRedact />
         <HowItWorks />
         <Services />
         <Industries />
-        <InsightsPreview />
         <Faq />
-        <FinalCta />
+        <InsightsPreview />
       </main>
       <Footer homePage />
     </>

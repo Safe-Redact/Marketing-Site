@@ -19,8 +19,9 @@ test("coral action surfaces use dark high-contrast labels", async () => {
     readSource("src/components/sections/WhySafeRedact.tsx"),
   ]);
 
-  assert.match(button, /bg-accent-warm text-canvas/);
-  assert.match(globals, /bg-accent-warm[^;\n]*text-canvas/);
+  // The canvas is light, so orange fills use the fixed dark on-accent label (6.5:1).
+  assert.match(button, /bg-accent-warm text-on-accent/);
+  assert.match(globals, /bg-accent-warm[^;\n]*text-on-accent/);
   assert.doesNotMatch(process, /bg-accent[^"\n]*text-white/);
   assert.doesNotMatch(why, /bg-accent[^"\n]*text-white/);
 });

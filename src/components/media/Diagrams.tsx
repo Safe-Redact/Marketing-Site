@@ -31,8 +31,8 @@ function Backdrop({ width, height }: { width: number; height: number }) {
       <rect width={width} height={height} fill="url(#diagram-vignette)" />
       <defs>
         <radialGradient id="diagram-vignette" cx="50%" cy="35%" r="75%">
-          <stop offset="0%" stopColor="currentColor" stopOpacity="0" />
-          <stop offset="100%" stopColor="currentColor" stopOpacity="0.35" />
+          <stop offset="0%" stopColor="rgb(var(--or-shadow))" stopOpacity="0" />
+          <stop offset="100%" stopColor="rgb(var(--or-shadow))" stopOpacity="0.12" />
         </radialGradient>
       </defs>
     </>
@@ -117,126 +117,17 @@ export function AudioDiagram({ variant = "range" }: { variant?: "range" | "effec
   );
 }
 
-function mosaic(x: number, y: number, cols: number, rows: number, size: number) {
-  const tones = ["fill-fg/80", "fill-fg-muted/70", "fill-elevated", "fill-line", "fill-fg/60"];
-  const cells = [];
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      cells.push(<rect key={`${r}-${c}`} x={x + c * size} y={y + r * size} width={size} height={size} className={tones[(r * 3 + c * 7 + ((r * c) % 4)) % tones.length]} />);
-    }
-  }
-  return cells;
-}
-
-function Street({ fx, fy, fw, fh }: { fx: number; fy: number; fw: number; fh: number }) {
-  const ground = fy + fh * 0.72;
-  const blocks = [
-    { x: 0.04, w: 0.15, h: 0.46 },
-    { x: 0.21, w: 0.11, h: 0.3 },
-    { x: 0.33, w: 0.13, h: 0.52 },
-    { x: 0.86, w: 0.11, h: 0.38 },
-  ];
-  return (
-    <g>
-      <rect x={fx} y={fy} width={fw} height={fh} rx={10} className="fill-elevated" />
-      {blocks.map((b) => (
-        <g key={b.x}>
-          <rect x={fx + fw * b.x} y={ground - fh * b.h} width={fw * b.w} height={fh * b.h} className="fill-line" />
-          {Array.from({ length: Math.floor((fh * b.h - 16) / 14) }, (_, row) => (
-            <rect key={row} x={fx + fw * b.x + 7} y={ground - fh * b.h + 9 + row * 14} width={fw * b.w - 14} height={4} className="fill-coral-soft/25" />
-          ))}
-        </g>
-      ))}
-      <rect x={fx} y={ground} width={fw} height={fy + fh - ground} className="fill-graphite" />
-      {Array.from({ length: 12 }, (_, i) => (
-        <rect key={i} x={fx + 10 + i * (fw / 12)} y={ground + (fy + fh - ground) * 0.55} width={fw / 24} height={2} className="fill-fg-muted/25" />
-      ))}
-    </g>
-  );
-}
-
-/** A static region with a supported effect and its interval on the timeline. Never tracking. */
-export function VideoDiagram({ variant = "region" }: { variant?: "region" | "candidates" | "lanes" }) {
-  const W = 640;
-  const H = 400;
-  const fx = 70;
-  const fy = 34;
-  const fw = 500;
-  const fh = variant === "lanes" ? 220 : 262;
-  const region = { x: fx + fw * 0.57, y: fy + fh * 0.32, w: fw * 0.26, h: fh * 0.24 };
-  const trackY = fy + fh + 40;
-  return (
-    <svg {...svgProps} viewBox={`0 0 ${W} ${H}`} color="rgb(0 0 0)">
-      <Backdrop width={W} height={H} />
-      <Street fx={fx} fy={fy} fw={fw} fh={fh} />
-      {/* A street sign with readable-looking text: the content a reviewer conceals. */}
-      <rect x={region.x + 8} y={region.y + 8} width={region.w - 16} height={region.h - 16} rx={4} className="fill-fg/90" />
-      <rect x={region.x + region.w / 2 - 2} y={region.y + region.h - 8} width={4} height={fy + fh * 0.72 - region.y - region.h + 8} className="fill-line" />
-      {variant !== "candidates" ? (
-        <g>
-          {mosaic(region.x + 8, region.y + 8, 9, 4, (region.w - 16) / 9)}
-          <rect x={region.x} y={region.y} width={region.w} height={region.h} rx={5} fill="none" className="stroke-coral" strokeWidth={2} />
-          <text x={region.x} y={region.y - 9} className="fill-coral-soft font-mono text-[11px]">
-            Region · Pixelate
-          </text>
-        </g>
-      ) : (
-        <g>
-          {[0, 1, 2].map((line) => (
-            <rect key={line} x={region.x + 16} y={region.y + 18 + line * 11} width={(region.w - 32) * (line === 2 ? 0.5 : 0.85)} height={4} className="fill-midnight/80" />
-          ))}
-          <rect x={region.x} y={region.y} width={region.w} height={region.h} rx={5} fill="none" className="stroke-signal" strokeWidth={1.5} strokeDasharray="5 4" />
-          <text x={region.x} y={region.y - 9} className="fill-signal font-mono text-[11px]">
-            Text candidate · review
-          </text>
-          <rect x={fx + fw * 0.07} y={fy + fh * 0.78} width={fw * 0.16} height={fh * 0.09} rx={3} className="fill-fg-muted/70" />
-          {mosaic(fx + fw * 0.07, fy + fh * 0.78, 8, 2, (fw * 0.16) / 8)}
-          <rect x={fx + fw * 0.07 - 6} y={fy + fh * 0.78 - 6} width={fw * 0.16 + 12} height={fh * 0.09 + 12} rx={4} fill="none" className="stroke-coral" strokeWidth={2} />
-          <text x={fx + fw * 0.07 - 6} y={fy + fh * 0.78 - 13} className="fill-coral-soft font-mono text-[11px]">
-            Plate · confirmed
-          </text>
-        </g>
-      )}
-      <rect x={fx} y={fy} width={fw} height={fh} rx={10} fill="none" className="stroke-fg/10" />
-      {variant === "lanes" ? (
-        <g>
-          <text x={fx} y={trackY - 6} className="fill-fg-muted font-mono text-[10px]">PICTURE</text>
-          <rect x={fx + 64} y={trackY - 14} width={fw - 64} height={10} rx={5} className="fill-line" />
-          <rect x={fx + 64 + (fw - 64) * 0.4} y={trackY - 14} width={(fw - 64) * 0.24} height={10} rx={5} className="fill-coral" />
-          <text x={fx} y={trackY + 26} className="fill-fg-muted font-mono text-[10px]">SOUND</text>
-          {wave(46, 2.2).map((amp, i) => {
-            const x = fx + 64 + i * ((fw - 64) / 45);
-            const inRange = i >= 26 && i <= 33;
-            const h = inRange ? 1.5 : amp * 14;
-            return <rect key={i} x={x - 1.4} y={trackY + 22 - h} width={2.8} height={h * 2} rx={1.4} className={inRange ? "fill-fg-muted/45" : "fill-signal/70"} />;
-          })}
-          <rect x={fx + 64 + (fw - 64) * 0.57} y={trackY + 4} width={(fw - 64) * 0.17} height={36} rx={6} fill="none" className="stroke-coral" strokeWidth={1.5} />
-        </g>
-      ) : (
-        <g>
-          <rect x={fx} y={trackY} width={fw} height={6} rx={3} className="fill-line" />
-          <rect x={fx + fw * 0.42} y={trackY - 2} width={fw * 0.26} height={10} rx={5} className="fill-coral" />
-          <rect x={fx + fw * 0.55 - 0.75} y={trackY - 16} width={1.5} height={36} className="fill-fg" />
-          <circle cx={fx + fw * 0.55} cy={trackY - 18} r={4} className="fill-fg" />
-          <Ruler x={fx} y={trackY + 22} w={fw} labels={["00:10", "00:15", "00:20", "00:25"]} />
-        </g>
-      )}
-    </svg>
-  );
-}
-
 /** Opening supported sources into one project. */
 export function SourcesDiagram() {
   const groups = [
-    { label: "Documents", formats: ["PDF", "DOCX", "PNG", "TIFF"], tone: "stroke-coral", text: "fill-coral-soft" },
+    { label: "Documents", formats: ["PDF", "DOCX", "RTF", "HTML"], tone: "stroke-coral", text: "fill-coral-soft" },
     { label: "Audio", formats: ["WAV", "MP3", "M4A", "FLAC"], tone: "stroke-signal", text: "fill-signal" },
-    { label: "Video", formats: ["MP4", "MOV", "MKV", "WEBM"], tone: "stroke-fg-muted", text: "fill-fg-muted" },
   ];
   return (
     <svg {...svgProps} viewBox="0 0 640 400" color="rgb(0 0 0)">
       <Backdrop width={640} height={400} />
       {groups.map((group, i) => {
-        const y = 62 + i * 98;
+        const y = 104 + i * 118;
         return (
           <g key={group.label}>
             <rect x={44} y={y} width={286} height={74} rx={12} className={`fill-elevated ${group.tone}`} strokeOpacity={0.5} />
@@ -253,7 +144,7 @@ export function SourcesDiagram() {
       })}
       <rect x={430} y={150} width={170} height={100} rx={14} className="fill-elevated stroke-coral" strokeOpacity={0.6} />
       <text x={515} y={192} textAnchor="middle" className="fill-fg text-[15px] font-semibold">Review project</text>
-      <text x={515} y={214} textAnchor="middle" className="fill-fg-muted font-mono text-[11px]">page · waveform · frame</text>
+      <text x={515} y={214} textAnchor="middle" className="fill-fg-muted font-mono text-[11px]">page · waveform</text>
     </svg>
   );
 }

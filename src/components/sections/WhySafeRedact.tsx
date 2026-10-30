@@ -1,74 +1,107 @@
 import Link from "next/link";
-import { featureHref, publishedFeaturePages } from "@/content/features";
-import type { FeatureSlug } from "@/lib/marketing/content";
-import { FeatureVisual, type FeatureVisualId } from "@/components/features/FeatureVisual";
+import type { CaptureId } from "@/content/media";
+import { ProductStoryVisual } from "@/components/media/ProductStoryVisual";
 import { AnimateOnScroll } from "@/components/ui/AnimateOnScroll";
 import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/utils";
 
-/** One visual per format; documents use the approved capture, audio and video labelled diagrams. */
-const rowVisual: Record<FeatureSlug, FeatureVisualId> = {
-  "document-redaction": "doc-closeup",
-  "audio-redaction": "aud-transcript",
-  "video-redaction": "vid-region",
+type Story = {
+  id: string;
+  number: string;
+  eyebrow: string;
+  title: string;
+  body: string;
+  points: readonly string[];
+  link: { label: string; href: string };
+  visual: { capture: CaptureId; crop: string; mobileCrop: string; alt: string };
 };
 
 /**
- * Format storytelling: one large split row per format, alternating sides. Copy comes
- * from the feature pages, so it carries the same evidence-register wording and limits.
+ * Copy is checked against the capability register: document marks and reasons
+ * (DOC-MANUAL, DOC-REVIEW), conditional detection and OCR (DOC-CANDIDATES, DOC-OCR),
+ * audio ranges, effects and preview (AUD-TIMELINE, AUD-EFFECTS, AUD-PREVIEW).
+ */
+const stories: readonly Story[] = [
+  {
+    id: "document",
+    number: "01",
+    eyebrow: "Document redaction",
+    title: "Find it. Review it. Redact it.",
+    body: "Open PDFs, scans and office files. Where detection is configured, findings wait for your decision. Anything else you mark yourself, by selecting text or drawing an area, with a reason on every mark.",
+    points: ["Text and area marks", "A reason on every mark", "OCR for scans when configured"],
+    link: { label: "Explore document redaction", href: "/features/document-redaction" },
+    visual: {
+      capture: "document-workspace",
+      crop: "story",
+      mobileCrop: "manualMobile",
+      alt: "The OpenRedakt document workspace with no document open: the manual redaction panel with selection modes and reasons, the page tools, and the project panel listing files with their preparation status. Project and file names are blurred.",
+    },
+  },
+  {
+    id: "audio",
+    number: "02",
+    eyebrow: "Audio redaction",
+    title: "Every second matters.",
+    body: "Spoken detail lives in a moment. Select the exact range on the waveform, or type its start and end, choose a masking effect and, where supported, preview it before a new file is rendered.",
+    points: ["Waveform and timeline review", "Mute, tone, silence or noise", "Preview before export"],
+    link: { label: "Explore audio redaction", href: "/features/audio-redaction" },
+    visual: {
+      capture: "audio-workspace",
+      crop: "story",
+      mobileCrop: "storyMobile",
+      alt: "The OpenRedakt audio workspace: masking effects and range controls beside a recording's waveform, transport controls and timeline. File names in the side panel are blurred.",
+    },
+  },
+];
+
+/**
+ * Product stories on the bounded warm band (hairline dividers top and bottom). Each
+ * story is one balanced row: text on one side, the product window on the other,
+ * mirrored for the second story. Both visual columns share one width and crop ratio,
+ * so the document and audio windows are always the same size.
  */
 export function WhySafeRedact() {
   return (
-    <section id="why-saferedact" aria-labelledby="formats-heading" className="sheet section-y bg-canvas text-ink">
+    <section id="why-saferedact" aria-label="Document and audio redaction" className="story-surface section-y text-ink">
       <Container>
-        <AnimateOnScroll className="mx-auto max-w-3xl text-center">
-          <p className="type-eyebrow">One review workspace</p>
-          <h2 id="formats-heading" className="type-h2 mx-auto mt-4 max-w-[24ch] text-balance">
-            Review content in the right context. <span className="type-quiet sm:block">One surface for each format.</span>
-          </h2>
-          <p className="type-lede mx-auto mt-5 max-w-2xl">
-            Document pages and audio transcripts need different review surfaces. OpenRedakt brings both supported workflows into one Windows desktop application.
-          </p>
-        </AnimateOnScroll>
-
-        <div className="mt-16 sm:mt-20">
-          {publishedFeaturePages.map((page, index) => {
+        <div className="space-y-20 sm:space-y-24 lg:space-y-32">
+          {stories.map((story, index) => {
             const flip = index % 2 === 1;
             return (
-              <AnimateOnScroll key={page.slug}>
-                <article
-                  aria-labelledby={`format-${page.slug}`}
-                  className="grid items-center gap-10 border-t border-border-subtle/50 py-14 sm:py-20 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20 lg:py-24"
-                >
-                  <div className={cn("min-w-0", flip && "lg:order-2")}>
-                    <p className="type-meta flex items-center gap-3">
-                      <span className="text-accent-warm">0{index + 1}</span>
-                      <span aria-hidden="true" className="h-px w-8 bg-border-subtle" />
-                      {page.eyebrow}
-                    </p>
-                    <h3 id={`format-${page.slug}`} className="type-h2 mt-5 max-w-[18ch] text-[clamp(1.625rem,1.25rem+1.2vw,2.375rem)]">
-                      {page.h1}
-                    </h3>
-                    <p className="type-body mt-5 max-w-xl">{page.summary}</p>
-                    <ul className="mt-7 border-t border-border-subtle/60">
-                      {page.atGlance.map((item) => (
-                        <li key={item} className="flex items-start gap-3 border-b border-border-subtle/60 py-3.5 text-[0.9375rem] leading-6 text-ink-muted">
-                          <Icon name="check-circle" size={17} className="mt-0.5 shrink-0 text-accent-warm" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <Link href={featureHref(page.slug)} className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-accent-warm transition-colors hover:text-accent-warm-hover motion-reduce:transition-none">
-                      Explore {page.eyebrow.toLowerCase()}
-                      <Icon name="arrow" size={16} />
-                    </Link>
-                  </div>
-                  <div className={cn("min-w-0", flip && "lg:order-1")}>
-                    <FeatureVisual visual={rowVisual[page.slug]} displayWidth={720} diagramRatio="4 / 3" />
-                  </div>
-                </article>
-              </AnimateOnScroll>
+              <article
+                key={story.id}
+                aria-labelledby={`story-${story.id}`}
+                className={cn(
+                  "grid items-center gap-10 lg:gap-16",
+                  flip ? "lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]" : "lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]"
+                )}
+              >
+                <AnimateOnScroll className={cn("min-w-0", flip && "lg:order-2")}>
+                  <p className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-canvas py-1 pl-1 pr-3 text-[0.8125rem] font-medium text-ink">
+                    <span className="rounded-full bg-accent-warm px-2 py-0.5 text-[0.75rem] font-semibold text-on-accent">{story.number}</span>
+                    {story.eyebrow}
+                  </p>
+                  <h2 id={`story-${story.id}`} className="mt-5 font-heading text-[clamp(1.875rem,1.35rem+1.6vw,2.75rem)] font-medium leading-[1.08] tracking-[-0.03em] text-ink text-balance">
+                    {story.title}
+                  </h2>
+                  <p className="mt-5 max-w-[30rem] text-[1rem] leading-7 text-ink-muted">{story.body}</p>
+                  <ul className="mt-6 flex flex-wrap gap-2" aria-label={`${story.eyebrow} highlights`}>
+                    {story.points.map((point) => (
+                      <li key={point} className="rounded-full border border-border-subtle bg-canvas px-3 py-1 text-[0.8125rem] text-ink">
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link href={story.link.href} className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-accent-ink transition-colors hover:text-accent-ink-hover motion-reduce:transition-none">
+                    {story.link.label}
+                    <Icon name="arrow" size={16} />
+                  </Link>
+                </AnimateOnScroll>
+                <AnimateOnScroll delay={80} className={cn("min-w-0", flip && "lg:order-1")}>
+                  <ProductStoryVisual {...story.visual} />
+                </AnimateOnScroll>
+              </article>
             );
           })}
         </div>

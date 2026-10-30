@@ -10,12 +10,12 @@ const points = [
 
 export function ProofByProcess() {
   return (
-    <section className="border-y border-border-subtle/50 bg-canvas py-12 sm:py-14">
+    <section className="bg-canvas py-12 sm:py-14">
       <Container>
         <div className="grid gap-8 md:grid-cols-3 md:gap-0 md:divide-x md:divide-border-subtle/50">
           {points.map((point) => (
             <div key={point.title} className="flex gap-4 md:px-8 md:first:pl-0 md:last:pr-0">
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-[10px] border border-border-subtle/70 bg-surface-raised text-accent-warm"><Icon name={point.icon} size={18} /></span>
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-[10px] border border-border-subtle/70 bg-surface-raised text-accent-ink"><Icon name={point.icon} size={18} /></span>
               <div><h2 className="type-h3">{point.title}</h2><p className="mt-2 text-body leading-6 text-ink-muted">{point.description}</p></div>
             </div>
           ))}

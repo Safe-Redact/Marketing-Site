@@ -29,10 +29,10 @@ test("the published CMS article renders and remains discoverable across Insights
   assert.equal((hubHtml.match(/<h1\b/g) ?? []).length, 1);
   assert.match(hubHtml, /data-insights-page="true"/);
   assert.doesNotMatch(hubHtml, /data-editorial-theme="light"/);
-  assert.match(hubHtml, /<h1[^>]*>\s*Insights\s*<\/h1>/);
+  assert.match(hubHtml, /<h1[^>]*>\s*Blog\s*<\/h1>/);
   assert.doesNotMatch(hubHtml, /Practical guidance for safer redaction/);
   assert.match(hubHtml, /aria-label="Featured insight"/);
-  assert.match(hubHtml, /%2Fimages%2Fproduct%2Fhero-document-review\.png/);
+  assert.match(hubHtml, /%2Fimages%2Fproduct%2Feditorial-document-cover\.png/);
   assert.doesNotMatch(hubHtml, /aria-label="Filter content by type"/);
   assert.doesNotMatch(hubHtml, />\s*Company News\s*</);
   assert.doesNotMatch(hubHtml, />\s*Product Updates\s*</);
@@ -84,8 +84,10 @@ test("a long-form article exposes breadcrumbs, matching heading anchors, TOC, an
   assert.match(html, /<h2[^>]*id="what-is-document-redaction"/);
   assert.match(html, /alt="OpenRedakt document review workspace"/);
   assert.match(html, /aria-label="Discuss your redaction workflow"/);
-  assert.match(html, /href="\/#demo-enquiry"/);
-  assert.match(html, /id="article-closing-cta"/);
+  assert.match(html, /href="\/book-a-demo"/);
+  // The shared footer invitation closes the article; there is no second closing CTA.
+  assert.doesNotMatch(html, /id="article-closing-cta"/);
+  assert.match(html, /id="footer-invitation-heading"/);
   const sidebar = html.match(/<div data-article-sidebar="true" class="([^"]+)"/);
   assert.ok(sidebar, "the sticky article sidebar should have an explicit scroll-owner boundary");
   assert.doesNotMatch(sidebar[1], /(?:max-h-|overflow-y-auto|overscroll-contain)/);
@@ -398,7 +400,7 @@ test("Insights hides redundant controls on the one-story hub and keeps an escape
 
   // With one published article, neither the content-type nor category row adds useful
   // choice on the hub. A deliberate filtered URL still retains an escape to all content.
-  assert.doesNotMatch(html, /All insights/);
+  assert.doesNotMatch(html, /All posts/);
   assert.match(
     filteredHtml,
     /<nav aria-label="Filter content by type"[\s\S]*?href="\/blog"[\s\S]*?All content[\s\S]*?<\/nav>/

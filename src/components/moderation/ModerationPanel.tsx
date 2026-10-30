@@ -163,7 +163,7 @@ export function ModerationPanel() {
         </p>
         <a
           href="/admin/index.html"
-          className="mt-5 inline-flex items-center justify-center rounded-sm bg-accent-cool px-5 py-2.5 font-heading text-body-sm font-semibold text-canvas transition-opacity hover:opacity-90"
+          className="mt-5 inline-flex items-center justify-center rounded-sm bg-accent-warm px-5 py-2.5 font-heading text-body-sm font-semibold text-on-accent transition-opacity hover:opacity-90"
         >
           Open the content studio
         </a>
@@ -225,7 +225,7 @@ export function ModerationPanel() {
         aria-live={isError ? "assertive" : "polite"}
         className={cn(
           "mt-4 text-body-sm focus-visible:outline-none",
-          isError ? "text-accent-warm" : "text-ink-muted"
+          isError ? "text-accent-ink" : "text-ink-muted"
         )}
       >
         {message || `${totalItems} comments in this queue.`}
@@ -245,7 +245,7 @@ export function ModerationPanel() {
                 <span className="text-caption uppercase tracking-[0.04em] text-accent-cool">staff</span>
               ) : null}
               {comment.openReports > 0 ? (
-                <span className="rounded-sm border border-accent-warm/40 bg-accent-warm/10 px-2 py-0.5 text-caption font-semibold uppercase tracking-[0.04em] text-accent-warm">
+                <span className="rounded-sm border border-accent-warm/40 bg-accent-warm/10 px-2 py-0.5 text-caption font-semibold uppercase tracking-[0.04em] text-accent-ink">
                   {comment.openReports} reported
                 </span>
               ) : null}

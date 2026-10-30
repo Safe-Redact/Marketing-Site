@@ -8,19 +8,24 @@
     --anchor-offset: 5.5rem;
 
     /*
-     * Cinematic Precision palette (D1). Space-separated RGB channels so Tailwind's
-     * opacity modifiers work, and so canvas code can read the same tokens. Existing
-     * pages keep the earlier canvas/accent tokens until their redesign checkpoint.
+     * Palette as space-separated RGB channels, so Tailwind's opacity modifiers work.
+     * The site is light by default; `.theme-dark` re-scopes the same channels to
+     * neutral black. Brand orange (#FF735C) fills buttons, the chat launcher and
+     * accents; orange *text* uses --or-coral-ink, which keeps 4.5:1 on either theme.
+     * (The token names predate the light default and are kept so classes stay stable.)
      */
-    --or-midnight: 8 11 18; /* #080B12 */
-    --or-graphite: 17 23 35; /* #111723 */
-    --or-elevated: 26 35 50; /* #1A2332 */
-    --or-coral: 255 115 92; /* #FF735C */
-    --or-coral-soft: 255 157 137; /* #FF9D89 */
-    --or-signal: 70 199 220; /* #46C7DC */
-    --or-fg: 245 246 249; /* #F5F6F9 */
-    --or-fg-muted: 173 182 198; /* #ADB6C6 */
-    --or-line: 52 64 82; /* #344052 */
+    --or-midnight: 255 255 255; /* canvas */
+    --or-graphite: 250 250 249; /* raised surface, #FAFAF9 */
+    --or-elevated: 245 245 244; /* active surface, #F5F5F4 */
+    --or-coral: 255 115 92; /* brand orange #FF735C */
+    --or-coral-soft: 255 140 118; /* fill hover */
+    --or-coral-ink: 194 65 42; /* #C2412A: 5.1:1 on white */
+    --or-coral-ink-hover: 163 54 35;
+    --or-signal: 194 65 42; /* focus and audio signal follow the brand */
+    --or-fg: 28 25 23; /* #1C1917 */
+    --or-fg-muted: 87 83 78; /* #57534E: 7.6:1 on white */
+    --or-line: 231 229 228; /* #E7E5E4 */
+    --or-shadow: 28 25 23;
 
     --or-ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
     --or-ease-spring: cubic-bezier(0.34, 1.3, 0.64, 1);
@@ -50,8 +55,49 @@
     scroll-margin-top: var(--anchor-offset);
   }
 
+  /* Neutral black sections: no blue cast. */
+  .theme-dark {
+    --or-midnight: 10 10 10; /* #0A0A0A */
+    --or-graphite: 20 20 20;
+    --or-elevated: 31 31 31;
+    --or-coral-soft: 255 157 137;
+    --or-coral-ink: 255 115 92; /* brand orange reads at 7.4:1 on black */
+    --or-coral-ink-hover: 255 157 137;
+    --or-signal: 255 115 92;
+    --or-fg: 245 245 244;
+    --or-fg-muted: 168 162 158; /* #A8A29E: 7.9:1 on black */
+    --or-line: 46 46 46;
+    --or-shadow: 0 0 0;
+    color-scheme: dark;
+  }
+
+  /*
+   * Header links over the burnt-orange hero: a warm near-white instead of the grey
+   * muted tone, which reads as dull on orange (#F5E6DF is about 10:1 on the hero top field).
+   */
+  .theme-dark.nav-on-hero {
+    --or-fg-muted: 245 230 223;
+  }
+
+  /* Light islands inside a dark section use the default palette again. */
+  .theme-light {
+    --or-midnight: 255 255 255;
+    --or-graphite: 250 250 249;
+    --or-elevated: 245 245 244;
+    --or-coral-soft: 255 140 118;
+    --or-coral-ink: 194 65 42;
+    --or-coral-ink-hover: 163 54 35;
+    --or-signal: 194 65 42;
+    --or-fg: 28 25 23;
+    --or-fg-muted: 87 83 78;
+    --or-line: 231 229 228;
+    --or-shadow: 28 25 23;
+    color-scheme: light;
+  }
+
   ::selection {
-    @apply bg-accent-cool/30 text-white;
+    background: rgb(var(--or-coral) / 0.28);
+    color: rgb(var(--or-fg));
   }
 
   * {
@@ -72,7 +118,7 @@
 
 @layer components {
   .skip-link {
-    @apply fixed -top-full left-5 z-[70] rounded-b-control bg-accent-warm px-4 py-2 text-sm font-semibold text-canvas transition-all;
+    @apply fixed -top-full left-5 z-[70] rounded-b-control bg-accent-warm px-4 py-2 text-sm font-semibold text-on-accent transition-all;
   }
 
   .skip-link:focus {
@@ -83,29 +129,29 @@
 
   /* Type scale. Restrained sizes, tight tracking, balanced wraps. */
   .type-display {
-    font-family: var(--font-poppins), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
     font-weight: 600;
-    font-size: clamp(2.375rem, 1.55rem + 3.1vw, 4rem);
-    line-height: 1.05;
-    letter-spacing: -0.038em;
+    font-size: clamp(2.5rem, 1.6rem + 3vw, 4rem);
+    line-height: 1.04;
+    letter-spacing: -0.042em;
     color: rgb(var(--or-fg));
     text-wrap: balance;
   }
   .type-h1 {
-    font-family: var(--font-poppins), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
     font-weight: 600;
-    font-size: clamp(2.125rem, 1.6rem + 2vw, 3.25rem);
-    line-height: 1.08;
-    letter-spacing: -0.034em;
+    font-size: clamp(2.25rem, 1.75rem + 1.4vw, 3rem);
+    line-height: 1.06;
+    letter-spacing: -0.038em;
     color: rgb(var(--or-fg));
     text-wrap: balance;
   }
   .type-h2 {
-    font-family: var(--font-poppins), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
     font-weight: 600;
-    font-size: clamp(1.625rem, 1.3rem + 1.25vw, 2.375rem);
-    line-height: 1.14;
-    letter-spacing: -0.028em;
+    font-size: clamp(1.75rem, 1.35rem + 1.1vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.034em;
     color: rgb(var(--or-fg));
     text-wrap: balance;
   }
@@ -116,16 +162,17 @@
     color: rgb(var(--or-fg-muted));
   }
   .type-h3 {
-    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
     font-weight: 600;
-    font-size: 1.125rem;
-    line-height: 1.4;
-    letter-spacing: -0.012em;
+    font-size: 1.1875rem;
+    line-height: 1.35;
+    letter-spacing: -0.018em;
     color: rgb(var(--or-fg));
   }
   .type-lede {
     font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
-    line-height: 1.65;
+    line-height: 1.6;
+    letter-spacing: -0.006em;
     color: rgb(var(--or-fg-muted));
   }
   .type-body {
@@ -134,16 +181,16 @@
     color: rgb(var(--or-fg-muted));
   }
   .type-eyebrow {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 0.75rem;
     line-height: 1.5;
     font-weight: 500;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgb(var(--or-coral));
+    color: rgb(var(--or-coral-ink));
   }
   .type-meta {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 0.75rem;
     line-height: 1.5;
     letter-spacing: 0.04em;
@@ -152,7 +199,7 @@
 
   /* Section rhythm: space and light separate sections, not boxes. */
   .section-y {
-    padding-block: clamp(4.5rem, 2.75rem + 5.5vw, 8rem);
+    padding-block: clamp(3.75rem, 2.25rem + 4vw, 6.5rem);
   }
   .section-y-sm {
     padding-block: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
@@ -175,7 +222,7 @@
     border-top: 1px solid rgb(var(--or-line) / 0.55);
   }
 
-  /* Product media frame: lit hairline edge, soft depth, optional content glow. */
+  /* Product media frame: hairline edge and soft depth; adapts to light and dark sections. */
   /* Decorative glows extend past their frames; clip (not hidden) keeps sticky columns working. */
   #main-content {
     overflow-x: clip;
@@ -183,25 +230,25 @@
   .media-frame {
     position: relative;
     isolation: isolate;
-    border-radius: 1rem;
-    padding: 5px;
-    background: linear-gradient(180deg, rgb(var(--or-elevated) / 0.9), rgb(var(--or-graphite) / 0.95));
-    border: 1px solid rgb(var(--or-fg) / 0.08);
-    box-shadow: inset 0 1px 0 rgb(var(--or-fg) / 0.1), 0 30px 80px rgb(0 0 0 / 0.45);
+    border-radius: 1.25rem;
+    padding: 6px;
+    background: rgb(var(--or-graphite));
+    border: 1px solid rgb(var(--or-line));
+    box-shadow: 0 1px 2px rgb(var(--or-shadow) / 0.05), 0 24px 60px -24px rgb(var(--or-shadow) / 0.28);
   }
   .media-frame-screen {
     position: relative;
     overflow: hidden;
-    border-radius: 0.7rem;
+    border-radius: 0.875rem;
     background: rgb(var(--or-midnight));
   }
   .media-glow::before {
     content: "";
     position: absolute;
-    inset: -14% -10%;
+    inset: -12% -8%;
     z-index: -1;
     pointer-events: none;
-    background: radial-gradient(50% 50% at 50% 45%, rgb(var(--media-glow, var(--or-coral)) / 0.15), transparent 72%);
+    background: radial-gradient(50% 50% at 50% 45%, rgb(var(--media-glow, var(--or-coral)) / 0.14), transparent 72%);
   }
   .media-glow-signal { --media-glow: var(--or-signal); }
 
@@ -215,28 +262,6 @@
       linear-gradient(to right, transparent, #000 var(--fade-left, 0px), #000 calc(100% - var(--fade-right, 0px)), transparent),
       linear-gradient(to bottom, transparent, #000 var(--fade-top, 0px), #000 calc(100% - var(--fade-bottom, 0px)), transparent);
     mask-composite: intersect;
-  }
-
-  /*
-   * D3 homepage. Light sections re-scope the palette channels, so every component that
-   * reads tokens renders on warm white unchanged. Coral darkens to #C44026 on light
-   * (4.6:1 against #F7F3EE) because #FF735C cannot carry text there.
-   */
-  .theme-light {
-    --or-midnight: 247 243 238; /* #F7F3EE warm white */
-    --or-graphite: 239 233 225;
-    --or-elevated: 229 221 211;
-    --or-coral: 196 64 38;
-    --or-coral-soft: 168 51 29;
-    --or-signal: 18 120 138;
-    --or-fg: 20 22 28;
-    --or-fg-muted: 84 89 101; /* 6.4:1 on warm white */
-    --or-line: 214 205 194;
-    color-scheme: light;
-  }
-  .theme-light .media-frame {
-    border-color: rgb(20 22 28 / 0.08);
-    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.6), 0 24px 60px rgb(74 38 24 / 0.14);
   }
 
   /* A section that slides over the previous one: the rounded top reveals the colour behind. */
@@ -254,33 +279,148 @@
     }
   }
 
-  /* Hero: graphite into ember into coral, handing over to warm white behind the showcase. */
+  /*
+   * Homepage hero: one continuous atmosphere from deep burnt orange through coral into
+   * off-white. White text only ever sits on the upper field (5.8:1 or better at every
+   * stop it can reach); the brightest coral glows behind the showcase card. OKLab
+   * interpolation keeps the blend free of visible bands; the sRGB declaration is the
+   * fallback. .hero-ember ends on exactly the colour .showcase-stage starts with.
+   */
   .hero-ember {
-    /* Ends on exactly the colour .showcase-stage starts with, so the hand-over has no seam. */
-    background: linear-gradient(180deg, #080b12 0%, #120b10 14%, #2a0b0a 34%, #5a150a 56%, #8e240e 78%, #b8381a 100%);
+    background: linear-gradient(180deg, #5a1f0c 0%, #6e2710 25%, #8a3311 50%, #a44116 72%, #b44a19 88%, #c2532a 100%);
+    background: linear-gradient(in oklab 180deg, #5a1f0c 0%, #6e2710 25%, #8a3311 50%, #a44116 72%, #b44a19 88%, #c2532a 100%);
   }
   .showcase-stage {
-    /* The brightest coral sits here, behind the card, where no text crosses it. */
-    background: linear-gradient(180deg, #b8381a 0%, #e85a32 10%, #fb9a74 22%, #f8c7ae 34%, #f6e2d6 46%, #f7f3ee 58%);
+    background:
+      radial-gradient(60% 34% at 50% 14%, rgb(255 138 104 / 0.38), transparent 72%),
+      linear-gradient(180deg, #c2532a 0%, #e46640 8%, #ff7a5c 16%, #ff9e85 26%, #ffc9b8 36%, #ffe8e0 46%, #fff6f2 56%, #ffffff 66%);
+    background:
+      radial-gradient(60% 34% at 50% 14%, rgb(255 138 104 / 0.38), transparent 72%),
+      linear-gradient(in oklab 180deg, #c2532a 0%, #e46640 8%, #ff7a5c 16%, #ff9e85 26%, #ffc9b8 36%, #ffe8e0 46%, #fff6f2 56%, #ffffff 66%);
   }
-  .hero-annotation {
-    animation: hero-annotation-in 900ms var(--or-ease-standard) both;
+
+  /*
+   * Closing sections: one soft orange light contained inside the section, fading out
+   * well before any edge, so the CTA and the white footer read as one composition.
+   */
+  .closing-glow {
+    background: radial-gradient(ellipse 52% 42% at 50% 50%, rgb(255 115 92 / 0.14), rgb(255 115 92 / 0.05) 48%, transparent 72%);
   }
-  @keyframes hero-annotation-in {
-    from {
-      opacity: 0;
-      transform: translateY(6px);
+
+  /*
+   * Footer: white at the top edge so it meets any section without a seam, warming
+   * gradually to a pale coral floor under the invitation, links and wordmark.
+   */
+  .footer-canvas {
+    background:
+      radial-gradient(70% 45% at 50% 100%, rgb(255 115 92 / 0.12), transparent 70%),
+      linear-gradient(180deg, #ffffff 0%, #fffaf8 22%, #fff3ee 60%, #ffece4 100%);
+  }
+  /* About 86vw wide at any width, so it never forces horizontal scrolling. */
+  .footer-wordmark {
+    font-size: clamp(3rem, 17.2vw, 16.5rem);
+    background: linear-gradient(180deg, rgb(255 115 92 / 0.24), rgb(255 115 92 / 0.1));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /*
+   * Product captures in an application window: light title bar, hairline border, soft
+   * lift. Used for the hero showcase and every homepage story visual.
+   */
+  .app-window {
+    background: #ffffff;
+    border: 1px solid rgb(28 25 23 / 0.1);
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.6) inset,
+      0 24px 60px -28px rgb(60 30 20 / 0.35),
+      0 6px 18px -10px rgb(60 30 20 / 0.18);
+  }
+  .app-window-bar {
+    background: #eceae6;
+    border-bottom: 1px solid rgb(28 25 23 / 0.08);
+  }
+
+  /*
+   * Homepage storytelling band: a warm near-white (#F7F6F4, between the site's raised
+   * #FAFAF9 and active #F5F5F4) that fades in from white and back out, so neither edge
+   * shows a seam. Product stages inside it sit one step deeper.
+   */
+  .story-band {
+    background: linear-gradient(180deg, #ffffff 0, #f7f6f4 160px, #f7f6f4 calc(100% - 160px), #ffffff 100%);
+  }
+  /*
+   * The homepage product-story band: the same warm near-white, bounded by hairline
+   * dividers so its start and end are visible, with no inner slab behind screenshots.
+   */
+  .story-surface {
+    background: #f7f6f4;
+    border-top: 1px solid rgb(28 25 23 / 0.1);
+    border-bottom: 1px solid rgb(28 25 23 / 0.1);
+  }
+
+  /* Problem section: illustrative cards around one review step (decorative). */
+  .problem-map .problem-card {
+    border-radius: 18px;
+    border: 1px solid rgb(28 25 23 / 0.08);
+    background: #ffffff;
+    padding: 1.125rem 1.25rem 1.25rem;
+    box-shadow: 0 18px 40px -28px rgb(60 30 20 / 0.35);
+  }
+  @media (min-width: 1024px) {
+    .problem-map .problem-card {
+      width: 21rem;
     }
+    .problem-map .problem-card:nth-child(1),
+    .problem-map .problem-card:nth-child(2) {
+      justify-self: start;
+    }
+    .problem-map .problem-card:nth-child(4),
+    .problem-map .problem-card:nth-child(5) {
+      justify-self: end;
+    }
+  }
+  .problem-core {
+    background: linear-gradient(145deg, #fff3ef, #ffe1d7);
+    border: 1px solid rgb(194 65 42 / 0.18);
+    box-shadow:
+      0 0 0 10px rgb(255 115 92 / 0.06),
+      0 0 0 22px rgb(255 115 92 / 0.035),
+      0 24px 50px -24px rgb(194 65 42 / 0.45);
+  }
+
+  /* Homepage Blog: one pale coral panel holding the editorial rows. */
+  .blog-panel {
+    background:
+      radial-gradient(60% 55% at 85% 0%, rgb(255 115 92 / 0.14), transparent 70%),
+      linear-gradient(180deg, #fff1eb 0%, #fff6f2 100%);
+  }
+
+  /* Book a demo: a soft coral atmosphere behind both columns, settling to white. */
+  .demo-atmosphere {
+    background:
+      radial-gradient(55% 45% at 78% 18%, rgb(255 115 92 / 0.2), transparent 70%),
+      radial-gradient(45% 40% at 8% 4%, rgb(255 158 133 / 0.22), transparent 70%),
+      linear-gradient(180deg, #fff1eb 0%, #fff8f5 55%, #ffffff 100%);
+  }
+
+  /* Internal pages: a calm orange light over white, never the full cinematic field. */
+  .page-glow {
+    background:
+      radial-gradient(70% 100% at 50% 0%, rgb(255 115 92 / 0.18), rgb(255 115 92 / 0.06) 45%, transparent 75%),
+      linear-gradient(180deg, #fff6f2 0%, #ffffff 70%);
   }
 
   /*
    * Showcase growth: a CSS scroll-driven animation on the compositor (transform only, so
-   * no layout shift). The track is the timeline subject and never transforms itself.
-   * Browsers without scroll timelines, reduced motion, and phones get the static frame.
+   * no layout shift). It starts at two-thirds size and opens to full width as the card
+   * rises. The track is the timeline subject and never transforms itself. Browsers
+   * without scroll timelines, reduced motion, and phones get the static full-size frame.
    */
   @keyframes showcase-grow {
     from {
-      transform: scale(0.86);
+      transform: scale(0.68);
     }
     to {
       transform: none;
@@ -295,13 +435,8 @@
         transform-origin: 50% 0;
         animation: showcase-grow linear both;
         animation-timeline: --showcase;
-        animation-range: cover 0% cover 45%;
+        animation-range: cover 16% cover 58%;
       }
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .hero-annotation {
-      animation: none;
     }
   }
 
@@ -312,9 +447,8 @@
 
   .hero-gradient {
     background:
-      radial-gradient(60% 45% at 50% 0%, rgb(var(--or-coral) / 0.12), transparent 70%),
-      radial-gradient(40% 35% at 85% 40%, rgb(var(--or-signal) / 0.04), transparent 70%),
-      rgb(var(--or-midnight));
+      radial-gradient(70% 100% at 50% 0%, rgb(255 115 92 / 0.18), rgb(255 115 92 / 0.06) 45%, transparent 75%),
+      linear-gradient(180deg, #fff6f2 0%, rgb(var(--or-midnight)) 70%);
   }
 
   .cta-gradient {
@@ -323,16 +457,8 @@
 
   .blog-hero {
     background:
-      radial-gradient(60% 55% at 50% 0%, rgb(var(--or-coral) / 0.1), transparent 70%),
-      rgb(var(--or-midnight));
-  }
-
-  .blog-card-visual,
-  .blog-feature-visual {
-    background-color: rgb(var(--or-graphite));
-    background-image:
-      radial-gradient(55% 60% at 30% 20%, rgb(var(--or-coral) / 0.16), transparent 70%),
-      radial-gradient(45% 50% at 80% 80%, rgb(var(--or-signal) / 0.07), transparent 70%);
+      radial-gradient(70% 100% at 50% 0%, rgb(255 115 92 / 0.16), rgb(255 115 92 / 0.05) 45%, transparent 75%),
+      linear-gradient(180deg, #fff6f2 0%, rgb(var(--or-midnight)) 70%);
   }
 
   .blog-page-link {
@@ -352,7 +478,7 @@
   .article-prose h2,
   .article-prose h3,
   .article-prose h4 {
-    @apply font-heading font-semibold tracking-[-0.025em] text-white;
+    @apply font-heading font-semibold tracking-[-0.025em] text-ink;
   }
 
   .article-prose h2 {
@@ -368,11 +494,11 @@
   }
 
   .article-prose a {
-    @apply rounded-sm font-medium text-accent-cool underline decoration-accent-cool/35 underline-offset-4 transition-colors hover:text-accent-warm;
+    @apply rounded-sm font-medium text-accent-cool underline decoration-accent-cool/35 underline-offset-4 transition-colors hover:text-accent-ink-hover;
   }
 
   .article-prose strong {
-    @apply font-semibold text-white;
+    @apply font-semibold text-ink;
   }
 
   .article-prose ul,
@@ -422,7 +548,7 @@
   }
 
   .article-prose th {
-    @apply bg-surface-raised font-heading font-semibold text-white;
+    @apply bg-surface-raised font-heading font-semibold text-ink;
   }
 
   .article-toc-list {
@@ -579,4 +705,14 @@
       0 24px 56px -22px rgba(0, 0, 0, 0.75),
       0 2px 8px -3px rgba(0, 0, 0, 0.55);
   }
+}
+
+/*
+ * Development only. Next's dev-tools host is an absolutely positioned <script> with no
+ * offsets, so it sits in the page flow after the footer. The site CSP (style-src 'self')
+ * blocks the <style> elements it injects, so it renders as an unstyled box that extends
+ * the page by a 50px strip. Production builds never render this element.
+ */
+script[data-nextjs-dev-overlay] {
+  display: none !important;
 }

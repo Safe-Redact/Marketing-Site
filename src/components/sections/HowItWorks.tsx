@@ -3,8 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { workflowSteps } from "@/content/platform";
-import { OutputCheckDiagram, SourcesDiagram } from "@/components/media/Diagrams";
-import { MediaSlot } from "@/components/media/MediaSlot";
+import { AppWindow } from "@/components/media/AppWindow";
 import { ProductShot } from "@/components/media/ProductShot";
 import { Accordion } from "@/components/ui/Accordion";
 import { AnimateOnScroll } from "@/components/ui/AnimateOnScroll";
@@ -18,50 +17,47 @@ const accordionItems = workflowSteps.map((step) => ({
   icon: step.icon,
 }));
 
-const STEP_RATIO = "16 / 10";
-
 /**
- * Step visuals. Only the review step has an approved capture; opening and exporting
- * use labelled diagrams until CAP-PRJ-01 and CAP-EXP-01 are produced.
+ * One capture per step, each a real state of that step: files listed with their
+ * preparation status, the manual redaction tools, and the export dialog. All three crops
+ * are 4:3 (4:5 on phones), so switching steps never shifts the layout.
  */
-function StepVisual({ index }: { index: number }) {
-  if (index === 1) {
-    return (
-      <ProductShot
-        capture="document-editor"
-        crop="toolsWide"
-        alt="OpenRedakt document review: manual redaction tools beside a synthetic statement with reviewed marks"
-        displayWidth={620}
-      />
-    );
-  }
-  return index === 0 ? (
-    <MediaSlot slot="CAP-PRJ-01" aspectRatio={STEP_RATIO}>
-      <SourcesDiagram />
-    </MediaSlot>
-  ) : (
-    <MediaSlot slot="CAP-EXP-01" aspectRatio={STEP_RATIO}>
-      <OutputCheckDiagram />
-    </MediaSlot>
-  );
-}
+const stepVisuals = [
+  {
+    capture: "document-workspace",
+    crop: "filesPanel",
+    mobileCrop: "filesMobile",
+    alt: "OpenRedakt project panel listing files with their preparation status (Ready, Not prepared) and the action to add files. File and project names are blurred.",
+  },
+  {
+    capture: "document-workspace",
+    crop: "manualTools",
+    mobileCrop: "manualMobile",
+    alt: "OpenRedakt manual redaction panel: select marks or text, draw a free-form area, choose the redaction appearance and record a reason. No document is open in this view.",
+  },
+  {
+    capture: "audio-export",
+    crop: "dialogFourThree",
+    mobileCrop: "summary",
+    alt: "OpenRedakt export dialog: the redacted copy is written as a new file with the chosen file type and export mode, and the original is left unchanged",
+  },
+] as const;
 
 export function HowItWorks() {
   const [activeIndex, setActiveIndex] = useState(0);
   const active = workflowSteps[activeIndex];
+  const visual = stepVisuals[activeIndex];
 
   return (
-    <section id="how-it-works" className="section-y relative border-t border-border-subtle/50 bg-canvas text-ink">
+    <section id="how-it-works" className="section-y relative bg-canvas text-ink">
       <Container>
-        <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
+        <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
           <AnimateOnScroll>
-            <p className="type-eyebrow">Product workflow</p>
-            <h2 className="type-h2 mt-4 max-w-[18ch]">
-              From source file to reviewed output. <span className="type-quiet">Three steps, every format.</span>
+            <p className="type-eyebrow">Workflow</p>
+            <h2 className="mt-4 font-heading text-[clamp(2rem,1.4rem+2.1vw,3.25rem)] font-medium leading-[1.06] tracking-[-0.035em] text-ink">
+              From sensitive to shareable.
             </h2>
-            <p className="type-body mt-5 max-w-xl">
-              Keep detection, review decisions, and export checks together in a workflow designed around the source format.
-            </p>
+            <p className="type-body mt-5 max-w-xl">The same three steps for every document and recording.</p>
             <Accordion
               className="mt-9"
               items={accordionItems}
@@ -69,13 +65,7 @@ export function HowItWorks() {
               onOpenChange={(index) => setActiveIndex(index ?? activeIndex)}
               allowCollapse={false}
             />
-            <p className="mt-6 flex gap-3 text-sm leading-6 text-ink-muted">
-              <Icon name="info" size={17} className="mt-0.5 shrink-0 text-accent-warm" />
-              <span>
-                <strong className="font-semibold text-ink">Review remains essential.</strong> Detection results are candidates; inspect the complete rendered output before use or sharing.
-              </span>
-            </p>
-            <Link href="/how-it-works" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-accent-warm transition-colors hover:text-accent-warm-hover motion-reduce:transition-none">
+            <Link href="/how-it-works" className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-accent-ink transition-colors hover:text-accent-ink-hover motion-reduce:transition-none">
               Read the full six-stage review lifecycle
               <Icon name="arrow" size={16} />
             </Link>
@@ -83,11 +73,13 @@ export function HowItWorks() {
 
           <div className="lg:sticky lg:top-28">
             <p className="type-meta mb-4 flex items-center gap-2">
-              <span className="text-accent-warm">0{activeIndex + 1}</span>
+              <span className="text-accent-ink">0{activeIndex + 1}</span>
               <span aria-hidden="true">·</span>
               {active.title}
             </p>
-            <StepVisual index={activeIndex} />
+            <AppWindow>
+              <ProductShot {...visual} displayWidth={640} frame={false} glow="none" />
+            </AppWindow>
           </div>
         </div>
       </Container>

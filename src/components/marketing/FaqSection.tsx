@@ -20,7 +20,7 @@ export function FaqSection({
 }) {
   const accordionItems = items.map((item, index) => ({ id: `${idPrefix}-faq-${index + 1}`, title: item.question, description: item.answer }));
   return (
-    <section className="section-y border-t border-border-subtle/50 bg-canvas text-ink">
+    <section className="section-y bg-canvas text-ink">
       <Container>
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
           <div>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { contentSecurityPolicyNonce } from "@/lib/csp";
 import { SupportChat } from "@/components/support/SupportChat";
 import {
@@ -11,17 +11,17 @@ import { resolveChatwootPublicConfig } from "@/lib/support/chatwoot-config";
 import "@/components/support/chatwoot-widget.css";
 import "./globals.css";
 
-const inter = Inter({
+// Geist (SIL Open Font License), self-hosted at build time by next/font.
+const geist = Geist({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-geist",
 });
 
-const poppins = Poppins({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-poppins",
-  weight: ["400", "500", "600", "700"],
+  variable: "--font-geist-mono",
 });
 
 /**
@@ -79,7 +79,7 @@ export default async function RootLayout({
   const chatwootConfig = resolveChatwootPublicConfig(process.env);
 
   return (
-    <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
+    <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <script

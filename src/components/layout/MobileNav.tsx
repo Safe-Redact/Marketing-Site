@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { PrimaryNavItem } from "@/content/navigation";
+import { siteConfig } from "@/content/site";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/utils";
@@ -95,7 +97,7 @@ export function MobileNav({ isOpen, onClose, pathname, items, ctaHref }: MobileN
   return (
     <>
       <div
-        className="fixed inset-0 z-40 bg-black/55 motion-safe:animate-fade-in min-[992px]:hidden"
+        className="fixed inset-0 z-[65] bg-[rgb(28_25_23/0.35)] backdrop-blur-[2px] motion-safe:animate-fade-in min-[992px]:hidden"
         onClick={() => onClose(true)}
         aria-hidden="true"
       />
@@ -103,20 +105,29 @@ export function MobileNav({ isOpen, onClose, pathname, items, ctaHref }: MobileN
       <div
         id="mobile-navigation"
         ref={panelRef}
-        className="fixed inset-x-3 top-[80px] z-50 max-h-[calc(100dvh-92px)] overscroll-contain overflow-y-auto rounded-[16px] border border-border-subtle/70 bg-surface-raised/95 px-4 py-5 shadow-[inset_0_1px_0_rgb(var(--or-fg)/0.06),0_24px_60px_rgb(0_0_0/0.5)] backdrop-blur-xl motion-safe:animate-fade-in sm:inset-x-6 min-[992px]:hidden"
+        className="fixed inset-x-3 top-3 z-[70] max-h-[calc(100dvh-24px)] overscroll-contain overflow-y-auto rounded-[24px] border border-border-subtle bg-canvas px-4 pb-5 pt-2 shadow-panel motion-safe:animate-fade-in sm:inset-x-5 min-[992px]:hidden"
         role="dialog"
         aria-modal="true"
         aria-label="Mobile navigation"
       >
-        <button
-          type="button"
-          onClick={() => onClose(true)}
-          className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-[10px] border border-border-subtle/70 text-ink transition-colors hover:bg-surface-active"
-          aria-label="Close mobile menu"
-        >
-          <Icon name="close" size={22} />
-        </button>
-        <nav className="mx-auto max-w-content pt-11" aria-label="Mobile navigation">
+        {/* The sheet covers the header, so this is the only close control on screen. */}
+        <div className="flex h-12 items-center justify-between pl-1">
+          <span className="inline-flex items-center gap-2.5 font-heading text-[1.1875rem] font-semibold tracking-[-0.03em] text-ink" aria-hidden="true">
+            <span className="flex h-7 w-7 items-center justify-center rounded-[8px] bg-accent-warm/15">
+              <Image src="/favicon.svg" alt="" width={18} height={18} />
+            </span>
+            <span><span className="text-accent-ink">Open</span>Redakt</span>
+          </span>
+          <button
+            type="button"
+            onClick={() => onClose(true)}
+            className="flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors hover:bg-ink/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"
+            aria-label="Close mobile menu"
+          >
+            <Icon name="close" size={22} />
+          </button>
+        </div>
+        <nav className="mx-auto mt-3 max-w-content" aria-label={`${siteConfig.name} mobile navigation`}>
           <ul className="flex flex-col gap-1">
             {items.map((item) => {
               if (item.kind === "link") {
@@ -157,10 +168,10 @@ export function MobileNav({ isOpen, onClose, pathname, items, ctaHref }: MobileN
                             onClick={() => onClose(false)}
                             className={cn(
                               "flex min-h-11 items-center gap-3 rounded-control px-3 py-2 text-body transition-colors motion-reduce:transition-none",
-                              current ? "bg-surface-active text-white" : "text-ink-muted hover:bg-surface-active hover:text-white"
+                              current ? "bg-surface-active text-ink" : "text-ink-muted hover:bg-surface-active hover:text-ink"
                             )}
                           >
-                            {link.icon ? <Icon name={link.icon} size={17} className="text-accent-warm" /> : null}
+                            {link.icon ? <Icon name={link.icon} size={17} className="text-accent-ink" /> : null}
                             {link.label}
                           </Link>
                         </li>
@@ -171,7 +182,7 @@ export function MobileNav({ isOpen, onClose, pathname, items, ctaHref }: MobileN
               );
             })}
           </ul>
-          <div className="mt-5 border-t border-border-subtle/60 pt-5">
+          <div className="mt-5 pt-1">
             <Button variant="primary" size="md" className="w-full" asChild>
               <Link href={ctaHref} onClick={() => onClose(false)}>
                 Request a Demo

@@ -21,7 +21,7 @@ export function ArchiveRow({ article }: { article: BlogArticle }) {
           <h3 className="mt-2 font-heading text-[clamp(1.05rem,2.2vw,1.3rem)] font-semibold leading-snug tracking-[-0.02em] text-ink">
             <Link
               href={`/blog/${article.slug}`}
-              className="rounded-sm transition-colors duration-200 hover:text-accent-warm-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"
+              className="rounded-sm transition-colors duration-200 hover:text-accent-ink-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool"
             >
               {article.title}
             </Link>

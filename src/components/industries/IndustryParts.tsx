@@ -9,15 +9,13 @@ import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/utils";
 
 export const formatMeta: Record<MediaFormat, { label: string; icon: string; tone: string; bar: string }> = {
-  document: { label: "Documents", icon: "document", tone: "text-accent-warm", bar: "bg-accent-warm" },
+  document: { label: "Documents", icon: "document", tone: "text-accent-ink", bar: "bg-accent-warm" },
   audio: { label: "Audio", icon: "audio", tone: "text-accent-cool", bar: "bg-accent-cool" },
-  video: { label: "Video", icon: "video", tone: "text-accent-mint", bar: "bg-accent-mint" },
 };
 
 export const featureIcons: Record<FeatureSlug, string> = {
   "document-redaction": "document",
   "audio-redaction": "audio",
-  "video-redaction": "video",
 };
 
 export function FormatBadge({ format, primary = false }: { format: MediaFormat; primary?: boolean }) {
@@ -41,7 +39,7 @@ export function IndustrySignal({ page }: { page: IndustryPageContent }) {
       <div className="rounded-[0.7rem] bg-surface-raised p-5 sm:p-6">
         <div className="flex items-center justify-between gap-4 border-b border-border-subtle/60 pb-4">
           <span className="inline-flex items-center gap-3 text-sm font-semibold text-ink">
-            <span className="grid h-9 w-9 place-items-center rounded-[10px] border border-accent-warm/25 bg-accent-warm/10 text-accent-warm"><Icon name={page.icon} size={18} /></span>
+            <span className="grid h-9 w-9 place-items-center rounded-[10px] border border-accent-warm/25 bg-accent-warm/10 text-accent-ink"><Icon name={page.icon} size={18} /></span>
             {page.navLabel} records
           </span>
           <span className="type-meta">Reviewer-led</span>
@@ -75,7 +73,7 @@ export function CapabilityList({ claimIds }: { claimIds: IndustryPageContent["wo
         const claim = capabilityClaims[claimId];
         return (
           <li key={claimId} className="flex gap-3 border-b border-border-subtle/60 py-3.5 text-[0.9375rem] leading-6 text-ink-muted">
-            <Icon name="check-circle" size={17} className="mt-0.5 shrink-0 text-accent-warm" />
+            <Icon name="check-circle" size={17} className="mt-0.5 shrink-0 text-accent-ink" />
             <span>
               <span className="text-ink">{claim.publicWording}</span>
               {claim.condition ? <span className="mt-1 block text-[0.8125rem] leading-5 text-ink-muted">{claim.condition}</span> : null}
@@ -92,7 +90,7 @@ export function IndustryCard({ page, headingLevel = 3 }: { page: IndustryPageCon
   return (
     <article className="group relative flex h-full flex-col rounded-[14px] border border-border-subtle/60 bg-surface-raised/40 p-6 transition-colors hover:border-ink-muted/35 hover:bg-surface-raised/70 motion-reduce:transition-none">
       <div className="flex items-center gap-3">
-        <span className="grid h-9 w-9 place-items-center rounded-[10px] border border-accent-warm/25 bg-accent-warm/10 text-accent-warm"><Icon name={page.icon} size={18} /></span>
+        <span className="grid h-9 w-9 place-items-center rounded-[10px] border border-accent-warm/25 bg-accent-warm/10 text-accent-ink"><Icon name={page.icon} size={18} /></span>
         <Heading className="type-h3 text-[1.125rem]">
           <Link href={industryHref(page.slug)} className="after:absolute after:inset-0 after:rounded-[14px] focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-accent-cool">
             {page.navLabel}
@@ -105,7 +103,7 @@ export function IndustryCard({ page, headingLevel = 3 }: { page: IndustryPageCon
       </ul>
       <div className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-border-subtle/50 pt-5">
         <div className="flex flex-wrap gap-1.5" aria-label="Formats, primary first">{page.mediaEmphasis.map((format, index) => <FormatBadge key={format} format={format} primary={index === 0} />)}</div>
-        <span aria-hidden="true" className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-warm">Read guide<Icon name="arrow" size={15} className="transition-transform group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" /></span>
+        <span aria-hidden="true" className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-ink">Read guide<Icon name="arrow" size={15} className="transition-transform group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" /></span>
       </div>
     </article>
   );
@@ -128,13 +126,13 @@ export function FormatIndustryLinks({ format, title }: { format: MediaFormat; ti
         {pages.map((page) => (
           <li key={page.slug}>
             <Link href={industryHref(page.slug)} className="inline-flex min-h-10 items-center gap-2 rounded-[10px] border border-border-subtle/70 px-3.5 text-sm text-ink-muted transition-colors hover:border-ink-muted/40 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool motion-reduce:transition-none">
-              <Icon name={page.icon} size={15} className="text-accent-warm" />
+              <Icon name={page.icon} size={15} className="text-accent-ink" />
               {page.navLabel}
             </Link>
           </li>
         ))}
         <li>
-          <Link href="/industries" className="inline-flex min-h-10 items-center gap-2 rounded-full px-3 text-sm font-semibold text-accent-warm hover:text-accent-warm-hover">All industries<Icon name="arrow" size={15} /></Link>
+          <Link href="/industries" className="inline-flex min-h-10 items-center gap-2 rounded-full px-3 text-sm font-semibold text-accent-ink hover:text-accent-ink-hover">All industries<Icon name="arrow" size={15} /></Link>
         </li>
       </ul>
     </div>

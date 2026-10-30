@@ -8,7 +8,6 @@ import { Icon } from "@/components/ui/Icon";
 import { PageHero } from "@/components/marketing/PageHero";
 import { Breadcrumbs } from "@/components/marketing/Breadcrumbs";
 import { demoHref } from "@/content/navigation";
-import { ContextualCta } from "@/components/marketing/ContextualCta";
 import { FaqSection } from "@/components/marketing/FaqSection";
 import { FormatIndustryLinks } from "@/components/industries/IndustryParts";
 import type { FeatureSlug } from "@/lib/marketing/content";
@@ -17,11 +16,11 @@ import { FeatureMedia } from "./FeatureMedia";
 import { CapabilitySections } from "./CapabilitySections";
 import { FormatWorkflow } from "./FormatWorkflow";
 import { SupportedFormats } from "./SupportedFormats";
+import { cn } from "@/lib/utils";
 
 const featureFormat: Record<FeatureSlug, MediaFormat> = {
   "document-redaction": "document",
   "audio-redaction": "audio",
-  "video-redaction": "video",
 };
 
 export function FeaturePage({ page }: { page: FeaturePageContent }) {
@@ -43,7 +42,7 @@ export function FeaturePage({ page }: { page: FeaturePageContent }) {
           <ul className="grid gap-px overflow-hidden rounded-[16px] border border-border-subtle/50 bg-border-subtle/50 sm:grid-cols-3">
             {page.atGlance.map((item) => (
               <li key={item} className="flex items-start gap-3 bg-canvas p-6 text-[0.9375rem] leading-6 text-ink-muted">
-                <Icon name="check-circle" size={17} className="mt-0.5 shrink-0 text-accent-warm" />
+                <Icon name="check-circle" size={17} className="mt-0.5 shrink-0 text-accent-ink" />
                 {item}
               </li>
             ))}
@@ -66,7 +65,7 @@ export function FeaturePage({ page }: { page: FeaturePageContent }) {
       <FormatWorkflow steps={page.workflow} title={`From source to reviewed ${page.eyebrow.toLowerCase()} output`} />
       <CapabilitySections page={page} />
 
-      <section className="section-y border-t border-border-subtle/50 bg-canvas text-ink">
+      <section className="section-y bg-canvas text-ink">
         <Container>
           <div className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16">
             <SupportedFormats formats={page.supportedFormats} note={page.formatNote} />
@@ -75,7 +74,7 @@ export function FeaturePage({ page }: { page: FeaturePageContent }) {
               <h2 className="type-h3 mt-4 text-[1.25rem] leading-7">{page.availabilityNote?.title}</h2>
               <p className="mt-3 text-[0.9375rem] leading-7 text-ink-muted">{page.availabilityNote?.description}</p>
               {page.insightsHref ? (
-                <Link href={page.insightsHref} className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-accent-warm transition-colors hover:text-accent-warm-hover motion-reduce:transition-none">
+                <Link href={page.insightsHref} className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-accent-ink transition-colors hover:text-accent-ink-hover motion-reduce:transition-none">
                   Read the document redaction guide
                   <Icon name="arrow" size={16} />
                 </Link>
@@ -91,17 +90,17 @@ export function FeaturePage({ page }: { page: FeaturePageContent }) {
         description="Answers reflect the current product boundary, including the tooling and review conditions that matter in a real workflow."
       />
 
-      <section className="section-y-sm border-t border-border-subtle/50 bg-canvas text-ink">
+      <section className="section-y-sm bg-canvas text-ink">
         <Container>
           <p className="type-eyebrow">Continue exploring</p>
-          <div className="mt-6 grid gap-px overflow-hidden rounded-[16px] border border-border-subtle/50 bg-border-subtle/50 sm:grid-cols-2">
+          <div className={cn("mt-6 grid gap-px overflow-hidden rounded-[16px] border border-border-subtle bg-border-subtle", page.relatedFeatures.length > 1 && "sm:grid-cols-2")}>
             {page.relatedFeatures.map((slug) => {
               const related = getFeaturePage(slug)!;
               return (
                 <Link key={slug} href={featureHref(slug)} className="group bg-canvas p-6 transition-colors hover:bg-surface-raised/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-cool motion-reduce:transition-none sm:p-8">
                   <p className="type-meta">{related.eyebrow}</p>
                   <h2 className="type-h3 mt-3 text-[1.25rem] leading-7">{related.h1}</h2>
-                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-accent-warm">
+                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-accent-ink">
                     Explore workflow
                     <Icon name="arrow" size={16} className="transition-transform group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" />
                   </span>
@@ -115,7 +114,6 @@ export function FeaturePage({ page }: { page: FeaturePageContent }) {
         </Container>
       </section>
 
-      <ContextualCta eyebrow={page.cta.eyebrow} title={page.cta.title} description={page.cta.description} />
     </>
   );
 }

@@ -66,7 +66,7 @@ export function Accordion({
               }
             >
               {item.icon && (
-                <span className={cn("grid h-9 w-9 shrink-0 place-items-center rounded-[10px] border transition-colors", isOpen ? "border-accent-warm/40 bg-accent-warm/10 text-accent-warm" : "border-border-subtle/70 text-ink-muted")}>
+                <span className={cn("grid h-9 w-9 shrink-0 place-items-center rounded-[10px] border transition-colors", isOpen ? "border-accent-warm/40 bg-accent-warm/10 text-accent-ink" : "border-border-subtle/70 text-ink-muted")}>
                   <Icon name={item.icon} size={18} />
                 </span>
               )}
@@ -78,7 +78,7 @@ export function Accordion({
                 size={18}
                 className={cn(
                   "text-ink-muted transition-transform duration-300 motion-reduce:transition-none",
-                  isOpen && "rotate-180 text-accent-warm"
+                  isOpen && "rotate-180 text-accent-ink"
                 )}
               />
             </button>

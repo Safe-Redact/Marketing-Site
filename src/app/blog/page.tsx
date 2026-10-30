@@ -57,7 +57,7 @@ export async function generateMetadata({ searchParams }: BlogPageProps): Promise
   const label = type ? CONTENT_FILTERS.find((filter) => filter.type === type)?.label : undefined;
 
   return {
-    title: type && label ? `${label} | Insights` : "Insights",
+    title: type && label ? `${label} | Blog` : "Blog",
     description:
       "OpenRedakt company news, product updates, industry insights, and practical guides about responsible redaction workflows.",
     alternates: { canonical },
@@ -67,7 +67,7 @@ export async function generateMetadata({ searchParams }: BlogPageProps): Promise
     openGraph: {
       type: "website",
       url: canonical,
-      title: type && label ? `${label} | OpenRedakt Insights` : "Insights | OpenRedakt",
+      title: type && label ? `${label} | OpenRedakt Blog` : "Blog | OpenRedakt",
       description:
         "Company news, product updates, industry insights, and practical guides from OpenRedakt.",
     },
@@ -127,7 +127,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         aria-label="Article directory"
       >
         <Container className="!max-w-5xl">
-          <div className="border-t border-border-subtle pt-7 sm:pt-8">
+          <div className="pt-2 sm:pt-4">
             <div>
               <ArticleSearch query={query} type={type ?? undefined} tag={activeTag?.slug} />
             </div>
@@ -177,7 +177,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
             </>
           ) : featured && !query && !type && !activeTag ? null : (
             <div className="mx-auto mt-14 max-w-2xl rounded-[16px] border border-border-subtle bg-surface-raised px-6 py-12 text-center sm:px-10">
-              <p className="font-heading text-caption font-semibold uppercase tracking-[0.12em] text-accent-warm">
+              <p className="font-heading text-caption font-semibold uppercase tracking-[0.12em] text-accent-ink">
                 {query || type || activeTag ? "No matching results" : "Publication queue"}
               </p>
               <h2 className="mt-4 font-heading text-heading-xl text-ink">

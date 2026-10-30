@@ -32,7 +32,7 @@ export default function NotFound() {
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/"
-              className="inline-flex items-center justify-center rounded-sm bg-accent-cool px-6 py-3 font-heading text-body font-semibold text-canvas transition-opacity hover:opacity-90"
+              className="inline-flex items-center justify-center rounded-sm bg-accent-warm px-6 py-3 font-heading text-body font-semibold text-on-accent transition-opacity hover:opacity-90"
             >
               Back to home
             </Link>
@@ -40,7 +40,7 @@ export default function NotFound() {
               href="/blog"
               className="inline-flex items-center justify-center rounded-sm border border-border-subtle px-6 py-3 font-heading text-body font-semibold text-ink transition-colors hover:border-accent-cool hover:text-accent-cool"
             >
-              Blog &amp; Insights
+              Blog
             </Link>
           </div>
         </Container>

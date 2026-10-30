@@ -15,7 +15,7 @@ export function ArticleArchive({
     <section aria-label="Chronological article archive" className="mt-14 sm:mt-16 lg:mt-20">
       <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="font-heading text-caption font-semibold uppercase tracking-[0.14em] text-accent-warm">
+          <p className="font-heading text-caption font-semibold uppercase tracking-[0.14em] text-accent-ink">
             Archive
           </p>
           <p className="mt-2 font-heading text-[clamp(1.5rem,2.8vw,2.15rem)] font-semibold tracking-[-0.025em] text-ink">

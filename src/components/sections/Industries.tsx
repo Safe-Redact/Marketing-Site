@@ -14,7 +14,7 @@ export function Industries() {
     .filter((group) => group.pages.length > 0);
 
   return (
-    <section id="industries" className="theme-light section-y relative bg-canvas pb-32 text-ink lg:pb-40">
+    <section id="industries" className="section-y relative bg-canvas text-ink">
       <Container>
         <AnimateOnScroll className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
@@ -26,7 +26,7 @@ export function Industries() {
               Teams use redaction when records need to move into filing, disclosure, release, research, or controlled internal review.
             </p>
           </div>
-          <Link href="/industries" className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-accent-warm transition-colors hover:text-accent-warm-hover motion-reduce:transition-none">
+          <Link href="/industries" className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-accent-ink transition-colors hover:text-accent-ink-hover motion-reduce:transition-none">
             Browse the industry guides
             <Icon name="arrow" size={16} />
           </Link>
@@ -43,7 +43,7 @@ export function Industries() {
                     <li key={page.slug} className="border-b border-border-subtle/60">
                       <Link href={industryHref(page.slug)} className="group flex min-h-11 items-center justify-between gap-3 py-2.5 text-[0.9375rem] text-ink-muted transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-cool motion-reduce:transition-none">
                         <span className="flex items-center gap-3">
-                          <Icon name={page.icon} size={16} className="text-accent-warm" />
+                          <Icon name={page.icon} size={16} className="text-accent-ink" />
                           {page.navLabel}
                         </span>
                         <Icon name="arrow" size={15} className="opacity-0 transition-opacity group-hover:opacity-100 motion-reduce:transition-none" />

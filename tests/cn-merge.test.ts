@@ -32,7 +32,8 @@ test("every custom font size in tailwind.config.ts is registered with the merge 
 });
 
 test("every Button variant and size keeps both its label colour and its font size", () => {
-  const expectedColour = { primary: "text-canvas", secondary: "text-ink", ghost: "text-ink" } as const;
+  // Orange fills carry the fixed dark on-accent label now that the canvas is light.
+  const expectedColour = { primary: "text-on-accent", secondary: "text-ink", ghost: "text-ink" } as const;
   const expectedSize = { sm: "text-body-sm", md: "text-body", lg: "text-body" } as const;
 
   for (const variant of ["primary", "secondary", "ghost"] as const) {
@@ -47,5 +48,5 @@ test("every Button variant and size keeps both its label colour and its font siz
   const asChild = renderToStaticMarkup(
     createElement(Button, { variant: "primary", size: "sm", asChild: true }, createElement("a", { href: "/contact" }, "Request a Demo"))
   );
-  assert.match(asChild, /<a [^>]*class="[^"]*\btext-canvas\b[^"]*\btext-body-sm\b/);
+  assert.match(asChild, /<a [^>]*class="[^"]*\btext-on-accent\b[^"]*\btext-body-sm\b/);
 });

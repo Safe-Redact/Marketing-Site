@@ -20,21 +20,21 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const variants = {
       primary:
-        "bg-accent-warm text-canvas shadow-action hover:bg-accent-warm-hover hover:shadow-action-hover",
+        "bg-accent-warm text-on-accent shadow-action hover:bg-accent-warm-hover hover:shadow-action-hover",
       secondary:
-        "border border-border-subtle/70 bg-surface-raised/80 text-ink hover:border-ink-muted/40 hover:bg-surface-active",
+        "border border-transparent bg-surface-active text-ink hover:bg-elevated hover:border-border-subtle",
       ghost:
-        "border border-border-subtle/70 bg-transparent text-ink hover:border-ink-muted/40 hover:bg-surface-active/60",
+        "border border-border-subtle bg-transparent text-ink hover:border-ink-muted/40 hover:bg-surface-active",
     };
 
     const sizes = {
-      sm: "min-h-10 px-4 py-2 text-body-sm",
+      sm: "min-h-9 px-4 py-1.5 text-body-sm",
       md: "min-h-11 px-5 py-2.5 text-body",
       lg: "min-h-12 px-6 py-3 text-body",
     };
 
     const classes = cn(
-      "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-[10px] font-semibold transition-all duration-200 motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool focus-visible:ring-offset-2 focus-visible:ring-offset-canvas disabled:pointer-events-none disabled:opacity-50",
+      "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold transition-all duration-200 motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool focus-visible:ring-offset-2 focus-visible:ring-offset-canvas disabled:pointer-events-none disabled:opacity-50",
       variants[variant],
       sizes[size],
       className

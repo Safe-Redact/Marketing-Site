@@ -35,7 +35,7 @@ export default function ContactPage() {
           breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
         />
 
-        <section className="section-y-sm border-t border-border-subtle/50 bg-canvas text-ink" aria-labelledby="contact-include">
+        <section className="section-y-sm bg-canvas text-ink" aria-labelledby="contact-include">
           <Container>
             <p className="type-eyebrow">Before the demo</p>
             <h2 id="contact-include" className="type-h2 mt-4 max-w-[24ch] text-[clamp(1.5rem,1.25rem+0.9vw,2rem)]">What helps us prepare a useful demo</h2>
@@ -43,26 +43,26 @@ export default function ContactPage() {
               {contactPage.include.map((item, index) => (
                 <li key={item.title} className="relative border-b border-border-subtle/60 py-7 md:border-b-0 md:pr-8">
                   <span aria-hidden="true" className="absolute -top-px left-0 h-px w-12 bg-accent-warm" />
-                  <span className="type-meta text-accent-warm">0{index + 1}</span>
+                  <span className="type-meta text-accent-ink">0{index + 1}</span>
                   <h3 className="type-h3 mt-3">{item.title}</h3>
                   <p className="mt-2 text-[0.9375rem] leading-6 text-ink-muted">{item.description}</p>
                 </li>
               ))}
             </ul>
             <p className="mt-8 max-w-3xl text-[0.9375rem] leading-7 text-ink-muted">
-              Describe your files in general terms, and please do not paste sensitive content into the form. Before the demo, you can review the <Link href="/features" className="font-semibold text-accent-warm hover:text-accent-warm-hover">feature workflows</Link> or the <Link href="/industries" className="font-semibold text-accent-warm hover:text-accent-warm-hover">industry guides</Link>.
+              Describe your files in general terms, and please do not paste sensitive content into the form. Before the demo, you can review the <Link href="/features" className="font-semibold text-accent-ink hover:text-accent-ink-hover">feature workflows</Link> or the <Link href="/industries" className="font-semibold text-accent-ink hover:text-accent-ink-hover">industry guides</Link>.
             </p>
           </Container>
         </section>
 
-        <section className="section-y relative isolate overflow-hidden border-t border-border-subtle/50 bg-canvas text-ink">
-          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[34rem] bg-[radial-gradient(ellipse_55%_60%_at_70%_0%,rgb(var(--or-coral)/0.12),transparent_70%)]" />
+        <section className="section-y relative isolate overflow-hidden bg-canvas text-ink">
+          <div aria-hidden="true" className="closing-glow pointer-events-none absolute inset-0 -z-10" />
           <Container>
             <DemoEnquiry />
           </Container>
         </section>
       </main>
-      <Footer />
+      <Footer invitation={false} />
     </>
   );
 }

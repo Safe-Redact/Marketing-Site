@@ -179,7 +179,7 @@ export function ArticleTableOfContents({
             className={cn(
               "-ml-px block border-l px-3 py-1.5 text-[0.8125rem] leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cool motion-reduce:transition-none",
               activeId === heading.id
-                ? "border-accent-warm font-medium text-white"
+                ? "border-accent-warm font-medium text-ink"
                 : "border-transparent font-normal text-ink-muted hover:border-accent-warm/55 hover:text-ink"
             )}
           >

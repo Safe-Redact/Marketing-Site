@@ -4,16 +4,11 @@ import { Header } from "@/components/layout/Header";
 import { PricingCards } from "@/components/pricing/PricingCards";
 import { PricingComparison } from "@/components/pricing/PricingComparison";
 import { PricingFaq } from "@/components/pricing/PricingFaq";
-import { FinalCta } from "@/components/sections/FinalCta";
 import { AnimateOnScroll } from "@/components/ui/AnimateOnScroll";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import {
-  pricingLicensingSteps,
-  pricingPackages,
-  type PricingPackageSlug,
-} from "@/content/pricing";
+import { pricingLicensingSteps } from "@/content/pricing";
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -29,40 +24,24 @@ export const metadata: Metadata = {
   },
 };
 
-interface PricingPageProps {
-  searchParams: Promise<{ package?: string | string[] }>;
-}
-
-export default async function PricingPage({ searchParams }: PricingPageProps) {
-  const parameters = await searchParams;
-  const requestedPackage = Array.isArray(parameters.package)
-    ? parameters.package[0]
-    : parameters.package;
-  const initialPackage = pricingPackages.some((plan) => plan.slug === requestedPackage)
-    ? (requestedPackage as PricingPackageSlug)
-    : undefined;
-
+export default function PricingPage() {
   return (
     <>
       <Header />
       <main id="main-content" className="min-h-screen bg-canvas text-ink">
-        <section className="hero-gradient border-b border-border-subtle pt-[8.75rem] sm:pt-[10rem] lg:pt-[11.5rem]">
-          <Container className="pb-16 sm:pb-20 lg:pb-24">
-            <div className="grid items-end gap-10 lg:grid-cols-[1fr_0.62fr] lg:gap-16">
-              <div>
-                <Eyebrow>Annual license pricing</Eyebrow>
-                <h1 className="mt-5 max-w-4xl font-heading text-[clamp(2.4rem,6vw,4.8rem)] font-semibold leading-[1.04] tracking-[-0.04em] text-ink text-balance">
-                  Redaction software that fits the work you do.
-                </h1>
-                <p className="mt-6 max-w-2xl text-body-lg leading-8 text-ink-muted">
-                  Choose a license for document workflows, audio workflows, or both. Each package helps teams review and protect sensitive information before it is shared.
-                </p>
-              </div>
-              <div className="rounded-panel border border-accent-cool/25 bg-accent-cool/5 p-6 sm:p-7">
-                <p className="font-heading text-lg font-semibold text-ink">
-                  Per license. Billed annually.
-                </p>
-                <p className="mt-3 text-sm leading-6 text-ink-muted">
+        <section className="page-glow pt-[7.5rem] sm:pt-[8.5rem]">
+          <Container className="pb-4 sm:pb-6">
+            <div className="mx-auto max-w-3xl text-center">
+              <Eyebrow>Annual license pricing</Eyebrow>
+              <h1 className="type-h1 mx-auto mt-5 max-w-[20ch]">
+                Redaction software that fits the work you do.
+              </h1>
+              <p className="type-lede mx-auto mt-5 max-w-2xl">
+                Choose a license for document workflows, audio workflows, or both. Each package helps teams review and protect sensitive information before it is shared.
+              </p>
+              <div className="mx-auto mt-8 flex max-w-lg flex-col items-center gap-1 rounded-[18px] border border-border-subtle bg-canvas/80 px-6 py-4 text-center shadow-[0_1px_2px_rgb(var(--or-shadow)/0.04)]">
+                <p className="text-sm font-semibold text-ink">Per license. Billed annually.</p>
+                <p className="text-sm leading-5 text-ink-muted">
                   Monthly figures are planning equivalents. OpenRedakt does not present a month-to-month payment schedule on this page.
                 </p>
               </div>
@@ -70,10 +49,11 @@ export default async function PricingPage({ searchParams }: PricingPageProps) {
           </Container>
         </section>
 
-        <section className="py-16 sm:py-20 lg:py-24" aria-labelledby="packages-heading">
+        <section className="pb-16 pt-12 sm:pb-20 sm:pt-16 lg:pb-24" aria-labelledby="packages-heading">
           <Container>
             <AnimateOnScroll>
               <SectionHeading
+                align="center"
                 eyebrow="Choose your workflow"
                 title={<span id="packages-heading">Three packages, clearly scoped</span>}
                 description="Essential and Advanced are separate, capability-specific packages: Essential covers documents and Advanced covers audio. Complete Suite combines both supported workflows under one license."
@@ -85,10 +65,11 @@ export default async function PricingPage({ searchParams }: PricingPageProps) {
           </Container>
         </section>
 
-        <section id="compare" className="scroll-mt-24 border-y border-border-subtle bg-surface-raised/35 py-16 sm:py-20 lg:py-24" aria-labelledby="comparison-heading">
+        <section id="compare" className="scroll-mt-24 bg-surface-raised py-16 sm:py-20 lg:py-24" aria-labelledby="comparison-heading">
           <Container>
             <AnimateOnScroll>
               <SectionHeading
+                align="center"
                 eyebrow="Package comparison"
                 title={<span id="comparison-heading">Compare packages</span>}
                 description="The differences that matter when choosing a package. Supported file formats and technical requirements are covered in the FAQ below."
@@ -112,22 +93,22 @@ export default async function PricingPage({ searchParams }: PricingPageProps) {
               </AnimateOnScroll>
               <ol className="grid gap-4 sm:grid-cols-2">
                 {pricingLicensingSteps.map((item, index) => (
-                  <AnimateOnScroll key={item.title} delay={index * 60}>
-                    <li className="h-full rounded-card border border-border-subtle bg-surface-raised p-6">
-                      <span className="grid h-10 w-10 place-items-center rounded-control border border-accent-cool/20 bg-accent-cool/10 font-heading text-sm font-semibold text-accent-cool">
+                  <li key={item.title}>
+                    <AnimateOnScroll delay={index * 60} className="h-full rounded-[18px] border border-border-subtle bg-surface-raised p-6">
+                      <span className="grid h-9 w-9 place-items-center rounded-full bg-accent-warm/15 font-heading text-sm font-semibold text-accent-ink">
                         {index + 1}
                       </span>
                       <h3 className="mt-5 font-heading text-lg font-semibold text-ink">{item.title}</h3>
                       <p className="mt-3 text-sm leading-6 text-ink-muted">{item.description}</p>
-                    </li>
-                  </AnimateOnScroll>
+                    </AnimateOnScroll>
+                  </li>
                 ))}
               </ol>
             </div>
           </Container>
         </section>
 
-        <section className="border-t border-border-subtle bg-surface-raised/35 py-16 sm:py-20 lg:py-24" aria-labelledby="pricing-faq-heading">
+        <section className="py-16 sm:py-20 lg:py-24" aria-labelledby="pricing-faq-heading">
           <Container>
             <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
               <AnimateOnScroll>
@@ -143,8 +124,6 @@ export default async function PricingPage({ searchParams }: PricingPageProps) {
             </div>
           </Container>
         </section>
-
-        <FinalCta initialPackage={initialPackage} />
       </main>
       <Footer />
     </>
