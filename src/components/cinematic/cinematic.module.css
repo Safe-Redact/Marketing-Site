@@ -1,0 +1,169 @@
+/*
+ * Cinematic Precision primitives (D1). Colours come only from the --or-* tokens in
+ * globals.css. Every effect here is decorative: nothing carries meaning or text.
+ */
+
+/* ---------- Atmospheric glow ---------- */
+.glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  --glow-rgb: var(--or-coral);
+  --glow-strength: 0.16;
+  background:
+    radial-gradient(var(--glow-shape, 55% 45%) at var(--glow-at, 50% 30%), rgb(var(--glow-rgb) / var(--glow-strength)), transparent 70%),
+    radial-gradient(35% 30% at var(--glow-at, 50% 30%), rgb(var(--glow-rgb) / calc(var(--glow-strength) * 0.8)), transparent 75%);
+}
+.glowSignal { --glow-rgb: var(--or-signal); }
+.glowMedium { --glow-strength: 0.22; }
+.glowTop { --glow-at: 50% 0%; --glow-shape: 70% 55%; }
+.glowCenter { --glow-at: 50% 55%; }
+.glowLeft { --glow-at: 18% 40%; }
+.glowRight { --glow-at: 82% 40%; }
+.glowBottom { --glow-at: 50% 100%; --glow-shape: 70% 50%; }
+
+/* Film grain removes banding from the gradients. 4% opacity, tiled, static. */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* ---------- Edge fade ---------- */
+.edgeFade {
+  --fade-top: 0px;
+  --fade-right: 0px;
+  --fade-bottom: 0px;
+  --fade-left: 0px;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 var(--fade-left), #000 calc(100% - var(--fade-right)), transparent),
+    linear-gradient(to bottom, transparent, #000 var(--fade-top), #000 calc(100% - var(--fade-bottom)), transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 var(--fade-left), #000 calc(100% - var(--fade-right)), transparent),
+    linear-gradient(to bottom, transparent, #000 var(--fade-top), #000 calc(100% - var(--fade-bottom)), transparent);
+  mask-composite: intersect;
+}
+
+/* ---------- Product frame ---------- */
+.frame {
+  position: relative;
+  isolation: isolate;
+  border-radius: 1rem;
+  padding: 6px;
+  background: linear-gradient(180deg, rgb(var(--or-elevated) / 0.9), rgb(var(--or-graphite) / 0.92));
+  border: 1px solid rgb(var(--or-fg) / 0.08);
+  box-shadow:
+    inset 0 1px 0 rgb(var(--or-fg) / 0.1),
+    0 30px 80px rgb(0 0 0 / 0.45),
+    0 0 0 1px rgb(0 0 0 / 0.35);
+}
+.frame::before {
+  /* Content-tinted light behind the frame. */
+  content: "";
+  position: absolute;
+  inset: -12% -8%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(50% 50% at 50% 40%, rgb(var(--frame-glow, var(--or-coral)) / 0.16), transparent 70%);
+}
+.frameGlowSignal { --frame-glow: var(--or-signal); }
+.frameGlowNone::before { display: none; }
+.frameScreen {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.65rem;
+  background: rgb(var(--or-midnight));
+}
+
+/* ---------- Redaction bar ---------- */
+.bar {
+  display: block;
+  height: var(--bar-height, 0.625rem);
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgb(var(--bar-rgb, var(--or-coral))) 0%, rgb(var(--bar-rgb, var(--or-coral)) / 0.92) 100%);
+  box-shadow: 0 0 24px rgb(var(--bar-rgb, var(--or-coral)) / 0.35);
+  transform-origin: left center;
+}
+.barSignal { --bar-rgb: var(--or-signal); }
+.barHairline { --bar-height: 2px; box-shadow: 0 0 12px rgb(var(--bar-rgb, var(--or-coral)) / 0.4); }
+.barSweep {
+  animation: bar-sweep 700ms var(--or-ease-standard) both;
+  animation-delay: var(--bar-delay, 0ms);
+}
+@keyframes bar-sweep {
+  from { transform: scaleX(0); opacity: 0.4; }
+  to { transform: scaleX(1); opacity: 1; }
+}
+
+/* ---------- Typography ---------- */
+.eyebrow {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(var(--or-fg-muted));
+}
+.eyebrowCoral { color: rgb(var(--or-coral)); }
+.eyebrowSignal { color: rgb(var(--or-signal)); }
+
+.heading { color: rgb(var(--or-fg)); text-wrap: balance; }
+.headingContinuation { color: rgb(var(--or-fg-muted)); }
+.headingHero {
+  font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(2.35rem, 1.6rem + 3.4vw, 4rem);
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+}
+.headingDisplay {
+  font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.875rem, 1.4rem + 2vw, 2.75rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+.headingSection {
+  font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.1875rem, 1.05rem + 0.5vw, 1.375rem);
+  line-height: 1.36;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- Sections ---------- */
+.section { position: relative; isolation: isolate; }
+.sectionMidnight { background: rgb(var(--or-midnight)); color: rgb(var(--or-fg)); }
+.sectionGraphite { background: rgb(var(--or-graphite)); color: rgb(var(--or-fg)); }
+.sectionHero { padding-block: clamp(6.5rem, 4rem + 6vw, 9rem) clamp(3rem, 2rem + 3vw, 5rem); }
+.sectionLg { padding-block: clamp(6rem, 3rem + 7vw, 10rem); }
+.sectionMd { padding-block: clamp(5rem, 3rem + 4vw, 7rem); }
+.sectionEditorial { padding-block: clamp(4rem, 3rem + 2vw, 5rem); }
+
+/* ---------- Motion control ---------- */
+.motionControl {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.25rem;
+  padding: 0 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgb(var(--or-fg-muted) / 0.55);
+  background: rgb(var(--or-midnight) / 0.7);
+  color: rgb(var(--or-fg));
+  font-size: 0.8125rem;
+  line-height: 1;
+  transition: background-color 150ms var(--or-ease-standard), border-color 150ms var(--or-ease-standard);
+}
+.motionControl:hover { background: rgb(var(--or-elevated)); border-color: rgb(var(--or-fg-muted) / 0.8); }
+.motionControl:focus-visible { outline: 2px solid rgb(var(--or-signal)); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .barSweep { animation: none; }
+  .motionControl { transition: none; }
+}

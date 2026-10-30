@@ -1,0 +1,1414 @@
+[
+  {
+    "name": "ai-1440",
+    "folder": "desktop-1440",
+    "url": "https://www.raycast.com/core-features/ai",
+    "width": 1440,
+    "height": 900,
+    "sections": true,
+    "full": true,
+    "measure": {
+      "title": "Meet your new virtual assistant",
+      "vw": 1440,
+      "docH": 10852,
+      "h1": [
+        "Meet your new virtual assistant",
+        "48px",
+        "500",
+        "50.4px",
+        [
+          495,
+          180,
+          450,
+          101
+        ]
+      ],
+      "bodyP": [
+        "18px",
+        "27px",
+        "rgba(255, 255, 255, 0.5)",
+        490
+      ],
+      "heads": [
+        [
+          "H1",
+          "Meet your new virtual assistant",
+          "48px",
+          "500",
+          "50.4px"
+        ],
+        [
+          "H3",
+          "Projects",
+          "16px",
+          "500",
+          "24px"
+        ],
+        [
+          "H3",
+          "Screen Awareness",
+          "16px",
+          "500",
+          "24px"
+        ],
+        [
+          "H3",
+          "Automations",
+          "16px",
+          "500",
+          "24px"
+        ],
+        [
+          "H3",
+          "Custom Agents",
+          "16px",
+          "500",
+          "24px"
+        ],
+        [
+          "H3",
+          "Bring your own subscriptions and keys",
+          "16px",
+          "500",
+          "24px"
+        ],
+        [
+          "H2",
+          "Ask anything, anytime, anywhere",
+          "32px",
+          "500",
+          "38.4px"
+        ],
+        [
+          "H2",
+          "Connect your tools",
+          "32px",
+          "500",
+          "38.4px"
+        ],
+        [
+          "H3",
+          "Find an AI Extension",
+          "16px",
+          "500",
+          "24px"
+        ],
+        [
+          "H3",
+          "...or build your own",
+          "16px",
+          "500",
+          "24px"
+        ]
+      ],
+      "videos": 0,
+      "canvas": 0,
+      "imgs": 47,
+      "sticky": []
+    },
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\ai-1440-s01.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\ai-1440-s02.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\ai-1440-s03.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\ai-1440-s04.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\ai-1440-s05.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\ai-1440-s06.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\ai-1440-s07.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\ai-1440-s08.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\ai-1440-s09.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\ai-1440-s10.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\ai-1440-s11.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\ai-1440-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:36:41.906Z",
+    "pageHeight": 10852,
+    "offsets": [
+      0,
+      72,
+      180,
+      2445,
+      3456,
+      4105,
+      4889,
+      5469,
+      6293,
+      8586,
+      9613
+    ]
+  },
+  {
+    "name": "pro-1440",
+    "folder": "desktop-1440",
+    "url": "https://www.raycast.com/pro",
+    "width": 1440,
+    "height": 900,
+    "sections": true,
+    "full": true,
+    "measure": {
+      "title": "Raycast Pro: AI, Cloud Sync & Custom Themes, Your Way",
+      "vw": 1440,
+      "docH": 10665,
+      "h1": [
+        "New Level Unlocked",
+        "48px",
+        "600",
+        "normal",
+        [
+          485,
+          324,
+          470,
+          59
+        ]
+      ],
+      "bodyP": [
+        "18px",
+        "normal",
+        "rgb(255, 255, 255)",
+        630
+      ],
+      "heads": [
+        [
+          "H1",
+          "New Level Unlocked",
+          "48px",
+          "600",
+          "normal"
+        ],
+        [
+          "H2",
+          "Meet your new virtual assistant",
+          "32px",
+          "500",
+          "38.4px"
+        ],
+        [
+          "H3",
+          "AI Chat",
+          "16px",
+          "500",
+          "24px"
+        ],
+        [
+          "H3",
+          "Quick AI",
+          "16px",
+          "500",
+          "24px"
+        ],
+        [
+          "H3",
+          "AI Extensions",
+          "16px",
+          "500",
+          "24px"
+        ],
+        [
+          "H2",
+          "One Interface.",
+          "24px",
+          "500",
+          "normal"
+        ],
+        [
+          "H2",
+          "Put the Pro in Productivity.",
+          "24px",
+          "500",
+          "normal"
+        ],
+        [
+          "H2",
+          "Don’t get lost in translation.",
+          "20px",
+          "500",
+          "normal"
+        ],
+        [
+          "H2",
+          "Stay in sync.",
+          "20px",
+          "500",
+          "normal"
+        ],
+        [
+          "H2",
+          "Never forget.",
+          "20px",
+          "500",
+          "normal"
+        ]
+      ],
+      "videos": 0,
+      "canvas": 0,
+      "imgs": 23,
+      "sticky": []
+    },
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\pro-1440-s01.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\pro-1440-s02.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\pro-1440-s03.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\pro-1440-s04.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\pro-1440-s05.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\pro-1440-s06.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\pro-1440-s07.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\pro-1440-s08.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\pro-1440-s09.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\pro-1440-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:37:16.483Z",
+    "pageHeight": 10665,
+    "offsets": [
+      0,
+      72,
+      24,
+      751,
+      2320,
+      3558,
+      6030,
+      8196,
+      9426
+    ]
+  },
+  {
+    "name": "windows-1440",
+    "folder": "desktop-1440",
+    "url": "https://www.raycast.com/windows",
+    "width": 1440,
+    "height": 900,
+    "sections": true,
+    "full": true,
+    "measure": {
+      "title": "Raycast for Windows",
+      "vw": 1440,
+      "docH": 10220,
+      "h1": [
+        "A New Start",
+        "168px",
+        "400",
+        "168px",
+        [
+          367,
+          337,
+          706,
+          168
+        ]
+      ],
+      "bodyP": [
+        "16px",
+        "28px",
+        "rgba(255, 255, 255, 0.6)",
+        680
+      ],
+      "heads": [
+        [
+          "H1",
+          "A New Start",
+          "168px",
+          "400",
+          "168px"
+        ],
+        [
+          "H2",
+          "New Productivity Hack Unlocked",
+          "20px",
+          "500",
+          "28px"
+        ],
+        [
+          "H3",
+          "Open apps quickly. Super quickly.",
+          "20px",
+          "500",
+          "normal"
+        ],
+        [
+          "H3",
+          "Search files and folders. The quickest way to find",
+          "20px",
+          "500",
+          "normal"
+        ],
+        [
+          "H3",
+          "Less Copy, More Paste. Access everything you've pr",
+          "20px",
+          "500",
+          "normal"
+        ],
+        [
+          "H3",
+          "Do it once, do it right. Your source of truth that",
+          "20px",
+          "500",
+          "normal"
+        ],
+        [
+          "H3",
+          "Beats bookmarks. The absolute quickest way launch ",
+          "20px",
+          "500",
+          "normal"
+        ],
+        [
+          "H3",
+          "Calculate anything. Our calculator understands hum",
+          "20px",
+          "500",
+          "normal"
+        ],
+        [
+          "H3",
+          "Smartest there is. Predictable search, pinning and",
+          "20px",
+          "500",
+          "normal"
+        ],
+        [
+          "H3",
+          "Hotkeys and Aliases. Speed up your workflow with s",
+          "20px",
+          "500",
+          "normal"
+        ]
+      ],
+      "videos": 7,
+      "canvas": 0,
+      "imgs": 151,
+      "sticky": []
+    },
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\windows-1440-s01.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\windows-1440-s02.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\windows-1440-s03.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\windows-1440-s04.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\windows-1440-s05.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\windows-1440-s06.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\windows-1440-s07.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\windows-1440-s08.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\windows-1440-s09.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\windows-1440-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:37:48.739Z",
+    "pageHeight": 10220,
+    "offsets": [
+      0,
+      1034,
+      3513,
+      4508,
+      5002,
+      5566,
+      6597,
+      7537,
+      8080
+    ]
+  },
+  {
+    "name": "teams-1440",
+    "folder": "desktop-1440",
+    "url": "https://www.raycast.com/teams",
+    "width": 1440,
+    "height": 900,
+    "sections": true,
+    "full": true,
+    "measure": {
+      "title": "Raycast for Teams: Streamline Collaboration and Workflow",
+      "vw": 1440,
+      "docH": 10971,
+      "h1": [
+        "Your team, reimagined.",
+        "72px",
+        "700",
+        "84px",
+        [
+          460,
+          366,
+          520,
+          168
+        ]
+      ],
+      "bodyP": [
+        "16px",
+        "24px",
+        "rgba(255, 255, 255, 0.6)",
+        506
+      ],
+      "heads": [
+        [
+          "H1",
+          "Your team, reimagined.",
+          "72px",
+          "700",
+          "84px"
+        ],
+        [
+          "H2",
+          "One organization,infinite possibilities.",
+          "36px",
+          "700",
+          "40px"
+        ],
+        [
+          "H3",
+          "Put the Proin Productivity",
+          "52px",
+          "600",
+          "57.2px"
+        ],
+        [
+          "H2",
+          "Get started today",
+          "36px",
+          "700",
+          "40px"
+        ],
+        [
+          "H2",
+          "Easily customizable extension templates",
+          "36px",
+          "700",
+          "40px"
+        ],
+        [
+          "H2",
+          "Ready for take-off?",
+          "36px",
+          "700",
+          "40px"
+        ],
+        [
+          "H2",
+          "Stay in the loop.",
+          "20px",
+          "500",
+          "normal"
+        ]
+      ],
+      "videos": 0,
+      "canvas": 0,
+      "imgs": 29,
+      "sticky": []
+    },
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\teams-1440-s01.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\teams-1440-s02.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\teams-1440-s03.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\teams-1440-s04.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\teams-1440-s05.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\teams-1440-s06.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\teams-1440-s07.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\teams-1440-s08.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\teams-1440-s09.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\teams-1440-s10.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\teams-1440-s11.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\teams-1440-s12.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\teams-1440-s13.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\teams-1440-s14.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\teams-1440-s15.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\teams-1440-s16.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\teams-1440-s17.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\teams-1440-s18.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\teams-1440-s19.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\teams-1440-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:38:20.931Z",
+    "pageHeight": 10971,
+    "offsets": [
+      -72,
+      1063,
+      1256,
+      1632,
+      2040,
+      3191,
+      3663,
+      4095,
+      4716,
+      5936,
+      6124,
+      6215,
+      7006,
+      7511,
+      7616,
+      7872,
+      8296,
+      8584,
+      9196
+    ]
+  },
+  {
+    "name": "blog-1440",
+    "folder": "desktop-1440",
+    "url": "https://www.raycast.com/blog",
+    "width": 1440,
+    "height": 900,
+    "sections": true,
+    "full": true,
+    "measure": {
+      "title": "Raycast - Blog",
+      "vw": 1440,
+      "docH": 4141,
+      "h1": [
+        "All Posts",
+        "15px",
+        "500",
+        "17.25px",
+        [
+          230,
+          667,
+          62,
+          19
+        ]
+      ],
+      "bodyP": [
+        "14px",
+        "22.4px",
+        "rgb(156, 156, 157)",
+        269
+      ],
+      "heads": [
+        [
+          "H2",
+          "Why We're Changing How Raycast AI Is Priced",
+          "20px",
+          "500",
+          "28px"
+        ],
+        [
+          "H1",
+          "All Posts",
+          "15px",
+          "500",
+          "17.25px"
+        ],
+        [
+          "H2",
+          "Meet Glaze",
+          "20px",
+          "500",
+          "28px"
+        ],
+        [
+          "H2",
+          "A Technical Deep Dive Into the New Raycast",
+          "20px",
+          "500",
+          "28px"
+        ],
+        [
+          "H2",
+          "The New Raycast",
+          "20px",
+          "500",
+          "28px"
+        ],
+        [
+          "H2",
+          "Introducing Glaze",
+          "20px",
+          "500",
+          "28px"
+        ],
+        [
+          "H2",
+          "Raycast for Windows",
+          "20px",
+          "500",
+          "28px"
+        ],
+        [
+          "H2",
+          "Raycast for iOS",
+          "20px",
+          "500",
+          "28px"
+        ],
+        [
+          "H2",
+          "Meet the new Raycast Notes",
+          "20px",
+          "500",
+          "28px"
+        ],
+        [
+          "H2",
+          "$30M Series B to bring Raycast to new platforms",
+          "20px",
+          "500",
+          "28px"
+        ]
+      ],
+      "videos": 0,
+      "canvas": 0,
+      "imgs": 39,
+      "sticky": []
+    },
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-1440-s01.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-1440-s02.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-1440-s03.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-1440-s04.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-1440-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:39:14.531Z",
+    "pageHeight": 4141,
+    "offsets": [
+      0,
+      72,
+      707,
+      2901
+    ]
+  },
+  {
+    "name": "blog-article-1440",
+    "folder": "desktop-1440",
+    "url": "https://www.raycast.com/blog/a-technical-deep-dive-into-the-new-raycast",
+    "width": 1440,
+    "height": 900,
+    "sections": true,
+    "full": true,
+    "measure": {
+      "title": "A Technical Deep Dive Into the New Raycast - Raycast Blog",
+      "vw": 1440,
+      "docH": 17770,
+      "h1": [
+        "A Technical Deep Dive Into the New Raycast",
+        "48px",
+        "600",
+        "62.4px",
+        [
+          363,
+          204,
+          714,
+          125
+        ]
+      ],
+      "bodyP": [
+        "16px",
+        "25.6px",
+        "rgba(255, 255, 255, 0.85)",
+        714
+      ],
+      "heads": [
+        [
+          "H1",
+          "A Technical Deep Dive Into the New Raycast",
+          "48px",
+          "600",
+          "62.4px"
+        ],
+        [
+          "H2",
+          "Where we started",
+          "24px",
+          "600",
+          "27.6px"
+        ],
+        [
+          "H2",
+          "Why the rewrite",
+          "24px",
+          "600",
+          "27.6px"
+        ],
+        [
+          "H2",
+          "Picking a stack",
+          "24px",
+          "600",
+          "27.6px"
+        ],
+        [
+          "H2",
+          "How it's built",
+          "24px",
+          "600",
+          "27.6px"
+        ],
+        [
+          "H3",
+          "New File Indexer",
+          "18px",
+          "600",
+          "20.7px"
+        ],
+        [
+          "H2",
+          "Making it feel at home",
+          "24px",
+          "600",
+          "27.6px"
+        ],
+        [
+          "H3",
+          "Platform conventions",
+          "18px",
+          "600",
+          "20.7px"
+        ],
+        [
+          "H3",
+          "Working with (and around) WebKit",
+          "18px",
+          "600",
+          "20.7px"
+        ],
+        [
+          "H3",
+          "On Windows",
+          "18px",
+          "600",
+          "20.7px"
+        ]
+      ],
+      "videos": 0,
+      "canvas": 0,
+      "imgs": 8,
+      "sticky": []
+    },
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s01.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s02.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s03.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s04.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s05.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s06.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s07.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s08.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s09.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s10.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s11.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s12.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s13.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s14.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s15.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s16.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s17.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s18.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s19.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s20.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s21.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s22.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s23.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s24.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s25.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s26.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s27.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s28.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s29.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s30.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s31.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s32.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s33.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s34.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s35.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s36.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s37.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s38.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s39.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s40.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s41.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s42.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s43.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s44.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s45.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s46.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s47.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s48.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s49.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s50.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s51.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s52.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s53.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s54.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s55.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s56.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s57.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s58.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s59.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s60.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s61.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s62.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s63.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s64.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s65.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s66.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s67.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s68.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s69.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s70.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s71.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s72.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s73.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s74.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s75.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s76.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s77.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s78.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s79.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-s80.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\desktop-1440\\blog-article-1440-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:39:37.685Z",
+    "pageHeight": 17770,
+    "offsets": [
+      572,
+      713,
+      1482,
+      1617,
+      1725,
+      1833,
+      2076,
+      2845,
+      3056,
+      3216,
+      3325,
+      3433,
+      3542,
+      3727,
+      3836,
+      3943,
+      4180,
+      4468,
+      4526,
+      4711,
+      4999,
+      5108,
+      5370,
+      5582,
+      5716,
+      5823,
+      5881,
+      6335,
+      6527,
+      7672,
+      7807,
+      7892,
+      8026,
+      8135,
+      8269,
+      8377,
+      8537,
+      9329,
+      9463,
+      9548,
+      9631,
+      9991,
+      10049,
+      10133,
+      10268,
+      10903,
+      11012,
+      11096,
+      11256,
+      11416,
+      11524,
+      11607,
+      11716,
+      11800,
+      11935,
+      12069,
+      12272,
+      12407,
+      12541,
+      12626,
+      12786,
+      12843,
+      13322,
+      13507,
+      13565,
+      13826,
+      13960,
+      14068,
+      14125,
+      14210,
+      14293,
+      14880,
+      14965,
+      15023,
+      15706,
+      15840,
+      15948,
+      16108,
+      16191,
+      16300
+    ]
+  },
+  {
+    "name": "blog-390",
+    "folder": "mobile-390",
+    "url": "https://www.raycast.com/blog",
+    "width": 390,
+    "height": 844,
+    "sections": true,
+    "offsets": [
+      0,
+      900,
+      1800
+    ],
+    "full": true,
+    "fullScale": 0.6,
+    "measure": {
+      "title": "Raycast - Blog",
+      "vw": 390,
+      "docH": 8874,
+      "h1": [
+        "All Posts",
+        "15px",
+        "500",
+        "17.25px",
+        [
+          34,
+          703,
+          62,
+          19
+        ]
+      ],
+      "bodyP": [
+        "14px",
+        "22.4px",
+        "rgb(156, 156, 157)",
+        294
+      ],
+      "heads": [
+        [
+          "H2",
+          "Why We're Changing How Raycast AI Is Priced",
+          "20px",
+          "500",
+          "28px"
+        ],
+        [
+          "H1",
+          "All Posts",
+          "15px",
+          "500",
+          "17.25px"
+        ],
+        [
+          "H2",
+          "Meet Glaze",
+          "20px",
+          "500",
+          "28px"
+        ],
+        [
+          "H2",
+          "A Technical Deep Dive Into the New Raycast",
+          "20px",
+          "500",
+          "28px"
+        ],
+        [
+          "H2",
+          "The New Raycast",
+          "20px",
+          "500",
+          "28px"
+        ],
+        [
+          "H2",
+          "Introducing Glaze",
+          "20px",
+          "500",
+          "28px"
+        ],
+        [
+          "H2",
+          "Raycast for Windows",
+          "20px",
+          "500",
+          "28px"
+        ],
+        [
+          "H2",
+          "Raycast for iOS",
+          "20px",
+          "500",
+          "28px"
+        ],
+        [
+          "H2",
+          "Meet the new Raycast Notes",
+          "20px",
+          "500",
+          "28px"
+        ],
+        [
+          "H2",
+          "$30M Series B to bring Raycast to new platforms",
+          "20px",
+          "500",
+          "28px"
+        ]
+      ],
+      "videos": 0,
+      "canvas": 0,
+      "imgs": 39,
+      "sticky": []
+    },
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\blog-390-s01.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\blog-390-s02.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\blog-390-s03.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\blog-390-fullpage.jpg"
+    ],
+    "observedAt": "2026-10-26T14:43:13.058Z",
+    "pageHeight": 8874
+  },
+  {
+    "name": "blog-article-390",
+    "folder": "mobile-390",
+    "url": "https://www.raycast.com/blog/a-technical-deep-dive-into-the-new-raycast",
+    "width": 390,
+    "height": 844,
+    "sections": true,
+    "offsets": [
+      0,
+      844,
+      1688
+    ],
+    "measure": {
+      "title": "A Technical Deep Dive Into the New Raycast - Raycast Blog",
+      "vw": 390,
+      "docH": 25197,
+      "h1": [
+        "A Technical Deep Dive Into the New Raycast",
+        "32px",
+        "600",
+        "41.6px",
+        [
+          16,
+          154,
+          358,
+          83
+        ]
+      ],
+      "bodyP": [
+        "16px",
+        "25.6px",
+        "rgba(255, 255, 255, 0.85)",
+        358
+      ],
+      "heads": [
+        [
+          "H1",
+          "A Technical Deep Dive Into the New Raycast",
+          "32px",
+          "600",
+          "41.6px"
+        ],
+        [
+          "H2",
+          "Where we started",
+          "24px",
+          "600",
+          "27.6px"
+        ],
+        [
+          "H2",
+          "Why the rewrite",
+          "24px",
+          "600",
+          "27.6px"
+        ],
+        [
+          "H2",
+          "Picking a stack",
+          "24px",
+          "600",
+          "27.6px"
+        ],
+        [
+          "H2",
+          "How it's built",
+          "24px",
+          "600",
+          "27.6px"
+        ],
+        [
+          "H3",
+          "New File Indexer",
+          "18px",
+          "600",
+          "20.7px"
+        ],
+        [
+          "H2",
+          "Making it feel at home",
+          "24px",
+          "600",
+          "27.6px"
+        ],
+        [
+          "H3",
+          "Platform conventions",
+          "18px",
+          "600",
+          "20.7px"
+        ],
+        [
+          "H3",
+          "Working with (and around) WebKit",
+          "18px",
+          "600",
+          "20.7px"
+        ],
+        [
+          "H3",
+          "On Windows",
+          "18px",
+          "600",
+          "20.7px"
+        ]
+      ],
+      "videos": 0,
+      "canvas": 0,
+      "imgs": 8,
+      "sticky": []
+    },
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\blog-article-390-s01.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\blog-article-390-s02.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\blog-article-390-s03.jpg"
+    ],
+    "observedAt": "2026-10-26T14:43:32.305Z",
+    "pageHeight": 25197
+  },
+  {
+    "name": "blog-article-768",
+    "folder": "tablet-768",
+    "url": "https://www.raycast.com/blog/a-technical-deep-dive-into-the-new-raycast",
+    "width": 768,
+    "height": 1024,
+    "sections": true,
+    "offsets": [
+      0,
+      1024
+    ],
+    "measure": {
+      "title": "A Technical Deep Dive Into the New Raycast - Raycast Blog",
+      "vw": 768,
+      "docH": 16808,
+      "h1": [
+        "A Technical Deep Dive Into the New Raycast",
+        "48px",
+        "600",
+        "62.4px",
+        [
+          27,
+          186,
+          714,
+          125
+        ]
+      ],
+      "bodyP": [
+        "16px",
+        "25.6px",
+        "rgba(255, 255, 255, 0.85)",
+        714
+      ],
+      "heads": [
+        [
+          "H1",
+          "A Technical Deep Dive Into the New Raycast",
+          "48px",
+          "600",
+          "62.4px"
+        ],
+        [
+          "H2",
+          "Where we started",
+          "24px",
+          "600",
+          "27.6px"
+        ],
+        [
+          "H2",
+          "Why the rewrite",
+          "24px",
+          "600",
+          "27.6px"
+        ],
+        [
+          "H2",
+          "Picking a stack",
+          "24px",
+          "600",
+          "27.6px"
+        ],
+        [
+          "H2",
+          "How it's built",
+          "24px",
+          "600",
+          "27.6px"
+        ],
+        [
+          "H3",
+          "New File Indexer",
+          "18px",
+          "600",
+          "20.7px"
+        ],
+        [
+          "H2",
+          "Making it feel at home",
+          "24px",
+          "600",
+          "27.6px"
+        ],
+        [
+          "H3",
+          "Platform conventions",
+          "18px",
+          "600",
+          "20.7px"
+        ],
+        [
+          "H3",
+          "Working with (and around) WebKit",
+          "18px",
+          "600",
+          "20.7px"
+        ],
+        [
+          "H3",
+          "On Windows",
+          "18px",
+          "600",
+          "20.7px"
+        ]
+      ],
+      "videos": 0,
+      "canvas": 0,
+      "imgs": 8,
+      "sticky": []
+    },
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\tablet-768\\blog-article-768-s01.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\tablet-768\\blog-article-768-s02.jpg"
+    ],
+    "observedAt": "2026-10-26T14:43:59.569Z",
+    "pageHeight": 16808
+  },
+  {
+    "name": "ai-390",
+    "folder": "mobile-390",
+    "url": "https://www.raycast.com/core-features/ai",
+    "width": 390,
+    "height": 844,
+    "sections": true,
+    "offsets": [
+      0,
+      844,
+      1688,
+      2532
+    ],
+    "measure": {
+      "title": "Meet your new virtual assistant",
+      "vw": 390,
+      "docH": 13024,
+      "h1": [
+        "Meet your new virtual assistant",
+        "40px",
+        "500",
+        "44px",
+        [
+          20,
+          112,
+          350,
+          88
+        ]
+      ],
+      "bodyP": [
+        "15px",
+        "22.5px",
+        "rgba(255, 255, 255, 0.5)",
+        350
+      ],
+      "heads": [
+        [
+          "H1",
+          "Meet your new virtual assistant",
+          "40px",
+          "500",
+          "44px"
+        ],
+        [
+          "H3",
+          "Projects",
+          "15px",
+          "500",
+          "22.5px"
+        ],
+        [
+          "H3",
+          "Screen Awareness",
+          "15px",
+          "500",
+          "22.5px"
+        ],
+        [
+          "H3",
+          "Automations",
+          "15px",
+          "500",
+          "22.5px"
+        ],
+        [
+          "H3",
+          "Custom Agents",
+          "15px",
+          "500",
+          "22.5px"
+        ],
+        [
+          "H3",
+          "Bring your own subscriptions and keys",
+          "16px",
+          "500",
+          "24px"
+        ],
+        [
+          "H2",
+          "Ask anything, anytime, anywhere",
+          "32px",
+          "500",
+          "38.4px"
+        ],
+        [
+          "H2",
+          "Connect your tools",
+          "32px",
+          "500",
+          "38.4px"
+        ],
+        [
+          "H3",
+          "Find an AI Extension",
+          "16px",
+          "500",
+          "24px"
+        ],
+        [
+          "H3",
+          "...or build your own",
+          "16px",
+          "500",
+          "24px"
+        ]
+      ],
+      "videos": 0,
+      "canvas": 0,
+      "imgs": 45,
+      "sticky": []
+    },
+    "files": [
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\ai-390-s01.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\ai-390-s02.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\ai-390-s03.jpg",
+      "M:\\Safaridesk\\Marketing-Site\\docs\\design\\redesign\\references\\raycast\\mobile-390\\ai-390-s04.jpg"
+    ],
+    "observedAt": "2026-10-26T14:44:17.759Z",
+    "pageHeight": 13024
+  }
+]

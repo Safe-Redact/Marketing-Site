@@ -1,59 +1,81 @@
+import Link from "next/link";
 import { heroContent } from "@/content/hero";
-import { Button } from "@/components/ui/Button";
+import { AppWindow } from "@/components/media/AppWindow";
+import { ProductShot } from "@/components/media/ProductShot";
 import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Icon } from "@/components/ui/Icon";
-import { RedactionWorkbench } from "@/components/visuals/RedactionWorkbench";
 
+/**
+ * Homepage hero: a centred composition on the burnt-orange-to-coral field (context chip,
+ * eyebrow, two-line headline, CTAs), then the product itself in an application window
+ * straddling the hand-over to white. `data-hero-dark` marks the field the header and
+ * chat launcher observe. The window opens out as it rises (CSS scroll timeline,
+ * transform only; see `.showcase-scale`).
+ */
 export function Hero() {
   return (
-    <section
-      className="hero-gradient relative overflow-hidden pb-14 pt-[168px] md:pb-14 md:pt-[218px] min-[992px]:pb-12 min-[992px]:pt-[208px]"
-      aria-labelledby="hero-heading"
-      data-section="hero"
-    >
-      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        <div className="absolute -right-36 top-16 h-[28rem] w-[28rem] rounded-full border border-accent-cool/[0.06]" />
-        <div className="absolute -right-20 top-28 h-72 w-72 rounded-full bg-accent-cool/[0.035] blur-3xl" />
-        <div className="absolute left-[8%] top-[62%] h-52 w-52 rounded-full bg-accent-warm/[0.035] blur-3xl" />
-      </div>
-
-      <Container className="relative">
-        <div className="grid items-start gap-12 md:gap-10 min-[992px]:grid-cols-2 min-[992px]:gap-4">
-          <div className="max-w-[608px] md:max-w-none min-[992px]:max-w-[608px] min-[992px]:pt-4">
-            <Eyebrow className="mb-8 md:mb-7 min-[992px]:mb-10">{heroContent.eyebrow}</Eyebrow>
+    <section aria-labelledby="hero-heading" data-section="hero" className="relative isolate">
+      <div data-hero-dark className="hero-ember relative overflow-hidden pb-20 pt-[7.5rem] sm:pb-24 sm:pt-[9rem] lg:pt-[9.75rem]">
+        <Container className="relative">
+          <div className="mx-auto flex max-w-[56rem] flex-col items-center text-center">
+            <Link
+              href={heroContent.chip.href}
+              className="inline-flex min-h-9 items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 text-[0.8125rem] font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white motion-reduce:transition-none"
+            >
+              {heroContent.chip.label}
+              <Icon name="chevron-down" size={14} className="-rotate-90" />
+            </Link>
+            <p className="mt-7 font-mono text-[0.75rem] uppercase tracking-[0.2em] text-white/80">{heroContent.eyebrow}</p>
             <h1
               id="hero-heading"
-              className="max-w-[17ch] font-heading text-[1.75rem] font-medium leading-[1.32] tracking-[-0.03em] text-white text-balance md:max-w-none md:text-[3.1rem] md:leading-[1.31] min-[992px]:text-[2.75rem] min-[992px]:font-normal"
+              className="mt-4 font-heading text-[clamp(2.125rem,1.3rem+4vw,4.75rem)] font-medium leading-[1.04] tracking-[-0.045em] text-white text-balance"
             >
-              {heroContent.headline}
+              <span className="block">{heroContent.headline}</span>
+              <span className="block text-[#ffcfbf]">{heroContent.headlineSecond}</span>
             </h1>
-            <p className="mt-7 max-w-[36rem] text-base leading-6 text-ink-muted md:max-w-none md:text-lg md:leading-7 min-[992px]:max-w-[34rem]">
+            <p className="mt-6 max-w-[34rem] text-[1.0625rem] leading-7 text-white sm:text-[1.1875rem] sm:leading-8">
               {heroContent.subheadline}
             </p>
-
-            <div className="mt-8 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center">
-              <Button variant="primary" size="md" className="w-full sm:w-auto" asChild>
-                <a href={heroContent.primaryCta.href}>
-                  {heroContent.primaryCta.label}
-                  <Icon name="arrow" size={18} />
-                </a>
-              </Button>
-              <a
+            <div className="mt-9 flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row sm:items-center">
+              <Link
+                href={heroContent.primaryCta.href}
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 text-[0.9375rem] font-semibold text-[#1c1917] shadow-[0_10px_30px_-8px_rgb(40_8_4/0.5)] transition-[background-color,transform] duration-200 hover:bg-[#fff1ec] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#a44116] motion-safe:hover:-translate-y-0.5 motion-reduce:transition-none"
+              >
+                {heroContent.primaryCta.label}
+                <Icon name="arrow" size={17} />
+              </Link>
+              <Link
                 href={heroContent.secondaryCta.href}
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-control px-3 text-sm font-semibold text-ink-muted transition-colors hover:text-white sm:justify-start"
+                className="inline-flex min-h-12 items-center justify-center gap-1.5 rounded-full border border-white/25 bg-[rgb(40_12_4/0.22)] px-6 text-[0.9375rem] font-medium text-white backdrop-blur-sm transition-colors hover:bg-[rgb(40_12_4/0.34)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white motion-reduce:transition-none"
               >
                 {heroContent.secondaryCta.label}
-                <Icon name="arrow" size={17} />
-              </a>
+                <Icon name="chevron-down" size={16} className="-rotate-90" />
+              </Link>
             </div>
           </div>
+        </Container>
+      </div>
 
-          <div className="motion-safe:animate-fade-in-up min-[992px]:pl-0">
-            <RedactionWorkbench className="md:max-w-none min-[992px]:max-w-[608px]" />
+      <div className="showcase-stage relative pb-16 sm:pb-24 lg:pb-28">
+        <Container>
+          <div className="showcase-track mx-auto max-w-content" data-hero-workbench>
+            <div className="showcase-scale">
+              <AppWindow className="shadow-[0_50px_100px_-30px_rgb(90_20_8/0.45),0_16px_36px_-14px_rgb(90_20_8/0.28)]">
+                <ProductShot
+                  capture="project-workspace"
+                  crop="hub"
+                  mobileCrop="hubMobile"
+                  alt={heroContent.showcase.alt}
+                  displayWidth={1160}
+                  priority
+                  frame={false}
+                  glow="none"
+                />
+              </AppWindow>
+            </div>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </div>
     </section>
   );
 }

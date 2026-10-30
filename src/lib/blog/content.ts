@@ -6,7 +6,14 @@ import { visit } from "unist-util-visit";
 import { parseDocument } from "yaml";
 import { z } from "zod";
 import { ARTICLE_TYPES } from "./types";
-import type { ArticleQuery, ArticleType, BlogArticle, ContentOptions, PaginatedArticles } from "./types";
+import type {
+  ArticleMonthGroup,
+  ArticleQuery,
+  ArticleType,
+  BlogArticle,
+  ContentOptions,
+  PaginatedArticles,
+} from "./types";
 
 export const BLOG_PAGE_SIZE = 6;
 export const DEFAULT_BLOG_DIRECTORY = path.join(process.cwd(), "content", "blog");
@@ -375,14 +382,76 @@ export function queryArticles(
   };
 }
 
+const archiveMonthFormatter = new Intl.DateTimeFormat("en", {
+  month: "long",
+  year: "numeric",
+  timeZone: "UTC",
+});
+
+/**
+ * Groups the supplied article result into a stable editorial archive. The caller
+ * owns publication and query filtering; this function never reaches outside the
+ * exact result it receives.
+ */
+export function groupArticlesByMonth(
+  articles: readonly BlogArticle[]
+): readonly ArticleMonthGroup[] {
+  const groups = new Map<string, { year: number; month: number; articles: BlogArticle[] }>();
+
+  for (const article of articles) {
+    const date = new Date(article.date);
+    const year = date.getUTCFullYear();
+    const month = date.getUTCMonth() + 1;
+    const key = `${year}-${String(month).padStart(2, "0")}`;
+    const existing = groups.get(key);
+
+    if (existing) existing.articles.push(article);
+    else groups.set(key, { year, month, articles: [article] });
+  }
+
+  return [...groups.entries()]
+    .sort(([, left], [, right]) => right.year - left.year || right.month - left.month)
+    .map(([key, group]) => ({
+      key: key as `${number}-${string}`,
+      year: group.year,
+      month: group.month,
+      label: archiveMonthFormatter.format(new Date(Date.UTC(group.year, group.month - 1, 1))),
+      articles: group.articles.toSorted(
+        (left, right) =>
+          new Date(right.date).getTime() - new Date(left.date).getTime() ||
+          left.slug.localeCompare(right.slug)
+      ),
+    }));
+}
+
 export function getRelatedArticles(
-  articles: BlogArticle[],
+  articles: readonly BlogArticle[],
   article: BlogArticle,
-  limit = 3
+  limit = 3,
+  now = new Date()
 ): BlogArticle[] {
+  const activeTags = new Set(article.tagSlugs);
+
   return articles
-    .filter((candidate) => candidate.slug !== article.slug && candidate.categorySlug === article.categorySlug)
-    .slice(0, Math.max(0, limit));
+    .filter((candidate) => candidate.slug !== article.slug && isPublishedArticle(candidate, now))
+    .map((candidate) => {
+      const overlappingTags = candidate.tagSlugs.filter((tag) => activeTags.has(tag)).length;
+      const score =
+        (candidate.categorySlug === article.categorySlug ? 4 : 0) +
+        (candidate.type === article.type ? 3 : 0) +
+        overlappingTags * 2;
+
+      return { candidate, score };
+    })
+    .filter(({ score }) => score > 0)
+    .sort(
+      (left, right) =>
+        right.score - left.score ||
+        new Date(right.candidate.date).getTime() - new Date(left.candidate.date).getTime() ||
+        left.candidate.slug.localeCompare(right.candidate.slug)
+    )
+    .slice(0, Math.max(0, limit))
+    .map(({ candidate }) => candidate);
 }
 
 export function getArticleCategories(articles: BlogArticle[]): Array<{ name: string; slug: string }> {

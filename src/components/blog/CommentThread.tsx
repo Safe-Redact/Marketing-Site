@@ -34,7 +34,7 @@ function CommentNode({
     <li className="mt-6 first:mt-0">
       <article
         aria-label={comment.removed ? "Removed comment" : `Comment by ${comment.authorName}`}
-        className="rounded-panel border border-border-subtle bg-surface-raised p-5 sm:p-6"
+        className="rounded-[16px] border border-border-subtle bg-surface-raised p-5 sm:p-6"
       >
         {comment.removed ? (
           // A tombstone keeps its place so the replies beneath it still make sense.
@@ -106,7 +106,11 @@ export async function CommentThread({ articleSlug }: { articleSlug: string }) {
   const total = countComments(comments);
 
   return (
-    <section id="comments" aria-labelledby="comments-heading" className="border-t border-border-subtle py-14 sm:py-16">
+    <section
+      id="comments"
+      aria-labelledby="comments-heading"
+      className="bg-canvas py-14 sm:py-16"
+    >
       <Container className="max-w-[58rem]">
         <Eyebrow>Discussion</Eyebrow>
         <h2 id="comments-heading" className="mt-3 font-heading text-heading-xl text-ink">

@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { CONTENT_FILTERS } from "@/components/blog/ContentTypeFilter";
 import { getArticleCategories, isAnnouncement, loadPublishedArticles } from "@/lib/blog/content";
 import { publicSiteUrl } from "@/content/site";
+import { marketingRoutes } from "@/lib/marketing/site-routes";
 
 // Scheduled content enters the sitemap at its approved UTC publication time without
 // requiring a host-specific cron rebuild.
@@ -13,13 +14,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const categories = getArticleCategories(articles);
   const announcements = articles.filter(isAnnouncement);
 
+  // Marketing routes come from one registry, so draft industries can never be listed.
+  const [home, ...pages] = marketingRoutes();
+
   return [
     {
       url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
+      lastModified: home.lastModified,
+      changeFrequency: home.changeFrequency,
+      priority: home.priority,
     },
+    ...pages.map((route) => ({
+      url: `${baseUrl}${route.path}`,
+      lastModified: route.lastModified,
+      changeFrequency: route.changeFrequency,
+      priority: route.priority,
+    })),
     {
       url: `${baseUrl}/pricing`,
       lastModified: new Date(),

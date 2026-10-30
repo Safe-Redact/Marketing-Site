@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { pricingPackages, pricingSharedLicenseNote } from "@/content/pricing";
@@ -38,7 +39,7 @@ export function PricingCards() {
                 "relative flex min-w-0 flex-col rounded-panel border bg-surface-raised p-6 shadow-panel sm:p-8 lg:row-span-4 lg:grid lg:grid-rows-subgrid lg:gap-y-0",
                 plan.families.length > 1 && "md:col-span-2 lg:col-span-1",
                 plan.emphasized
-                  ? "border-accent-cool/55 bg-[linear-gradient(180deg,rgba(51,183,255,0.08),rgba(16,21,37,1)_32%)]"
+                  ? "border-accent-warm/60 bg-[linear-gradient(180deg,rgb(var(--or-coral)/0.12),rgb(var(--or-graphite))_34%)]"
                   : "border-border-subtle"
               )}
             >
@@ -96,10 +97,10 @@ export function PricingCards() {
                 size="lg"
                 className="mt-6 w-full lg:self-start"
               >
-                <a href={`?package=${plan.slug}#demo-enquiry`}>
+                <Link href={`/book-a-demo?package=${plan.slug}`}>
                   {plan.ctaLabel}
                   <Icon name="arrow" size={17} />
-                </a>
+                </Link>
               </Button>
 
               <ul className="mt-7 space-y-3 border-t border-border-subtle pt-6">

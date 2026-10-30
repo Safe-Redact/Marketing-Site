@@ -5,16 +5,49 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        canvas: "#080914",
-        "surface-raised": "#101525",
-        "surface-active": "#151B2F",
-        "border-subtle": "#222B44",
-        ink: "#F7F8FC",
-        "ink-muted": "#A7B0C9",
-        "accent-warm": "#E47755",
-        "accent-warm-hover": "#F08A66",
-        "accent-cool": "#33B7FF",
-        "accent-mint": "#55E6D0",
+        // Cinematic Precision semantic palette (D1). Values live in globals.css as
+        // --or-* channels; use these names, never the hex values, in components.
+        midnight: "rgb(var(--or-midnight) / <alpha-value>)",
+        graphite: "rgb(var(--or-graphite) / <alpha-value>)",
+        elevated: "rgb(var(--or-elevated) / <alpha-value>)",
+        coral: {
+          DEFAULT: "rgb(var(--or-coral) / <alpha-value>)",
+          soft: "rgb(var(--or-coral-soft) / <alpha-value>)",
+        },
+        signal: "rgb(var(--or-signal) / <alpha-value>)",
+        fg: {
+          DEFAULT: "rgb(var(--or-fg) / <alpha-value>)",
+          muted: "rgb(var(--or-fg-muted) / <alpha-value>)",
+        },
+        line: "rgb(var(--or-line) / <alpha-value>)",
+        // The original semantic names now resolve to the locked palette, so every
+        // existing route adopts Cinematic Precision without renaming classes.
+        canvas: "rgb(var(--or-midnight) / <alpha-value>)",
+        "surface-raised": "rgb(var(--or-graphite) / <alpha-value>)",
+        "surface-active": "rgb(var(--or-elevated) / <alpha-value>)",
+        "border-subtle": "rgb(var(--or-line) / <alpha-value>)",
+        ink: "rgb(var(--or-fg) / <alpha-value>)",
+        "ink-muted": "rgb(var(--or-fg-muted) / <alpha-value>)",
+        "accent-warm": "rgb(var(--or-coral) / <alpha-value>)",
+        "accent-warm-hover": "rgb(var(--or-coral-soft) / <alpha-value>)",
+        // Orange text: darker on light, brand orange on black (see globals.css).
+        // Label colour on brand-orange fills: 6.5:1 on #FF735C in either theme.
+        "on-accent": "#1C1917",
+        "accent-ink": "rgb(var(--or-coral-ink) / <alpha-value>)",
+        "accent-ink-hover": "rgb(var(--or-coral-ink-hover) / <alpha-value>)",
+        "accent-cool": "rgb(var(--or-signal) / <alpha-value>)",
+        // No third hue: confirmations use the same text-safe orange.
+        "accent-mint": "rgb(var(--or-coral-ink) / <alpha-value>)",
+        editorial: {
+          canvas: "#F4F6FA",
+          paper: "#FFFFFF",
+          ink: "#151821",
+          muted: "#606878",
+          line: "#DDE2EA",
+          soft: "#E9EEF6",
+          blue: "#2758A5",
+          coral: "#C85F42",
+        },
         accent: {
           DEFAULT: "#D97757",
           dark: "#B85C3F",
@@ -62,7 +95,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: [
-          "var(--font-inter)",
+          "var(--font-geist)",
           "ui-sans-serif",
           "system-ui",
           "sans-serif",
@@ -70,12 +103,12 @@ const config: Config = {
           "Segoe UI Emoji",
         ],
         heading: [
-          "var(--font-poppins)",
-          "var(--font-inter)",
+          "var(--font-geist)",
           "ui-sans-serif",
           "system-ui",
           "sans-serif",
         ],
+        mono: ["var(--font-geist-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
       },
       fontSize: {
         "display-lg": [
@@ -139,6 +172,10 @@ const config: Config = {
           { lineHeight: "1.5", fontWeight: "500" },
         ],
       },
+      transitionTimingFunction: {
+        standard: "var(--or-ease-standard)",
+        spring: "var(--or-ease-spring)",
+      },
       spacing: {
         section: "6rem",
         "section-sm": "4rem",
@@ -150,13 +187,15 @@ const config: Config = {
         chip: "0.25rem",
       },
       maxWidth: {
-        content: "77rem",
+        // 1160px content width, as on the reference; prose stays narrower.
+        content: "72.5rem",
         prose: "65ch",
       },
       boxShadow: {
-        action: "0 2px 14px rgba(228, 119, 85, 0.46)",
-        "action-hover": "0 4px 20px rgba(228, 119, 85, 0.58)",
-        panel: "0 18px 70px rgba(0, 0, 0, 0.32)",
+        action: "inset 0 1px 0 rgb(255 255 255 / 0.28), 0 6px 18px -6px rgb(var(--or-coral) / 0.55)",
+        "action-hover": "inset 0 1px 0 rgb(255 255 255 / 0.32), 0 10px 26px -8px rgb(var(--or-coral) / 0.65)",
+        panel: "0 1px 2px rgb(var(--or-shadow) / 0.04), 0 18px 48px -12px rgb(var(--or-shadow) / 0.16)",
+        frame: "inset 0 1px 0 rgb(255 255 255 / 0.08), 0 30px 80px -20px rgb(var(--or-shadow) / 0.35)",
       },
       keyframes: {
         "fade-in-up": {

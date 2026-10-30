@@ -1,43 +1,57 @@
-import { useCaseGroups } from "@/content/platform";
+import Link from "next/link";
+import { industryGroups, industryHref, liveIndustryPages } from "@/content/industries";
 import { AnimateOnScroll } from "@/components/ui/AnimateOnScroll";
 import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Icon } from "@/components/ui/Icon";
-import { UseCaseVisual } from "@/components/visuals/UseCaseVisual";
 
+/**
+ * Sector pathways: every published industry guide, grouped as on /industries.
+ * Drafts never appear because the list comes from the live registry entries.
+ */
 export function Industries() {
+  const groups = industryGroups
+    .map((group) => ({ ...group, pages: liveIndustryPages.filter((page) => page.group === group.id) }))
+    .filter((group) => group.pages.length > 0);
+
   return (
-    <section id="industries" className="relative overflow-hidden bg-canvas py-section text-ink">
+    <section id="industries" className="section-y relative bg-canvas text-ink">
       <Container>
-        <AnimateOnScroll className="max-w-3xl">
-          <Eyebrow>Use cases</Eyebrow>
-          <h2 className="mt-4 font-heading text-display font-bold text-ink text-balance">
-            Prepare sensitive records for the next step
-          </h2>
-          <p className="mt-5 max-w-2xl text-base leading-7 text-ink-muted sm:text-lg">
-            Teams use redaction when records need to move into filing, disclosure, release, research, or controlled internal review.
-          </p>
+        <AnimateOnScroll className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-2xl">
+            <p className="type-eyebrow">Use cases</p>
+            <h2 className="type-h2 mt-4 max-w-[20ch]">
+              Prepare sensitive records for the next step. <span className="type-quiet">Guides by sector.</span>
+            </h2>
+            <p className="type-body mt-5 max-w-xl">
+              Teams use redaction when records need to move into filing, disclosure, release, research, or controlled internal review.
+            </p>
+          </div>
+          <Link href="/industries" className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-accent-ink transition-colors hover:text-accent-ink-hover motion-reduce:transition-none">
+            Browse the industry guides
+            <Icon name="arrow" size={16} />
+          </Link>
         </AnimateOnScroll>
 
-        <div className="mt-12 grid gap-5 lg:grid-cols-3 lg:gap-6">
-          {useCaseGroups.map((useCase, index) => (
-            <AnimateOnScroll key={useCase.title} delay={index * 90}>
-              <article className="h-full overflow-hidden rounded-card border border-border-subtle bg-surface-raised shadow-panel transition-colors duration-300 hover:border-accent-cool/35">
-                <UseCaseVisual variant={useCase.visual} icon={useCase.icon} />
-                <div className="p-5 sm:p-6">
-                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent-cool">{useCase.kicker}</p>
-                  <h3 className="mt-3 font-heading text-xl font-semibold leading-7 text-ink">{useCase.title}</h3>
-                  <p className="mt-3 text-[0.9375rem] leading-6 text-ink-muted">{useCase.description}</p>
-                  <ul className="mt-6 flex flex-wrap gap-2" aria-label={`${useCase.title} categories`}>
-                    {useCase.tags.map((tag) => (
-                      <li key={tag} className="inline-flex items-center gap-1.5 rounded-full border border-border-subtle px-3 py-1 text-xs text-ink-muted">
-                        <Icon name="check-circle" size={12} className="text-accent-mint" />
-                        {tag}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
+        <div className="mt-12 grid gap-px overflow-hidden rounded-[16px] border border-border-subtle/50 bg-border-subtle/50 md:grid-cols-2 xl:grid-cols-4">
+          {groups.map((group, index) => (
+            <AnimateOnScroll key={group.id} delay={index * 70} className="bg-canvas">
+              <div className="flex h-full flex-col p-6 sm:p-7">
+                <h3 className="type-h3">{group.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-ink-muted">{group.description}</p>
+                <ul className="mt-6 border-t border-border-subtle/60">
+                  {group.pages.map((page) => (
+                    <li key={page.slug} className="border-b border-border-subtle/60">
+                      <Link href={industryHref(page.slug)} className="group flex min-h-11 items-center justify-between gap-3 py-2.5 text-[0.9375rem] text-ink-muted transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-cool motion-reduce:transition-none">
+                        <span className="flex items-center gap-3">
+                          <Icon name={page.icon} size={16} className="text-accent-ink" />
+                          {page.navLabel}
+                        </span>
+                        <Icon name="arrow" size={15} className="opacity-0 transition-opacity group-hover:opacity-100 motion-reduce:transition-none" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </AnimateOnScroll>
           ))}
         </div>

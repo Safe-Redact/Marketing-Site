@@ -44,15 +44,24 @@ test("scroll reveals are progressive, one-time, and safe without motion support"
   );
 });
 
-test("active section navigation is accessible and never rewrites URL history", async () => {
-  const [header, mobileNav, hook] = await Promise.all([
-    read("src/components/layout/Header.tsx"),
+test("route navigation is accessible and never rewrites URL history", async () => {
+  const [header, mobileNav, dropdown, hook] = await Promise.all([
+    read("src/components/layout/SiteHeader.tsx"),
     read("src/components/layout/MobileNav.tsx"),
+    read("src/components/layout/NavDropdown.tsx"),
     readOrEmpty("src/hooks/useActiveSection.ts"),
   ]);
 
-  assert.match(header, /aria-current=\{activeHref === link\.href \? "location" : undefined\}/);
-  assert.match(mobileNav, /aria-current=\{activeHref === link\.href \? "location" : undefined\}/);
+  // The multipage navigation marks routes, not scroll positions, as current.
+  assert.match(header, /aria-current=\{isRouteActive\(pathname, item\.href\) \? "page" : undefined\}/);
+  assert.match(mobileNav, /aria-current=\{active \? "page" : undefined\}/);
+  assert.match(dropdown, /aria-expanded=\{isOpen\}/);
+  assert.match(dropdown, /aria-controls=\{panelId\}/);
+  assert.match(dropdown, /hidden=\{!isOpen\}/);
+  assert.doesNotMatch(dropdown, /\srole="menu"/);
+  for (const source of [header, mobileNav, dropdown]) {
+    assert.doesNotMatch(source, /history\.(?:pushState|replaceState)|location\.hash\s*=/);
+  }
   assert.match(hook, /requestAnimationFrame/);
   assert.match(hook, /addEventListener\("scroll"[^\n]*passive:\s*true/);
   assert.doesNotMatch(hook, /history\.(?:pushState|replaceState)|location\.hash\s*=/);

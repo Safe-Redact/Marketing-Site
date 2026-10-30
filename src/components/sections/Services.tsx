@@ -1,58 +1,65 @@
-import { platformCapabilities, platformOutcomes } from "@/content/platform";
+import Link from "next/link";
 import { AnimateOnScroll } from "@/components/ui/AnimateOnScroll";
 import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Icon } from "@/components/ui/Icon";
+
+/**
+ * What sets OpenRedakt apart, limited to what the application verifiably does:
+ * reviewer decisions (DOC-REVIEW, AUD-TIMELINE), both workflows in one app, the optional
+ * report of reviewed actions (DOC-REPORT; shown in the export dialog), and exports written to a
+ * folder the user chooses (export dialog). No offline, compliance or accuracy claims.
+ */
+const reasons = [
+  {
+    icon: "check-circle",
+    title: "Every mark is a decision",
+    description: "Detection proposes. A reviewer accepts, rejects or adds marks and time ranges before anything is exported.",
+  },
+  {
+    icon: "layers",
+    title: "Documents and audio, one application",
+    description: "PDFs, scans, office files and recordings are reviewed in the same app, each on the surface it needs: a page or a waveform.",
+  },
+  {
+    icon: "file-text",
+    title: "A record of what was redacted",
+    description: "Optionally write a machine- and human-readable report of what was redacted alongside the export. It never quotes the redacted text.",
+  },
+  {
+    icon: "settings",
+    title: "On your desktop, in your folders",
+    description: "OpenRedakt is a Windows desktop application. Each export is written as a new file to a folder you choose.",
+  },
+] as const;
 
 export function Services() {
   return (
-    <section id="services" className="relative overflow-hidden bg-canvas py-section text-ink">
+    <section id="services" aria-labelledby="why-heading" className="story-band section-y text-ink">
       <Container>
-        <div className="grid border-y border-border-subtle md:grid-cols-3">
-          {platformOutcomes.map((outcome, index) => (
-            <AnimateOnScroll
-              key={outcome.title}
-              delay={index * 90}
-              className="h-full border-b border-border-subtle py-7 last:border-b-0 md:border-b-0 md:border-r md:px-8 md:py-9 md:first:pl-0 md:last:border-r-0 md:last:pr-0"
-            >
-              <article className="flex h-full gap-5">
-                <span className="font-heading text-sm font-semibold text-accent-warm">{outcome.number}</span>
-                <div>
-                  <h2 className="font-heading text-xl font-semibold text-ink">{outcome.title}</h2>
-                  <p className="mt-2 text-[0.9375rem] leading-6 text-ink-muted">{outcome.description}</p>
-                </div>
+        <AnimateOnScroll className="mx-auto max-w-[44rem] text-center">
+          <p className="type-eyebrow">Why OpenRedakt</p>
+          <h2 id="why-heading" className="mt-4 font-heading text-[clamp(2rem,1.4rem+2.1vw,3.25rem)] font-medium leading-[1.06] tracking-[-0.035em] text-ink text-balance">
+            Built for the review, not just the redaction.
+          </h2>
+        </AnimateOnScroll>
+        <div className="mx-auto mt-14 grid max-w-[64rem] gap-4 sm:grid-cols-2 sm:gap-5">
+          {reasons.map((reason, index) => (
+            <AnimateOnScroll key={reason.title} delay={index * 70}>
+              <article className="h-full rounded-[20px] border border-[rgb(28_25_23/0.07)] bg-canvas p-7 sm:p-8">
+                <span className="grid h-10 w-10 place-items-center rounded-[12px] bg-accent-warm/10 text-accent-ink">
+                  <Icon name={reason.icon} size={18} />
+                </span>
+                <h3 className="mt-6 font-heading text-[1.25rem] font-semibold tracking-[-0.02em] text-ink">{reason.title}</h3>
+                <p className="mt-2 text-[0.9375rem] leading-7 text-ink-muted">{reason.description}</p>
               </article>
             </AnimateOnScroll>
           ))}
         </div>
-
-        <AnimateOnScroll className="mt-16 max-w-4xl md:mt-20">
-          <Eyebrow>Platform capabilities</Eyebrow>
-          <h2 className="mt-4 max-w-[19ch] font-heading text-display font-bold text-ink text-balance">
-            One review workspace for <span className="text-accent-warm">documents and audio</span>
-          </h2>
-          <p className="mt-5 max-w-2xl text-base leading-7 text-ink-muted sm:text-lg">
-            Move from candidate detection to operator decisions without losing the context of the document page, transcript, or audio time range.
-          </p>
-        </AnimateOnScroll>
-
-        <div className="mt-12 grid gap-x-16 gap-y-10 md:grid-cols-2 lg:mt-14">
-          {platformCapabilities.map((capability, index) => (
-            <AnimateOnScroll key={capability.title} delay={index * 80}>
-              <article className="group border-t border-border-subtle pt-6">
-                <div className="flex items-start gap-4">
-                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-card border border-accent-cool/20 bg-accent-cool/10 text-accent-cool transition-colors duration-300 group-hover:border-accent-cool/45 group-hover:bg-accent-cool/15">
-                    <Icon name={capability.icon} size={22} />
-                  </span>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent-warm">{capability.accent}</p>
-                    <h3 className="mt-2 font-heading text-xl font-semibold text-ink">{capability.title}</h3>
-                    <p className="mt-3 max-w-[34rem] text-base leading-7 text-ink-muted">{capability.description}</p>
-                  </div>
-                </div>
-              </article>
-            </AnimateOnScroll>
-          ))}
+        <div className="mt-10 text-center">
+          <Link href="/why-openredakt" className="inline-flex items-center gap-2 text-sm font-semibold text-accent-ink transition-colors hover:text-accent-ink-hover motion-reduce:transition-none">
+            How OpenRedakt describes its limits
+            <Icon name="arrow" size={16} />
+          </Link>
         </div>
       </Container>
     </section>

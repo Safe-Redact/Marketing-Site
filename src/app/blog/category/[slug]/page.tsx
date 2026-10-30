@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   if (!category) return {};
 
   return {
-    title: `${category.name} Insights`,
+    title: `${category.name} | Blog`,
     description: `Published OpenRedakt articles in the ${category.name} category.`,
     alternates: { canonical: `/blog/category/${category.slug}` },
   };
@@ -46,14 +46,14 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
 
   return (
     <>
-      <section className="blog-hero border-b border-border-subtle pt-[8.75rem] sm:pt-[10rem] lg:pt-[11.5rem]">
+      <section className="blog-hero pt-[8.75rem] sm:pt-[10rem] lg:pt-[11.5rem]">
         <Container className="pb-12 sm:pb-16">
           <Eyebrow>Blog category</Eyebrow>
           <h1 className="mt-5 font-heading text-[clamp(2.3rem,5vw,4.2rem)] font-semibold leading-tight tracking-[-0.035em] text-ink">
             {category.name}
           </h1>
           <p className="mt-5 max-w-2xl text-body-lg leading-8 text-ink-muted">
-            Browse published OpenRedakt insights in this category.
+            Browse published OpenRedakt blog posts in this category.
           </p>
         </Container>
       </section>

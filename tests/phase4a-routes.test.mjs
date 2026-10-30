@@ -26,15 +26,74 @@ test("the published CMS article renders and remains discoverable across Insights
 
   for (const response of [hub, article, search, tag, sitemap]) assert.equal(response.status, 200);
   assert.equal(archived.status, 404);
-  assert.match(hubHtml, /<h1[^>]*>\s*Insights\s*<\/h1>/);
+  assert.equal((hubHtml.match(/<h1\b/g) ?? []).length, 1);
+  assert.match(hubHtml, /data-insights-page="true"/);
+  assert.doesNotMatch(hubHtml, /data-editorial-theme="light"/);
+  assert.match(hubHtml, /<h1[^>]*>\s*Blog\s*<\/h1>/);
+  assert.doesNotMatch(hubHtml, /Practical guidance for safer redaction/);
+  assert.match(hubHtml, /aria-label="Featured insight"/);
+  assert.match(hubHtml, /%2Fimages%2Fproduct%2Feditorial-document-cover\.png/);
+  assert.doesNotMatch(hubHtml, /aria-label="Filter content by type"/);
+  assert.doesNotMatch(hubHtml, />\s*Company News\s*</);
+  assert.doesNotMatch(hubHtml, />\s*Product Updates\s*</);
+  assert.doesNotMatch(hubHtml, />\s*Guides &amp; Tutorials\s*</);
+  assert.doesNotMatch(hubHtml, /aria-label="Article categories"/);
+  assert.doesNotMatch(hubHtml, /aria-label="Filter content by tag"/);
   assert.match(hubHtml, /Understanding Document Redaction and Why It Matters/);
   assert.doesNotMatch(hubHtml, /No content has been published yet/i);
+  assert.doesNotMatch(hubHtml, /coming soon|sample article|untitled article/i);
   assert.match(articleHtml, /rel="canonical" href="https:\/\/saferedact\.io\/blog\/understanding-document-redaction"/);
   assert.match(searchHtml, /Understanding Document Redaction and Why It Matters/);
   assert.match(tagHtml, /Understanding Document Redaction and Why It Matters/);
   assert.match(sitemapXml, /\/blog\/understanding-document-redaction<\/loc>/);
   assert.doesNotMatch(sitemapXml, /cms-publishing-test/);
   assert.match(hubHtml, /<form[^>]+role="search"/);
+  assert.match(tagHtml, /<form[^>]+role="search"/);
+  assert.doesNotMatch(tagHtml, /aria-label="Filter content by type"/);
+});
+
+test("an empty Insights search explains the result and offers a server-rendered reset", async () => {
+  const response = await get("/blog?query=no-such-openredakt-article");
+  const html = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.match(html, /No content matches your search/);
+  assert.match(html, /href="\/blog"[^>]*>\s*browse all content\s*<\/a>/i);
+  assert.match(html, /<meta name="robots" content="[^"]*noindex/i);
+});
+
+test("filtered Insights results use a chronological archive with semantic month headings", async () => {
+  const response = await get("/blog?query=document");
+  const html = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.match(html, /aria-label="Chronological article archive"/);
+  assert.match(html, /<h2[^>]*>October 2026<\/h2>/);
+  assert.match(html, /href="\/blog\/understanding-document-redaction"/);
+});
+
+test("a long-form article exposes breadcrumbs, matching heading anchors, TOC, and a demo-only side CTA", async () => {
+  const response = await get("/blog/understanding-document-redaction");
+  const html = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.equal((html.match(/<h1\b/g) ?? []).length, 1);
+  assert.match(html, /aria-label="Breadcrumb"/);
+  assert.match(html, /aria-label="On this page"/);
+  assert.match(html, /href="#what-is-document-redaction"/);
+  assert.match(html, /<h2[^>]*id="what-is-document-redaction"/);
+  assert.match(html, /alt="OpenRedakt document review workspace"/);
+  assert.match(html, /aria-label="Discuss your redaction workflow"/);
+  assert.match(html, /href="\/book-a-demo"/);
+  // The shared footer invitation closes the article; there is no second closing CTA.
+  assert.doesNotMatch(html, /id="article-closing-cta"/);
+  assert.match(html, /id="footer-invitation-heading"/);
+  const sidebar = html.match(/<div data-article-sidebar="true" class="([^"]+)"/);
+  assert.ok(sidebar, "the sticky article sidebar should have an explicit scroll-owner boundary");
+  assert.doesNotMatch(sidebar[1], /(?:max-h-|overflow-y-auto|overscroll-contain)/);
+  assert.match(html, /data-toc-scroll-region="true"/);
+  assert.doesNotMatch(html, /id="related-articles-heading"/);
+  assert.doesNotMatch(html, /download|sign in|log in|free trial/i);
 });
 
 test("search results are not indexed as duplicate editorial pages", async () => {
@@ -318,29 +377,34 @@ test("the legacy newsroom URL permanently redirects into the Insights news filte
   assert.equal(response.headers.get("location"), "/blog?type=news");
 });
 
-test("Insights is the single content hub and carries the content-type filters", async () => {
-  const response = await get("/blog");
-  const html = await response.text();
+test("Insights hides redundant controls on the one-story hub and keeps an escape on filtered views", async () => {
+  const [response, filteredResponse] = await Promise.all([
+    get("/blog"),
+    get("/blog?type=article"),
+  ]);
+  const [html, filteredHtml] = await Promise.all([response.text(), filteredResponse.text()]);
 
   assert.equal(response.status, 200);
-  for (const label of [
-    "All content",
-    "Company News",
-    "Product Updates",
-    "Industry Insights",
-    "Guides &amp; Tutorials",
-  ]) {
-    assert.ok(html.includes(label), `the hub must offer the ${label} filter`);
+  assert.equal(filteredResponse.status, 200);
+  for (const label of ["All content", "Industry Insights"]) {
+    assert.ok(!html.includes(label), `the one-story hub must hide the redundant ${label} filter`);
+    assert.ok(filteredHtml.includes(label), `a filtered view must offer the ${label} control`);
+  }
+  for (const label of ["Company News", "Product Updates", "Guides &amp; Tutorials"]) {
+    assert.ok(!html.includes(label), `the hub must not offer an empty ${label} filter`);
   }
 
   // One content entry in the navigation, and it is the hub.
   assert.match(html, /href="\/blog"/);
   assert.doesNotMatch(html, /href="\/news"/);
 
-  // The category row's "All insights" chip pointed at /blog too, so the hub carried
-  // two identical chips both claiming aria-current="page" — a screen reader was told
-  // the reader was on two pages at once. The type row owns the "all" affordance now.
-  assert.doesNotMatch(html, /All insights/);
+  // With one published article, neither the content-type nor category row adds useful
+  // choice on the hub. A deliberate filtered URL still retains an escape to all content.
+  assert.doesNotMatch(html, /All posts/);
+  assert.match(
+    filteredHtml,
+    /<nav aria-label="Filter content by type"[\s\S]*?href="\/blog"[\s\S]*?All content[\s\S]*?<\/nav>/
+  );
 });
 
 test("only the active view claims aria-current on the hub", async () => {

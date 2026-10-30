@@ -36,7 +36,7 @@ export function Pagination({ currentPage, totalPages, basePath, query, type, tag
           key={page}
           href={pageHref(basePath, page, query, type, tag)}
           aria-current={page === currentPage ? "page" : undefined}
-          className="blog-page-link aria-[current=page]:border-accent-cool aria-[current=page]:bg-accent-cool/10 aria-[current=page]:text-accent-cool"
+          className="blog-page-link aria-[current=page]:border-accent-warm/60 aria-[current=page]:bg-accent-warm/10 aria-[current=page]:text-accent-ink-hover"
         >
           <span className="sr-only">Page </span>{page}
         </Link>

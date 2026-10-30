@@ -1,102 +1,110 @@
-"use client";
-
-import { useRef, useState, type KeyboardEvent } from "react";
-import { formatTabs } from "@/content/platform";
+import Link from "next/link";
+import type { CaptureId } from "@/content/media";
+import { ProductStoryVisual } from "@/components/media/ProductStoryVisual";
 import { AnimateOnScroll } from "@/components/ui/AnimateOnScroll";
 import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/ui/Icon";
-import { FormatPreview } from "@/components/visuals/FormatPreview";
 import { cn } from "@/lib/utils";
 
+type Story = {
+  id: string;
+  number: string;
+  eyebrow: string;
+  title: string;
+  body: string;
+  points: readonly string[];
+  link: { label: string; href: string };
+  visual: { capture: CaptureId; crop: string; mobileCrop: string; alt: string };
+};
+
+/**
+ * Copy is checked against the capability register: document marks and reasons
+ * (DOC-MANUAL, DOC-REVIEW), conditional detection and OCR (DOC-CANDIDATES, DOC-OCR),
+ * audio ranges, effects and preview (AUD-TIMELINE, AUD-EFFECTS, AUD-PREVIEW).
+ */
+const stories: readonly Story[] = [
+  {
+    id: "document",
+    number: "01",
+    eyebrow: "Document redaction",
+    title: "Find it. Review it. Redact it.",
+    body: "Open PDFs, scans and office files. Where detection is configured, findings wait for your decision. Anything else you mark yourself, by selecting text or drawing an area, with a reason on every mark.",
+    points: ["Text and area marks", "A reason on every mark", "OCR for scans when configured"],
+    link: { label: "Explore document redaction", href: "/features/document-redaction" },
+    visual: {
+      capture: "document-workspace",
+      crop: "story",
+      mobileCrop: "manualMobile",
+      alt: "The OpenRedakt document workspace with no document open: the manual redaction panel with selection modes and reasons, the page tools, and the project panel listing files with their preparation status. Project and file names are blurred.",
+    },
+  },
+  {
+    id: "audio",
+    number: "02",
+    eyebrow: "Audio redaction",
+    title: "Every second matters.",
+    body: "Spoken detail lives in a moment. Select the exact range on the waveform, or type its start and end, choose a masking effect and, where supported, preview it before a new file is rendered.",
+    points: ["Waveform and timeline review", "Mute, tone, silence or noise", "Preview before export"],
+    link: { label: "Explore audio redaction", href: "/features/audio-redaction" },
+    visual: {
+      capture: "audio-workspace",
+      crop: "story",
+      mobileCrop: "storyMobile",
+      alt: "The OpenRedakt audio workspace: masking effects and range controls beside a recording's waveform, transport controls and timeline. File names in the side panel are blurred.",
+    },
+  },
+];
+
+/**
+ * Product stories on the bounded warm band (hairline dividers top and bottom). Each
+ * story is one balanced row: text on one side, the product window on the other,
+ * mirrored for the second story. Both visual columns share one width and crop ratio,
+ * so the document and audio windows are always the same size.
+ */
 export function WhySafeRedact() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const active = formatTabs[activeIndex];
-
-  const moveFocus = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
-    let next = index;
-    if (event.key === "ArrowRight") next = (index + 1) % formatTabs.length;
-    else if (event.key === "ArrowLeft") next = (index - 1 + formatTabs.length) % formatTabs.length;
-    else if (event.key === "Home") next = 0;
-    else if (event.key === "End") next = formatTabs.length - 1;
-    else return;
-    event.preventDefault();
-    setActiveIndex(next);
-    tabRefs.current[next]?.focus();
-  };
-
   return (
-    <section id="why-saferedact" className="relative overflow-hidden bg-canvas py-section text-ink">
+    <section id="why-saferedact" aria-label="Document and audio redaction" className="story-surface section-y text-ink">
       <Container>
-        <AnimateOnScroll className="max-w-4xl">
-          <p className="font-heading text-[0.8125rem] font-bold uppercase tracking-[0.04em] text-accent-cool">Why OpenRedakt</p>
-          <h2 className="mt-4 font-heading text-display font-bold text-ink text-balance">
-            Review content in the <span className="gradient-text">right context</span>
-          </h2>
-          <p className="mt-5 max-w-2xl text-base leading-7 text-ink-muted sm:text-lg">
-            Document pages and audio transcripts need different review surfaces. OpenRedakt brings both supported workflows into one Windows desktop application.
-          </p>
-        </AnimateOnScroll>
-
-        <div className="relative mt-10">
-          <div className="pointer-events-none absolute right-0 top-0 z-10 h-12 w-10 bg-gradient-to-l from-canvas to-transparent md:hidden" />
-          <div
-            role="tablist"
-            aria-label="OpenRedakt format workflows"
-            className="flex gap-3 overflow-x-auto pb-3 pr-7 [scrollbar-width:thin] [scrollbar-color:#222B44_transparent]"
-          >
-            {formatTabs.map((tab, index) => (
-              <button
-                key={tab.id}
-                ref={(element) => { tabRefs.current[index] = element; }}
-                id={`format-tab-${tab.id}`}
-                role="tab"
-                type="button"
-                aria-selected={activeIndex === index}
-                aria-controls="format-panel"
-                tabIndex={activeIndex === index ? 0 : -1}
-                onClick={() => setActiveIndex(index)}
-                onKeyDown={(event) => moveFocus(event, index)}
+        <div className="space-y-20 sm:space-y-24 lg:space-y-32">
+          {stories.map((story, index) => {
+            const flip = index % 2 === 1;
+            return (
+              <article
+                key={story.id}
+                aria-labelledby={`story-${story.id}`}
                 className={cn(
-                  "inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border px-5 py-2.5 font-heading text-sm font-semibold transition-colors duration-300",
-                  activeIndex === index
-                    ? "border-accent-cool bg-accent-cool/10 text-ink"
-                    : "border-border-subtle bg-transparent text-ink-muted hover:border-accent-cool/40 hover:text-ink"
+                  "grid items-center gap-10 lg:gap-16",
+                  flip ? "lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]" : "lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]"
                 )}
               >
-                <Icon name={tab.icon} size={17} />
-                {tab.label}
-              </button>
-            ))}
-          </div>
+                <AnimateOnScroll className={cn("min-w-0", flip && "lg:order-2")}>
+                  <p className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-canvas py-1 pl-1 pr-3 text-[0.8125rem] font-medium text-ink">
+                    <span className="rounded-full bg-accent-warm px-2 py-0.5 text-[0.75rem] font-semibold text-on-accent">{story.number}</span>
+                    {story.eyebrow}
+                  </p>
+                  <h2 id={`story-${story.id}`} className="mt-5 font-heading text-[clamp(1.875rem,1.35rem+1.6vw,2.75rem)] font-medium leading-[1.08] tracking-[-0.03em] text-ink text-balance">
+                    {story.title}
+                  </h2>
+                  <p className="mt-5 max-w-[30rem] text-[1rem] leading-7 text-ink-muted">{story.body}</p>
+                  <ul className="mt-6 flex flex-wrap gap-2" aria-label={`${story.eyebrow} highlights`}>
+                    {story.points.map((point) => (
+                      <li key={point} className="rounded-full border border-border-subtle bg-canvas px-3 py-1 text-[0.8125rem] text-ink">
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link href={story.link.href} className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-accent-ink transition-colors hover:text-accent-ink-hover motion-reduce:transition-none">
+                    {story.link.label}
+                    <Icon name="arrow" size={16} />
+                  </Link>
+                </AnimateOnScroll>
+                <AnimateOnScroll delay={80} className={cn("min-w-0", flip && "lg:order-1")}>
+                  <ProductStoryVisual {...story.visual} />
+                </AnimateOnScroll>
+              </article>
+            );
+          })}
         </div>
-
-        <AnimateOnScroll delay={100} className="mt-7">
-          <div
-            id="format-panel"
-            role="tabpanel"
-            tabIndex={0}
-            aria-labelledby={`format-tab-${active.id}`}
-            className="grid overflow-hidden rounded-panel border border-border-subtle bg-surface-raised/65 lg:grid-cols-[0.86fr_1.14fr]"
-          >
-            <div className="flex flex-col justify-center p-6 sm:p-9 lg:p-12">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent-warm">{active.eyebrow}</p>
-              <h3 className="mt-3 font-heading text-2xl font-semibold leading-tight text-ink sm:text-3xl">{active.title}</h3>
-              <p className="mt-5 text-base leading-7 text-ink-muted">{active.description}</p>
-              <ul className="mt-7 space-y-3">
-                {active.bullets.map((bullet) => (
-                  <li key={bullet} className="flex items-start gap-3 text-sm leading-6 text-ink-muted">
-                    <Icon name="check-circle" size={17} className="mt-1 text-accent-mint" />
-                    {bullet}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="border-t border-border-subtle p-4 sm:p-6 lg:border-l lg:border-t-0">
-              <FormatPreview visual={active.visual} fileLabel={active.fileLabel} />
-            </div>
-          </div>
-        </AnimateOnScroll>
       </Container>
     </section>
   );

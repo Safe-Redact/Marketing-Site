@@ -4,8 +4,16 @@ import type { NextConfig } from "next";
 
 const applicationRoot = path.dirname(fileURLToPath(import.meta.url));
 
+/**
+ * Design prototypes live in `page.dev.tsx` files. Only `next dev` recognises that
+ * extension, so production builds never compile those routes: they 404 in production
+ * rather than relying on noindex.
+ */
+const isDevelopment = process.env.NODE_ENV === "development";
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  pageExtensions: isDevelopment ? ["dev.tsx", "tsx", "ts", "jsx", "js"] : ["tsx", "ts", "jsx", "js"],
   output: "standalone",
   outputFileTracingRoot: applicationRoot,
   images: {
@@ -25,6 +33,9 @@ const nextConfig: NextConfig = {
     ];
   },
   async headers() {
+    // Review deployments (staging) set SITE_NOINDEX=true so no page is indexed. Unset,
+    // as in production, nothing changes. Next calls this at build time.
+    const siteNoIndex = process.env.SITE_NOINDEX === "true";
     return [
       {
         source: "/admin/:path*",
@@ -37,6 +48,9 @@ const nextConfig: NextConfig = {
           { key: "Referrer-Policy", value: "no-referrer" },
         ],
       },
+      ...(siteNoIndex
+        ? [{ source: "/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] }]
+        : []),
     ];
   },
 };

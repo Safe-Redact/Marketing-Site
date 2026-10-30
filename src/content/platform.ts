@@ -54,28 +54,28 @@ export const workflowSteps = [
   {
     id: "open",
     icon: "upload",
-    label: "Open a supported file",
-    title: "Start in a project workspace",
+    label: "Open or prepare a file",
+    title: "Files are prepared for review",
     description:
-      "Add a supported document or audio recording and choose the available workflow for that source.",
+      "Add documents or recordings to a project. Supported office files are prepared as PDFs, and each file shows whether it is ready.",
     previewLabel: "Source ready",
   },
   {
     id: "review",
     icon: "search",
-    label: "Detect and review",
-    title: "Treat detections as candidates",
+    label: "Review and apply redactions",
+    title: "A reviewer applies every mark",
     description:
-      "Run detection or transcription, then approve, reject, add, remove, or adjust findings before creating an output.",
-    previewLabel: "3 findings to review",
+      "Accept or reject candidate findings, and add your own marks or time ranges, each with a reason, before anything is exported.",
+    previewLabel: "Marks under review",
   },
   {
     id: "export",
     icon: "download",
-    label: "Export and inspect",
-    title: "Check the rendered result",
+    label: "Export the resulting copy",
+    title: "A new copy; the original stays",
     description:
-      "Create the redacted output and inspect the complete file before it is used or shared outside the workflow.",
+      "Export writes a redacted copy to a folder you choose and leaves the original untouched. Inspect the result before you share it.",
     previewLabel: "Output prepared",
   },
 ] as const;

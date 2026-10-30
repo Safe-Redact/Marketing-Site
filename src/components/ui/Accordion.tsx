@@ -41,7 +41,7 @@ export function Accordion({
   };
 
   return (
-    <div className={cn("space-y-3", className)}>
+    <div className={cn("border-y border-border-subtle/60", className)}>
       {items.map((item, index) => {
         const isOpen = activeIndex === index;
         const triggerId = `${groupId}-${item.id}-trigger`;
@@ -51,16 +51,14 @@ export function Accordion({
           <div
             key={item.id}
             className={cn(
-              "overflow-hidden rounded-card border bg-surface-raised transition-colors duration-300",
-              isOpen
-                ? "border-accent-cool/45 bg-surface-active"
-                : "border-border-subtle hover:border-accent-cool/25"
+              "border-t border-border-subtle/60 transition-colors duration-300 first:border-t-0 motion-reduce:transition-none",
+              isOpen && "bg-surface-raised/40"
             )}
           >
             <button
               id={triggerId}
               type="button"
-              className="flex min-h-16 w-full items-center gap-3 px-4 py-4 text-left sm:px-5"
+              className="group flex min-h-16 w-full items-center gap-4 px-1 py-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-cool sm:px-3"
               aria-expanded={isOpen}
               aria-controls={panelId}
               onClick={() =>
@@ -68,19 +66,19 @@ export function Accordion({
               }
             >
               {item.icon && (
-                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-control border border-accent-cool/20 bg-accent-cool/10 text-accent-cool">
+                <span className={cn("grid h-9 w-9 shrink-0 place-items-center rounded-[10px] border transition-colors", isOpen ? "border-accent-warm/40 bg-accent-warm/10 text-accent-ink" : "border-border-subtle/70 text-ink-muted")}>
                   <Icon name={item.icon} size={18} />
                 </span>
               )}
-              <span className="flex-1 font-heading text-base font-semibold leading-6 text-ink sm:text-lg">
+              <span className={cn("flex-1 text-base font-semibold leading-6 transition-colors sm:text-[1.0625rem]", isOpen ? "text-ink" : "text-ink/90 group-hover:text-ink")}>
                 {item.title}
               </span>
               <Icon
                 name="chevron-down"
                 size={18}
                 className={cn(
-                  "text-ink-muted transition-transform duration-300",
-                  isOpen && "rotate-180 text-accent-cool"
+                  "text-ink-muted transition-transform duration-300 motion-reduce:transition-none",
+                  isOpen && "rotate-180 text-accent-ink"
                 )}
               />
             </button>
@@ -89,7 +87,7 @@ export function Accordion({
               role="region"
               aria-labelledby={triggerId}
               hidden={!isOpen}
-              className="px-4 pb-5 pl-16 text-[0.9375rem] leading-6 text-ink-muted sm:px-5 sm:pl-[4.75rem]"
+              className={cn("pb-6 pr-6 text-[0.9375rem] leading-7 text-ink-muted", item.icon ? "pl-[3.75rem] sm:pl-[4.25rem]" : "pl-1 sm:pl-3")}
             >
               {item.description}
             </div>

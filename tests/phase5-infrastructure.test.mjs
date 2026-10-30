@@ -411,6 +411,7 @@ test("the pages that render inline scripts read the nonce, which keeps them out 
     assert.match(source, /<script[^>]*nonce=\{nonce\}/);
   }
   assert.match(layout, /<script[^>]*suppressHydrationWarning[^>]*nonce=\{nonce\}|<script[^>]*nonce=\{nonce\}[^>]*suppressHydrationWarning/);
+  assert.match(article, /<script[^>]*suppressHydrationWarning[^>]*nonce=\{nonce\}|<script[^>]*nonce=\{nonce\}[^>]*suppressHydrationWarning/);
   assert.match(layout, /export default async function RootLayout/);
 
   // Nothing below the root layout may be prerendered: a prerendered document would be

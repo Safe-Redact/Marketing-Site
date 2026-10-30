@@ -1,5 +1,3 @@
-import type { NavLink } from "@/types";
-
 export const siteConfig = {
   name: "OpenRedakt",
   tagline: "AI-powered redaction software",
@@ -16,13 +14,3 @@ export const siteConfig = {
 
 export const publicSiteUrl = siteConfig.externalCoordinates.url;
 export const publicSupportEmail = siteConfig.externalCoordinates.email;
-
-export const navLinks: NavLink[] = [
-  { label: "Capabilities", href: "#services" },
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "Industries", href: "#industries" },
-  { label: "Why OpenRedakt", href: "#why-saferedact" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "Insights", href: "/blog" },
-  { label: "FAQ", href: "#faq" },
-];

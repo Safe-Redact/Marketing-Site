@@ -30,8 +30,11 @@ routeTest("public marketing presents document and audio redaction without unfini
     /Video redaction|Image redaction|Video review controls|Documents & images|common image formats|Video files|Scanned images/i
   );
   assert.match(html, /href="\/pricing"/);
-  assert.match(html, /format-documents\.png/i);
-  assert.doesNotMatch(html, /step-open\.png|format-video\.png/i);
+  // Light-theme product captures only: the project library and the document workspace.
+  assert.match(html, /project-workspace\.png/i);
+  assert.match(html, /document-workspace\.png/i);
+  assert.doesNotMatch(html, /hero-document-review\.png|format-documents\.png/i);
+  assert.doesNotMatch(html, /step-open\.png|format-video\.png|homepage\.png|ai%20tools|ai-tools/i);
 });
 
 routeTest("pricing route makes package scope and annual per-license billing unambiguous", async () => {
@@ -73,9 +76,12 @@ routeTest("pricing route makes package scope and annual per-license billing unam
   assert.doesNotMatch(text, /(?:^|\D)2 devices per (?:user|license)|two devices per (?:user|license)/i);
   assert.match(html, /<table/);
   assert.match(html, /<caption/);
-  assert.match(html, /id="demo-enquiry"/);
-  assert.match(html, /name="packageInterest"/);
-  assert.match(html, /name="licenseCount"/);
+  // Package buttons carry the choice to the enquiry form on /book-a-demo.
+  for (const slug of ["essential", "advanced", "complete-suite"]) {
+    assert.match(packageCard(html, slug), new RegExp(`href="/book-a-demo\\?package=${slug}"`));
+  }
+  assert.doesNotMatch(html, /name="packageInterest"/);
+  assert.match(html, /id="footer-invitation-heading"/);
   assert.match(html, /<link rel="canonical" href="https:\/\/saferedact\.io\/pricing"/);
 });
 
@@ -204,15 +210,16 @@ routeTest("pricing navigation and sitemap expose one canonical pricing destinati
   const sitemap = await sitemapResponse.text();
 
   assert.match(home, /href="\/pricing"[^>]*>Pricing</);
-  assert.match(pricing, /href="\/pricing"[^>]*aria-current="page"/);
+  assert.match(pricing, /<a\b(?=[^>]*\bhref="\/pricing")(?=[^>]*\baria-current="page")[^>]*>/);
   assert.match(sitemap, /<loc>https:\/\/saferedact\.io\/pricing<\/loc>/);
   assert.equal((sitemap.match(/https:\/\/saferedact\.io\/pricing<\/loc>/g) ?? []).length, 1);
 });
 
 routeTest("pricing CTA query context preselects only a recognized package", async () => {
+  // Package buttons on /pricing link to /book-a-demo?package=..., where the form lives.
   const [recognizedResponse, unknownResponse] = await Promise.all([
-    fetch(`${baseUrl}/pricing?package=advanced`),
-    fetch(`${baseUrl}/pricing?package=starter`),
+    fetch(`${baseUrl}/book-a-demo?package=advanced`),
+    fetch(`${baseUrl}/book-a-demo?package=starter`),
   ]);
   assert.equal(recognizedResponse.status, 200);
   assert.equal(unknownResponse.status, 200);
